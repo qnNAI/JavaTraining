@@ -7,7 +7,7 @@ public class Service {
         int right = array.length - 1;
 
         while (left <= right) {
-            for (int i = right; i >= left; i--) {
+            for (int i = right; i >= left; i--)     {
                 if (array[i - 1] > array[i]) {
                     int temp = array[i];
                     array[i] = array[i - 1];
