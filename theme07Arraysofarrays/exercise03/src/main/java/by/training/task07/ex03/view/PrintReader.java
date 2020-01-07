@@ -1,4 +1,4 @@
-package by.training.task07.ex01.view;
+package by.training.task07.ex03.view;
 
 import java.util.ArrayList;
 import java.util.Scanner;

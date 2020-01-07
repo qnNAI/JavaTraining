@@ -1,7 +1,7 @@
-package by.training.task07.ex01.controller;
+package by.training.task07.ex03.controller;
 
-import by.training.task07.ex01.service.Service;
-import by.training.task07.ex01.view.PrintReader;
+import by.training.task07.ex03.service.Service;
+import by.training.task07.ex03.view.PrintReader;
 
 public class Runner {
     public static void main(String[] args) {

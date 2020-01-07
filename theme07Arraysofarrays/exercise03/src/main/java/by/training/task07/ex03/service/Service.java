@@ -1,4 +1,4 @@
-package by.training.task07.ex01.service;
+package by.training.task07.ex03.service;
 
 import java.util.ArrayList;
 import java.util.Random;
