@@ -1,11 +1,11 @@
-package by.training.theme10.exercise01.data;
+package by.training.theme10.exercise01.entity;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class TextFile extends File {
+public class TextFile extends FileEntity {
 
     // конструкторы с параметрами
     public TextFile(String dir, String filename) {
@@ -29,7 +29,7 @@ public class TextFile extends File {
         super();
     }
 
-    // переопределяем абстрактные методы класса File
+    // переопределяем абстрактные методы класса FileEntity
     // получить содержимое файла
     @Override
     public String getContent() throws IOException {
@@ -40,7 +40,7 @@ public class TextFile extends File {
     @Override
     public void addInfo(String info) throws IOException {
         try (FileWriter writer = new FileWriter(getFullPath().getAbsolutePath(), true)) {
-            writer.write(info);
+            writer.write(info + "\n");
             writer.flush();
         } catch (IOException ex) {
             throw new IOException("Не удалось добавить информацию!", ex);

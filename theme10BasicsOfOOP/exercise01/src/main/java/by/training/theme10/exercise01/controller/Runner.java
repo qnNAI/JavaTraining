@@ -1,7 +1,7 @@
 package by.training.theme10.exercise01.controller;
 
 import by.training.theme10.exercise01.controller.command.Command;
-import by.training.theme10.exercise01.data.TextFile;
+import by.training.theme10.exercise01.entity.TextFile;
 import by.training.theme10.exercise01.view.PrintReader;
 
 public class Runner {
@@ -15,12 +15,16 @@ public class Runner {
         TextFile file = new TextFile();
 
         int choice = -1;
+        String request = "";
 
         while (choice != 0) {
             printReader.printMenu();
-            choice = printReader.scanChoice();
+          //  choice = printReader.scanChoice();
+            request = printReader.scanRequest();
 
-            switch (choice) {
+            printReader.printResponse(runner.executeTask(request, file));
+
+         /*  switch (choice) {
                 case 1: { // создать файл
                     printReader.printResponse(runner.executeTask(CommandsConstants.CREATE + " " + printReader.scanDir() + " " +
                             printReader.scanFilename(), file));
@@ -57,25 +61,34 @@ public class Runner {
                     break;
                 }
                 default: // показать меню ещё раз
-            }
+            }*/
         }
     }
 
     public String executeTask(String request, TextFile file) {
         String commandName;
         Command executionCommand;
+        String response;
+        String errorMsg = "Ошибка передачи параметров!";
         int index = request.indexOf(paramDelimeter);
 
+
+        if (index == -1) {
+            if (!request.equals("exit")) {
+                response = errorMsg;
+                return response;
+            }
+        }
         commandName = request.substring(0, index);
         executionCommand = provider.getCommand(commandName);
 
-        String response;
+
 
         if (request.length() > index + 1) {
             request = request.substring(index + 1);
             response = executionCommand.execute(request, file);
         } else {
-            response = "Ошибка передачи параметров!";
+            response = errorMsg;
         }
 
         return response;

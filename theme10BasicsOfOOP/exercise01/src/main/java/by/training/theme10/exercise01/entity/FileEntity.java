@@ -1,34 +1,34 @@
-package by.training.theme10.exercise01.data;
+package by.training.theme10.exercise01.entity;
 
 import java.io.IOException;
 
-public abstract class File {
+public abstract class FileEntity {
     private Directory dir;          // директория файла
     private java.io.File filename;  // имя файла
 
     // конструкторы с параметрами
-    public File(String dir, String filename) {
+    public FileEntity(String dir, String filename) {
         this.dir = new Directory(dir);
         this.filename = new java.io.File(filename);
     }
 
-    public File(java.io.File dir, java.io.File filename) {
+    public FileEntity(java.io.File dir, java.io.File filename) {
         this.dir = new Directory(dir);
         this.filename = filename;
     }
 
-    public File(java.io.File dir, String filename) {
+    public FileEntity(java.io.File dir, String filename) {
         this.dir = new Directory(dir);
         this.filename = new java.io.File(filename);
     }
 
-    public File(String dir, java.io.File filename) {
+    public FileEntity(String dir, java.io.File filename) {
         this.dir = new Directory(dir);
         this.filename = filename;
     }
 
     // конструктор без параметров
-    public File() {
+    public FileEntity() {
         dir = null;
         filename = null;
     }

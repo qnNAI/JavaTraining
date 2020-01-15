@@ -3,9 +3,9 @@ package by.training.theme10.exercise01.controller.command.impl;
 import by.training.theme10.exercise01.controller.command.Command;
 import by.training.theme10.exercise01.entity.TextFile;
 
-public class WrongRequest implements Command {
+public class Exit implements Command {
     @Override
     public String execute(String request, TextFile file) {
-        return "Ошибка выполнения команды!";
+        return "выход из программы";
     }
 }

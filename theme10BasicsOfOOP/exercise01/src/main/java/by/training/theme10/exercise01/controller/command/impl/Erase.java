@@ -1,7 +1,7 @@
 package by.training.theme10.exercise01.controller.command.impl;
 
 import by.training.theme10.exercise01.controller.command.Command;
-import by.training.theme10.exercise01.data.TextFile;
+import by.training.theme10.exercise01.entity.TextFile;
 import by.training.theme10.exercise01.service.Service;
 import by.training.theme10.exercise01.validation.Validator;
 

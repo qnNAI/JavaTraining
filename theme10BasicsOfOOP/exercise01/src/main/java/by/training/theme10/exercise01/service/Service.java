@@ -1,6 +1,6 @@
 package by.training.theme10.exercise01.service;
 
-import by.training.theme10.exercise01.data.TextFile;
+import by.training.theme10.exercise01.entity.TextFile;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
