@@ -1,6 +1,7 @@
 package by.training.theme10.exercise01.entity;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public abstract class FileEntity {
     private Directory dir;          // директория файла
@@ -103,4 +104,25 @@ public abstract class FileEntity {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FileEntity)) return false;
+        FileEntity that = (FileEntity) o;
+        return Objects.equals(getDir(), that.getDir()) &&
+                Objects.equals(getFilename(), that.getFilename());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDir(), getFilename());
+    }
+
+    @Override
+    public String toString() {
+        return "FileEntity{" +
+                "dir=" + dir +
+                ", filename=" + filename +
+                '}';
+    }
 }

@@ -31,8 +31,6 @@ public class PrintReader {
         System.out.println("remove_prod - удалить товар из списка доступных - команда наименование");
         System.out.println("exit - выход из программы - команда");
         System.out.println();
-        System.out.println("Команда вводится в формате: ");
-        System.out.println("команда наименование цена количество единица-измерения");
     }
 
 }

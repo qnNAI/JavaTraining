@@ -47,6 +47,8 @@ public class TextFile extends FileEntity {
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        return "TextFile{}";
+    }
 }

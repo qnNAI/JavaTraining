@@ -50,10 +50,10 @@ public class Payment {
     }
 
     public class Product {
-        String name;
-        double price;
-        double amount;
-        String measure;
+        private String name;
+        private double price;
+        private double amount;
+        private String measure;
 
         public Product(String name, double price, double amount, String measure) {
             this.name = name;
@@ -159,5 +159,27 @@ public class Payment {
                     ", measure='" + measure + '\'' +
                     '}';
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Payment)) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(products, payment.products) &&
+                Objects.equals(getSelectedProducts(), payment.getSelectedProducts());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(products, getSelectedProducts());
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "products=" + products +
+                ", selectedProducts=" + selectedProducts +
+                '}';
     }
 }
