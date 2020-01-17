@@ -7,6 +7,5 @@ public enum CommandName {
     ADD_INFO,
     DELETE,
     ERASE,
-    EXIT,
     WRONG_REQUEST
 }

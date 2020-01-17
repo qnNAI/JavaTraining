@@ -54,7 +54,11 @@ public class Service {
             index =  request.indexOf(paramDelimeter);
             if (index != -1) {
                 params.add(request.substring(0, index));
-                request = request.substring(index + 1, request.length());
+                 if (index + 1 < request.length()) {
+                     request = request.substring(index + 1, request.length());
+                 } else {
+                     return params;
+                 }
             } else {
                 params.add(request);
             }

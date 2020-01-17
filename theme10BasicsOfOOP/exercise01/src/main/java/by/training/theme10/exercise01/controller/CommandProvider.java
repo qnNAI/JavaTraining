@@ -17,7 +17,6 @@ public final class CommandProvider {
         repository.put(CommandName.SHOW_INFO, new ShowInfo());
         repository.put(CommandName.DELETE, new Delete());
         repository.put(CommandName.ERASE, new Erase());
-        repository.put(CommandName.EXIT, new Exit());
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
 
