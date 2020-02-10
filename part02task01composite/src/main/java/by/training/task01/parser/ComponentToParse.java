@@ -4,7 +4,7 @@ public enum ComponentToParse {
     TEXT,
     PARAGRAPH,
     SENTENCE,
-    LEXEM,
+    LEXEME,
     WORD,
     DELIMETER
 }
