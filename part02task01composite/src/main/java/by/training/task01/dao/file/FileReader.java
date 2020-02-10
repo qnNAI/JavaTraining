@@ -1,7 +1,7 @@
 package by.training.task01.dao.file;
 
 import by.training.task01.dao.DataReader;
-import by.training.task01.dao.daoException.DaoException;
+import by.training.task01.dao.daoException.DAOException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileReader implements DataReader {
-    public List<String> readData(String filename) throws DaoException {
+    public List<String> readData(String filename) throws DAOException {
         ArrayList<String> list = new ArrayList<>();
         String line = "";
 
@@ -22,7 +22,7 @@ public class FileReader implements DataReader {
                 list.add(line);
             }
         } catch (Exception ex) {
-            throw new DaoException("ошибка работы с файлом!", ex);
+            throw new DAOException("ошибка работы с файлом!", ex);
         }
 
         return list;
