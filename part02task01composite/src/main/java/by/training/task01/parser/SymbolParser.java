@@ -17,7 +17,7 @@ public class SymbolParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] symbols;
 
-        Pattern pattern = Pattern.compile("\\w&");
+        Pattern pattern = Pattern.compile("^\\w&");
         symbols = pattern.split(data);
 
         try {
