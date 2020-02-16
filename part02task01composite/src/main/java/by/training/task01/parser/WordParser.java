@@ -16,7 +16,7 @@ public class WordParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] words;
 
-        Pattern pattern = Pattern.compile("\\w+ &");
+        Pattern pattern = Pattern.compile("\\w+&");
         words = pattern.split(data);
 
         try {
