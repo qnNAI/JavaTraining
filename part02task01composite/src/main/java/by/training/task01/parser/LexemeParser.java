@@ -1,17 +1,35 @@
 package by.training.task01.parser;
 
-import java.util.List;
+import by.training.task01.composite.Component;
+import by.training.task01.composite.Lexeme;
+import by.training.task01.composite.compositeException.CompositeException;
+import by.training.task01.parser.parseException.ParseException;
+
+import java.util.regex.Pattern;
 
 public class LexemeParser extends TextParser {
 
-    public LexemeParser(TextParser next) {
-        super(next);
+    public LexemeParser() {
+        super(ComponentToParse.SENTENCE);
     }
 
 
     @Override
-    public List<String> parse(String data) {
+    public void parse(String data, Component component) throws ParseException {
+        String[] lexemes;
 
-        return null;
+        Pattern pattern = Pattern.compile(" &");
+        lexemes = pattern.split(data);
+
+        try {
+            for (String lexeme : lexemes) {
+                Component newComponent = new Lexeme();
+                callNext(ComponentToParse.LEXEME, lexeme, newComponent);
+                component.add(newComponent);
+            }
+        } catch (CompositeException ex) {
+            throw new ParseException("Sentence parse -> composite exception", ex);
+        }
+
     }
 }

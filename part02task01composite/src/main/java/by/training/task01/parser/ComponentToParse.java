@@ -5,6 +5,5 @@ public enum ComponentToParse {
     PARAGRAPH,
     SENTENCE,
     LEXEME,
-    WORD,
-    DELIMETER
+    WORD
 }

@@ -1,13 +1,22 @@
 package by.training.task01.parser;
 
-import java.util.List;
+import by.training.task01.composite.Component;
+import by.training.task01.parser.parseException.ParseException;
 
 public abstract class TextParser {
     private TextParser next;
     private ComponentToParse componentToParse;
 
-    public TextParser(TextParser next) {
+    /* TextParser(TextParser next) {
         this.next = next;
+    } */
+
+    TextParser() {
+        next = null;
+    }
+
+    TextParser(ComponentToParse componentToParse) {
+        this.componentToParse = componentToParse;
     }
 
     public TextParser linkWith(TextParser next) {
@@ -15,22 +24,23 @@ public abstract class TextParser {
         return next;
     }
 
-    public abstract List<String> parse(String data);
+    public abstract void parse(String data, Component component) throws ParseException;
 
-    protected List<String> callNext(String componentName, String data) {
+    protected void callNext(ComponentToParse componentName, String data, Component component) throws ParseException {
         if (next == null) {
-            return null;
+            return;
         }
-        return next.tryParse(componentName, data);
+        next.tryParse(componentName, data, component);
     }
 
-    public List<String> tryParse(String componentName, String data) {
+    public void tryParse(ComponentToParse componentName, String data, Component component) throws ParseException {
         // если можем обработать, парсим данные и возвращаем,
         // если не можем, передаём данные дальше по цепочке
-        if (componentName.toUpperCase() == componentToParse.name()) {
-            return parse(data);
+        if (componentToParse == componentName) {
+            parse(data, component);
+            return;
         } else {
-            return callNext(componentName, data);
+            callNext(componentName, data, component);
         }
     }
 }
