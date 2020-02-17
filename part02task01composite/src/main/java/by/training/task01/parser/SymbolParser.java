@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class SymbolParser extends TextParser {
 
-    public SymbolParser(TextParser next) {
+    public SymbolParser() {
         super(ComponentToParse.WORD);
     }
 
@@ -17,7 +17,7 @@ public class SymbolParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] symbols;
 
-        Pattern pattern = Pattern.compile("^\\w&");
+        Pattern pattern = Pattern.compile("");
         symbols = pattern.split(data);
 
         try {

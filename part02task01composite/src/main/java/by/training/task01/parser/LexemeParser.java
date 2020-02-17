@@ -18,7 +18,7 @@ public class LexemeParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] lexemes;
 
-        Pattern pattern = Pattern.compile(" &");
+        Pattern pattern = Pattern.compile("\\s+");
         lexemes = pattern.split(data);
 
         try {

@@ -16,13 +16,13 @@ public class WordParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] words;
 
-        Pattern pattern = Pattern.compile("^\\w+&");
+        Pattern pattern = Pattern.compile("[^\\w]+");
         words = pattern.split(data);
 
         try {
             for (String word : words) {
                 Component newComponent = new Word();
-                callNext(ComponentToParse.LEXEME, word, newComponent);
+                callNext(ComponentToParse.WORD, word, newComponent);
                 component.add(newComponent);
             }
         } catch (CompositeException ex) {

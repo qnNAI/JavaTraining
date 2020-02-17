@@ -1,35 +1,28 @@
 package by.training.task01.controller;
 
-import by.training.task01.composite.Paragraph;
-import by.training.task01.composite.Symbol;
-import by.training.task01.composite.compositeException.CompositeException;
-import by.training.task01.parser.ParagraphParser;
-import by.training.task01.parser.WordParser;
-
-import java.util.List;
+import by.training.task01.composite.Text;
+import by.training.task01.parser.*;
+import by.training.task01.parser.parseException.ParseException;
 
 public class Runner {
     public static void main(String[] args) {
-       /* ParagraphParser parser = new ParagraphParser();
+        Text text = new Text();
+
+        ParagraphParser paragraphParser = new ParagraphParser();
+        SentenceParser sentenceParser = new SentenceParser();
+        LexemeParser lexemeParser = new LexemeParser();
         WordParser wordParser = new WordParser();
+        SymbolParser symbolParser = new SymbolParser();
 
-        Paragraph paragraph = new Paragraph();
+        paragraphParser.linkWith(sentenceParser);
+        sentenceParser.linkWith(lexemeParser);
+        lexemeParser.linkWith(wordParser);
+        wordParser.linkWith(symbolParser);
 
-        List<String> list =  parser.parse("qwerty").getStringList();
-
-        for (String sent : list) {
-            char[] arr = wordParser.parse(sent).getCharArr();
-
-            Symbol symbol = new Symbol(arr[0]);
-            paragraph.add(symbol);
-
-            try {
-                System.out.println(paragraph.getChild(0).getSymbol());
-            } catch (CompositeException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-
+        try {
+            paragraphParser.parse("qwerty, qwerty qwerty. tyyy \n asdf", text);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -18,7 +18,7 @@ public class ParagraphParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] paragraphs;
 
-        Pattern pattern = Pattern.compile("\n&");
+        Pattern pattern = Pattern.compile("\n");
         paragraphs = pattern.split(data);
 
         try {

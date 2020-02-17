@@ -17,7 +17,7 @@ public class SentenceParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] sentences;
 
-        Pattern pattern = Pattern.compile(". &");
+        Pattern pattern = Pattern.compile("\\.\\s?");
         sentences = pattern.split(data);
 
         try {
