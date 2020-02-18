@@ -13,7 +13,6 @@ public class LexemeParser extends TextParser {
         super(ComponentToParse.SENTENCE);
     }
 
-
     @Override
     public void parse(String data, Component component) throws ParseException {
         String[] lexemes;
@@ -23,9 +22,12 @@ public class LexemeParser extends TextParser {
 
         try {
             for (String lexeme : lexemes) {
-                Component newComponent = new Lexeme();
-                callNext(ComponentToParse.LEXEME, lexeme, newComponent);
-                component.add(newComponent);
+                Component newComponent;
+                if (!lexeme.isEmpty()) {
+                    newComponent = new Lexeme();
+                    callNext(ComponentToParse.LEXEME, lexeme, newComponent);
+                    component.add(newComponent);
+                }
             }
         } catch (CompositeException ex) {
             throw new ParseException("Sentence parse -> composite exception", ex);

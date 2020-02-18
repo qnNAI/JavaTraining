@@ -1,10 +1,12 @@
 package by.training.task01.parser;
 
 import by.training.task01.composite.Component;
+import by.training.task01.composite.Mark;
 import by.training.task01.composite.Word;
 import by.training.task01.composite.compositeException.CompositeException;
 import by.training.task01.parser.parseException.ParseException;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WordParser extends TextParser {
@@ -14,21 +16,33 @@ public class WordParser extends TextParser {
 
     @Override
     public void parse(String data, Component component) throws ParseException {
-        String[] words;
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher(data);
 
-        Pattern pattern = Pattern.compile("[^\\w]+");
-        words = pattern.split(data);
+        String word = "";
+        String mark = "";
 
         try {
-            for (String word : words) {
-                Component newComponent = new Word();
+            Component newComponent;
+            if (matcher.find()) {
+                word = matcher.group();
+                newComponent = new Word();
                 callNext(ComponentToParse.WORD, word, newComponent);
                 component.add(newComponent);
             }
-        } catch (CompositeException ex) {
-            throw new ParseException("Lexeme parse -> composite exception", ex);
-        }
 
+            pattern = Pattern.compile("\\W+");
+            matcher = pattern.matcher(data);
+
+            if (matcher.find()) {
+                mark = matcher.group();
+                newComponent = new Mark();
+                callNext(ComponentToParse.WORD, mark, newComponent);
+                component.add(newComponent);
+            }
+        } catch(CompositeException ex) {
+            throw new ParseException("Lexeme parse -> composite exception");
+        }
     }
 }
 

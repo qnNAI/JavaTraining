@@ -21,9 +21,12 @@ public class SymbolParser extends TextParser {
         symbols = pattern.split(data);
 
         try {
+            Symbol newComponent;
             for (String symbol : symbols) {
-                Symbol newComponent = new Symbol(symbol.charAt(0));
-                component.add(newComponent);
+                if (!symbol.isEmpty()) {
+                    newComponent = new Symbol(symbol.charAt(0));
+                    component.add(newComponent);
+                }
             }
         } catch (CompositeException ex) {
             throw new ParseException("Word parse -> composite exception", ex);

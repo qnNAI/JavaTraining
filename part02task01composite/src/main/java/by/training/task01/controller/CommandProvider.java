@@ -15,7 +15,7 @@ public final class CommandProvider {
         repository.put(CommandName.DECOMPOSE, new DecomposeText());
         repository.put(CommandName.COMPOSE_WRITE, new ComposeWriteText());
         repository.put(CommandName.SORT_PARAGRAPH, new SortParagraphs());
-        repository.put(CommandName.SORT_SENTENCE, new SortSentences());
+        repository.put(CommandName.SORT_SENTENCE, new SortWords());
         repository.put(CommandName.SORT_LEXEME, new SortLexems());
         repository.put(CommandName.EXIT, new Exit());
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());

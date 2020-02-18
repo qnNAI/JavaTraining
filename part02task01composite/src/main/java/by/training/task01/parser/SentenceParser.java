@@ -17,12 +17,13 @@ public class SentenceParser extends TextParser {
     public void parse(String data, Component component) throws ParseException {
         String[] sentences;
 
-        Pattern pattern = Pattern.compile("\\.\\s?");
+        Pattern pattern = Pattern.compile("\\s*\\.\\s*");
         sentences = pattern.split(data);
 
         try {
+            Component newComponent;
             for (String sentence : sentences) {
-                Component newComponent = new Sentence();
+                newComponent = new Sentence();
                 callNext(ComponentToParse.SENTENCE, sentence, newComponent);
                 component.add(newComponent);
             }

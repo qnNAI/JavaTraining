@@ -22,9 +22,8 @@ public class FileReader implements DataReader {
                 list.add(line);
             }
         } catch (Exception ex) {
-            throw new DAOException("ошибка работы с файлом!", ex);
+            throw new DAOException("File read exception", ex);
         }
-
         return list;
     }
 }

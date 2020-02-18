@@ -15,28 +15,29 @@ public class Symbol implements Component {
 
     @Override
     public void add(Component component) throws CompositeException {
-        throw new CompositeException("Leaf -> add exception");
+        throw new CompositeException("Symbol -> add exception");
     }
 
     @Override
     public void remove(Component component) throws CompositeException {
-        throw new CompositeException("Leaf -> remove exception");
+        throw new CompositeException("Symbol -> remove exception");
     }
 
     @Override
-    public Component getChild(int index) throws CompositeException {
-        throw new CompositeException("Leaf -> get child exception");
+    public Component getChild(int index) {
+        return null;
     }
 
     @Override
-    public void collect() {
-
+    public int getChildSize() {
+        return 0;
     }
 
     @Override
-    public char getSymbol() {
-        return symbol;
+    public StringBuilder collect() {
+        StringBuilder content = new StringBuilder();
+        content.insert(0, symbol);
+        return content;
     }
-
 
 }

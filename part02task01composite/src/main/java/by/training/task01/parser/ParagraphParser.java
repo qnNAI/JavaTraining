@@ -22,8 +22,9 @@ public class ParagraphParser extends TextParser {
         paragraphs = pattern.split(data);
 
         try {
+            Component newComponent;
             for (String paragraph : paragraphs) {
-                Component newComponent = new Paragraph();
+                newComponent = new Paragraph();
                 callNext(ComponentToParse.PARAGRAPH, paragraph, newComponent);
                 component.add(newComponent);
             }
