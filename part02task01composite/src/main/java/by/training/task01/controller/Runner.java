@@ -1,44 +1,53 @@
 package by.training.task01.controller;
 
+import by.training.task01.composite.Component;
 import by.training.task01.composite.Text;
-import by.training.task01.composite.compositeException.CompositeException;
-import by.training.task01.parser.*;
-import by.training.task01.parser.parseException.ParseException;
-import by.training.task01.service.SymbolOccurrenceSorter;
-import by.training.task01.service.WordSorter;
+import by.training.task01.controller.command.Command;
+import by.training.task01.view.PrintReader;
 
 public class Runner {
+    private final CommandProvider provider = new CommandProvider();
+
     public static void main(String[] args) {
-        Text text = new Text();
+        Runner runner = new Runner();
+        PrintReader printReader = new PrintReader();
+        Component text = new Text();
 
-        ParagraphParser paragraphParser = new ParagraphParser();
-        SentenceParser sentenceParser = new SentenceParser();
-        LexemeParser lexemeParser = new LexemeParser();
-        WordParser wordParser = new WordParser();
-        SymbolParser symbolParser = new SymbolParser();
+        String request;
+        String response;
 
-        paragraphParser.linkWith(sentenceParser);
-        sentenceParser.linkWith(lexemeParser);
-        lexemeParser.linkWith(wordParser);
-        wordParser.linkWith(symbolParser);
+        while (true) {
+            printReader.printMenu();
+            request = printReader.scanRequest();
+            response = runner.executeTask(request, text);
 
-        try {
-            paragraphParser.parse("qwerty, qwertyyy qwerty as. qdfwf. \n asdf.", text);
-
-            System.out.println(text.collect());
-
-            //ParagraphSorter paragraphSorter = new ParagraphSorter();
-            //paragraphSorter.sort(text);
-           // WordSorter wordSorter = new WordSorter();
-            //wordSorter.sort(text);
-            SymbolOccurrenceSorter occurrenceSorter = new SymbolOccurrenceSorter('q');
-            occurrenceSorter.sort(text);
-
-
-            System.out.println(text.collect());
-
-        } catch (ParseException | CompositeException e) {
-            e.printStackTrace();
+            if (response.equals("exit")) {
+                break;
+            }
+            printReader.printResponse(response);
         }
+    }
+
+    public String executeTask(String request, Component component) {
+        String commandName;
+        Command executionCommand;
+        String response;
+
+        int index = request.indexOf(' ');
+
+        if (index == -1) {
+            commandName = request;
+            executionCommand = provider.getCommand(commandName);
+
+            response = executionCommand.execute("", component);
+        } else {
+            commandName = request.substring(0, index);
+            executionCommand = provider.getCommand(commandName);
+
+            request = request.substring(index + 1);
+            response = executionCommand.execute(request, component);
+        }
+
+        return response;
     }
 }

@@ -1,12 +1,12 @@
 package by.training.task01.controller.command;
 
 public enum CommandName {
-    READ_FILE,
-    DECOMPOSE,
+    READ_DECOMPOSE,
     COMPOSE_WRITE,
-    SORT_PARAGRAPH,
-    SORT_SENTENCE,
-    SORT_LEXEME,
+    SHOW,
+    SORT_PARAGRAPHS,
+    SORT_SENTENCES,
+    SORT_LEXEMES,
     EXIT,
     WRONG_REQUEST
 }

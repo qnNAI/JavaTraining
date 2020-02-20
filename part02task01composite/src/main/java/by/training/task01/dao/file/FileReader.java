@@ -5,25 +5,22 @@ import by.training.task01.dao.daoException.DAOException;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileReader implements DataReader {
-    public List<String> readData(String filename) throws DAOException {
-        ArrayList<String> list = new ArrayList<>();
-        String line = "";
+    public String readData(String filename) throws DAOException {
+        String data;
 
-        File file = new File(filename);
-
-        try (java.io.FileReader fileReader = new java.io.FileReader(file);
-             BufferedReader reader = new BufferedReader(fileReader)) {
-
-            while ((line = reader.readLine()) != null) {
-                list.add(line);
-            }
-        } catch (Exception ex) {
-            throw new DAOException("File read exception", ex);
+        try {
+            data = new String(Files.readAllBytes(Paths.get(filename)));
+        } catch (IOException ex) {
+            throw new DAOException("Read data -> IOException", ex);
         }
-        return list;
+
+        return data;
     }
 }

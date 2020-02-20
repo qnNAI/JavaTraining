@@ -1,16 +1,24 @@
 package by.training.task01.service.factory;
 
-import by.training.task01.service.ParagraphSorter;
-import by.training.task01.service.Sorter;
-import by.training.task01.service.SymbolOccurrenceSorter;
-import by.training.task01.service.WordSorter;
+import by.training.task01.service.parse.ParseText;
+import by.training.task01.service.parse.Parser;
+import by.training.task01.service.readWriteData.ReadData;
+import by.training.task01.service.readWriteData.ReadFile;
+import by.training.task01.service.readWriteData.WriteData;
+import by.training.task01.service.readWriteData.WriteFile;
+import by.training.task01.service.sort.*;
 
 public class ServiceFactory {
-    public static final ServiceFactory instance = new ServiceFactory();
+    private static final ServiceFactory instance = new ServiceFactory();
 
-    private final Sorter paragraphSorter = new ParagraphSorter();
-    private final Sorter wordSorter = new WordSorter();
-    private final Sorter symbolOccurrenceSorter = new SymbolOccurrenceSorter();
+    private final SortParagraph paragraphSorter = new ParagraphSorter();
+    private final SortWord wordSorter = new WordSorter();
+    private final SortSymbol symbolOccurrenceSorter = new SymbolOccurrenceSorter();
+
+    private final ReadData dataReader = new ReadFile();
+    private final WriteData dataWriter = new WriteFile();
+
+    private final Parser parser = new ParseText();
 
     private ServiceFactory() {}
 
@@ -18,15 +26,27 @@ public class ServiceFactory {
         return instance;
     }
 
-    public Sorter getParagraphSorter() {
+    public SortParagraph getParagraphSorter() {
         return paragraphSorter;
     }
 
-    public Sorter getWordSorter() {
+    public SortWord getWordSorter() {
         return wordSorter;
     }
 
-    public Sorter getSymbolOccurrenceSorter() {
+    public SortSymbol getSymbolOccurrenceSorter() {
         return symbolOccurrenceSorter;
+    }
+
+    public ReadData getDataReader() {
+        return dataReader;
+    }
+
+    public WriteData getDataWriter() {
+        return dataWriter;
+    }
+
+    public Parser getParser() {
+        return parser;
     }
 }

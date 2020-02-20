@@ -7,10 +7,6 @@ public abstract class TextParser {
     private TextParser next;
     private ComponentToParse componentToParse;
 
-    /* TextParser(TextParser next) {
-        this.next = next;
-    } */
-
     TextParser() {
         next = null;
     }
