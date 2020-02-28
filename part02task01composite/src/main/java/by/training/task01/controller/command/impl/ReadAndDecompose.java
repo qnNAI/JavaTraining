@@ -6,8 +6,12 @@ import by.training.task01.service.factory.ServiceFactory;
 import by.training.task01.service.parse.Parser;
 import by.training.task01.service.readWriteData.ReadData;
 import by.training.task01.service.serviceException.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ReadAndDecompose implements Command {
+    private static final Logger decomposeLogger = LogManager.getLogger(ReadAndDecompose.class.getName());
+
     @Override
     public String execute(String request, Component text) {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -20,7 +24,7 @@ public class ReadAndDecompose implements Command {
             parser.parse(data, text);
             return "Text read and parse successful";
         } catch (ServiceException ex) {
-            ex.printStackTrace();
+            decomposeLogger.error(ex.getMessage());
             return "Error text read and parse!";
         }
     }

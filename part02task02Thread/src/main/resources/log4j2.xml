@@ -12,26 +12,26 @@
             <SizeBasedTriggeringPolicy size="2MB"/>
             <TimeBasedTriggeringPolicy />
         </RollingFile>
-        <RollingFile name="infoLogFile" fileName="logs/logInfoLevel/infoLog.log"
-                     filePattern="logs/logInfoLevel/infoLog-%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="%d{dd::MM::yyyy HH:mm:ss} [%t] %-5level %C{2}  %M %msg%n"/>
-            <SizeBasedTriggeringPolicy size="2MB"/>
-            <TimeBasedTriggeringPolicy />
-        </RollingFile>
     </Appenders>
 
     <Loggers>
-        <Logger name="c" level="info">
-            <AppenderRef ref="infoLogFile"/>
-        </Logger>
-        <Logger name="logger2" level="error">
+        <Logger name="by.training.part02.task02.controller.CountDownRunner" level="error">
             <AppenderRef ref="errorLogFile"/>
         </Logger>
-        <Logger name="logger3" level="fatal">
+        <Logger name="by.training.part02.task02.controller.LockerRunner" level="error">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
+        <Logger name="by.training.part02.task02.controller.SemaphoreRunner" level="error">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
+        <Logger name="by.training.part02.task02.controller.thread.semaphore.SemaphoreThread" level="error">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
+        <Logger name="by.training.part02.task02.controller.thread.semaphore.SemaphoreFinishThread" level="error">
             <AppenderRef ref="errorLogFile"/>
         </Logger>
 
-        <Root level="all" additivity = 'true'>
+        <Root level="info" additivity = 'true'>
             <AppenderRef ref="console"/>
         </Root>
     </Loggers>
