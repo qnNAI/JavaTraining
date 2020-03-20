@@ -20,6 +20,7 @@ public class ReadAndDecompose implements Command {
         String data;
 
         try {
+            //String path = "d:\\text2.txt";
             data = dataReader.readData(request);
             parser.parse(data, text);
             return "Text read and parse successful";

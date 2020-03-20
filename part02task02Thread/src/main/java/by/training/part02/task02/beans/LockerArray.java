@@ -22,7 +22,6 @@ public class LockerArray {
     public void setElem(int i, int j, int elem) {
         lock.lock();
         array[i][j] = elem;
-        //condition.signal();
         lock.unlock();
     }
 

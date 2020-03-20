@@ -16,7 +16,7 @@
 
     <Loggers>
         <Logger name="by.training.task01.controller.command.impl.ComposeWriteText" level="error">
-            <AppenderRef ref="console"/>
+            <AppenderRef ref="errorLogFile"/>
         </Logger>
         <Logger name="by.training.task01.controller.command.impl.ReadAndDecompose" level="error">
             <AppenderRef ref="errorLogFile"/>

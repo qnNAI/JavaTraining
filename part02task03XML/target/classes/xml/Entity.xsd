@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.training.by/entities"
+        xmlns:tns="http://www.training.by/entities"
+        elementFormDefault="qualified">
+    <element name="entities">
+        <complexType>
+            <sequence>
+                <element ref="tns:entity"
+                         minOccurs="1"
+                         maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="entity" type="tns:Entity" abstract="true"></element>
+    <element name="user" type="tns:User" substitutionGroup="tns:entity"></element>
+    <element name="product" type="tns:Product" substitutionGroup="tns:entity"></element>
+    <element name="purchase" type="tns:Purchase" substitutionGroup="tns:entity"></element>
+
+    <complexType name="Entity">
+        <attribute name="id" type="int" use="required"></attribute>
+    </complexType>
+
+    <complexType name="User">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="username" type="string"/>
+                    <element name="password" type="string"/>
+                    <element name="name" type="string"/>
+                    <element name="surname" type="string"/>
+                    <element name="patronymic" type="string"/>
+                    <element name="email" type="string"/>
+                    <element name="phone" type="string"/>
+                    <element name="purchase" type="tns:Purchase" minOccurs="1" maxOccurs="unbounded"/>
+                </sequence>
+                <attribute name="role" use="required">
+                    <simpleType>
+                        <restriction base="int">
+                            <enumeration value="0"></enumeration>
+                            <enumeration value="1"></enumeration>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+                <attribute name="state" use="required">
+                    <simpleType>
+                        <restriction base="int">
+                            <enumeration value="0"></enumeration>
+                            <enumeration value="1"></enumeration>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Product">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="name" type="string"></element>
+                    <element name="price" type="double"></element>
+                    <element name="description" type="string"></element>
+                    <element name="image_path" type="string"></element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Purchase">
+        <complexContent>
+            <extension base="tns:Entity">
+                <sequence>
+                    <element name="product" type="tns:Product" minOccurs="1" maxOccurs="unbounded"></element>
+                    <element name="address" type="string"></element>
+                    <element name="finalprice" type="double"></element>
+                    <element name="date" type="string"></element>
+                    <element name="amount" type="int"></element>
+                </sequence>
+                <attribute name="state" use="required">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="изготавливается"></enumeration>
+                            <enumeration value="готов"></enumeration>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+                <attribute name="obtainingMethod" use="required">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="доставка"></enumeration>
+                            <enumeration value="самовывоз"></enumeration>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+            </extension>
+        </complexContent>
+    </complexType>
+
+</schema>

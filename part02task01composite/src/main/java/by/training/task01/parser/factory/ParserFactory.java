@@ -15,8 +15,8 @@ public class ParserFactory {
 
         wordParser.linkWith(symbolParser);
         lexemeParser.linkWith(wordParser);
-        sentenceParser.linkWith(lexemeParser);
-        parser.linkWith(sentenceParser);
+        //sentenceParser.linkWith(lexemeParser);
+        parser.linkWith(lexemeParser);
     }
 
     public static ParserFactory getInstance() {

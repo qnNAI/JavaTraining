@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.training.by/entities"
+       xsi:schemaLocation="http://www.training.by/entities Entity.xsd">
+    <user  id="1" role="1" state="1">
+        <username>vasya</username>
+        <password>12345</password>
+        <name>Vasiliy</name>
+        <surname>Terkin</surname>
+        <patronymic>Vasilich</patronymic>
+        <email>vasya@mail.ru</email>
+        <phone>1112233</phone>
+        <purchase id="1" state="готов" obtainingMethod="самовывоз">
+            <product id="1">
+                <name>prod1</name>
+                <price>500</price>
+                <description>just a product</description>
+                <image_path>aaa.jpg</image_path>
+            </product>
+            <address>wwwww</address>
+            <finalprice>550</finalprice>
+            <date>20-20-2000</date>
+            <amount>1</amount>
+        </purchase>
+    </user>
+
+    <user  id="2" role="1" state="1">
+        <username>petya</username>
+        <password>54321</password>
+        <name>Petr</name>
+        <surname>Shishka</surname>
+        <patronymic>Petrov</patronymic>
+        <email>petya@mail.ru</email>
+        <phone>3332211</phone>
+        <purchase id="2" state="изготавливается" obtainingMethod="доставка">
+            <product id="2">
+                <name>prod2</name>
+                <price>1000</price>
+                <description>just a product 2</description>
+                <image_path>bbb.jpg</image_path>
+            </product>
+            <product id="3">
+                <name>prod3</name>
+                <price>2000</price>
+                <description>just a product 3</description>
+                <image_path>333.jpg</image_path>
+            </product>
+            <address>qqqq</address>
+            <finalprice>3000</finalprice>
+            <date>20-07-2000</date>
+            <amount>5</amount>
+        </purchase>
+    </user>
+</entities>

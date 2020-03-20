@@ -30,13 +30,6 @@ public abstract class TextParser {
     }
 
     public void tryParse(ComponentToParse componentName, String data, Component component) throws ParseException {
-        // если можем обработать, парсим данные и возвращаем,
-        // если не можем, передаём данные дальше по цепочке
-        if (componentToParse == componentName) {
-            parse(data, component);
-            return;
-        } else {
-            callNext(componentName, data, component);
-        }
+        parse(data, component);
     }
 }
