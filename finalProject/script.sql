@@ -2,8 +2,8 @@ USE `workshopDB`;
 
 -- -------------------------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS user (
-                                    `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS workshopDB.user (
+                                    `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                     `username` VARCHAR(45) NOT NULL,
                                     `password` VARCHAR(45) NOT NULL,
                                     `role` ENUM('0', '1') NOT NULL,
@@ -15,23 +15,24 @@ CREATE TABLE IF NOT EXISTS user (
                                     `phone` VARCHAR(45) NULL,
                                     PRIMARY KEY (`id`) );
 
-CREATE UNIQUE INDEX  username_UNIQUE  ON user(username ASC) VISIBLE ;
+CREATE UNIQUE INDEX  username_UNIQUE  ON workshopDB.user(username ASC) VISIBLE ;
 
 -- -------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS product (
-                                       `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS workshopDB.product (
+                                       `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                        `name` VARCHAR(45) NOT NULL,
                                        `price` DOUBLE NOT NULL,
                                        `description` VARCHAR(45) NULL,
+                                       `image_path` VARCHAR(45) NULL,
                                        PRIMARY KEY (`id`) );
 
 -- -------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS localAddress (
-                                            `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS workshopDB.localAddress (
+                                            `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                             `address` VARCHAR(45) NOT NULL,
                                             PRIMARY KEY (`id`) );
 
@@ -39,18 +40,18 @@ CREATE TABLE IF NOT EXISTS localAddress (
 -- -------------------------------------------------------------------------------------------------------
 
 
-CREATE TABLE IF NOT EXISTS obtainingMethod (
-                                               `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS workshopDB.obtainingMethod (
+                                               `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                                `method` VARCHAR(45) NOT NULL,
                                                PRIMARY KEY (`id`) );
 
-CREATE UNIQUE INDEX method_UNIQUE ON obtainingMethod(method ASC) VISIBLE ;
+CREATE UNIQUE INDEX method_UNIQUE ON workshopDB.obtainingMethod(method ASC) VISIBLE ;
 
 -- -------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS workshopDB.order (
-                                                `id` INT NOT NULL,
+                                                `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                                 `name` VARCHAR(45) NOT NULL,
                                                 `wishes` VARCHAR(255) NOT NULL,
                                                 `user_id` INT NOT NULL,
@@ -67,24 +68,24 @@ ALTER TABLE workshopDB.order ADD CONSTRAINT fk_order_user
 -- -------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS purchase (
+CREATE TABLE IF NOT EXISTS workshopDB.purchase (
                                         `id` INT NOT NULL,
                                         `product_id` INT NOT NULL,
                                         `user_id` INT NOT NULL,
                                         `finalPrice` DOUBLE NOT NULL,
                                         `address` VARCHAR(45) NULL,
+                                        `localAddress_id` INT NULL,
                                         `date` DATETIME NOT NULL,
                                         `state` ENUM('добавлен', 'заказан', 'доставлен') NOT NULL,
-                                        `localAddress_id` INT NULL,
                                         `obtainingMethod_id` INT NOT NULL,
                                         PRIMARY KEY (`id`, `product_id`, `user_id`, `obtainingMethod_id`) );
 
-CREATE INDEX fk_purchase_product1_idx ON purchase(product_id ASC) VISIBLE;
-CREATE INDEX fk_purchase_user1_idx ON purchase(user_id ASC) VISIBLE;
-CREATE INDEX fk_purchase_localAddress1_idx ON purchase(localAddress_id ASC) VISIBLE;
-CREATE INDEX fk_purchase_obtainingMethod1_idx ON purchase(obtainingMethod_id ASC) VISIBLE;
+CREATE INDEX fk_purchase_product1_idx ON workshopDB.purchase(product_id ASC) VISIBLE;
+CREATE INDEX fk_purchase_user1_idx ON workshopDB.purchase(user_id ASC) VISIBLE;
+CREATE INDEX fk_purchase_localAddress1_idx ON workshopDB.purchase(localAddress_id ASC) VISIBLE;
+CREATE INDEX fk_purchase_obtainingMethod1_idx ON workshopDB.purchase(obtainingMethod_id ASC) VISIBLE;
 
-ALTER TABLE purchase
+ALTER TABLE workshopDB.purchase
     ADD CONSTRAINT fk_purchase_product
         FOREIGN KEY (`product_id`)
             REFERENCES product (`id`)
@@ -98,8 +99,8 @@ ALTER TABLE purchase
     ADD CONSTRAINT fk_purchase_localAddress
         FOREIGN KEY (`localAddress_id`)
             REFERENCES localAddress (`id`)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE,
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION ,
     ADD CONSTRAINT fk_purchase_obtainingMethod
         FOREIGN KEY (`obtainingMethod_id`)
             REFERENCES obtainingMethod (`id`)
@@ -109,22 +110,22 @@ ALTER TABLE purchase
 -- -------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS confirmedOrder (
+CREATE TABLE IF NOT EXISTS workshopDB.confirmedOrder (
                                               `id` INT NOT NULL,
                                               `order_id` INT NOT NULL,
                                               `state` ENUM('изготавливается', 'готов', 'доставлен') NOT NULL,
                                               `finalPrice` DOUBLE NOT NULL,
                                               `amount` INT NOT NULL,
                                               `address` VARCHAR(45) NULL,
+                                              `localAddress_id` INT NULL,
                                               `date` DATETIME NOT NULL,
                                               `obtainingMethod_id` INT NOT NULL,
-                                              `localAddress_id` INT NULL,
                                               PRIMARY KEY (`id`, `order_id`, `obtainingMethod_id`) );
 
-CREATE INDEX fk_confirmedOrder_obtainingMethod1_idx ON confirmedOrder(obtainingMethod_id ASC) VISIBLE;
-CREATE INDEX fk_confirmedOrder_localAddress1_idx ON confirmedOrder(localAddress_id ASC) VISIBLE;
+CREATE INDEX fk_confirmedOrder_obtainingMethod1_idx ON workshopDB.confirmedOrder(obtainingMethod_id ASC) VISIBLE;
+CREATE INDEX fk_confirmedOrder_localAddress1_idx ON workshopDB.confirmedOrder(localAddress_id ASC) VISIBLE;
 
-ALTER TABLE confirmedOrder
+ALTER TABLE workshopDB.confirmedOrder
     ADD CONSTRAINT fk_confirmedOrder_obtainingMethod
         FOREIGN KEY (`obtainingMethod_id`)
             REFERENCES obtainingMethod (`id`)
@@ -138,7 +139,8 @@ ALTER TABLE confirmedOrder
     ADD CONSTRAINT fk_confirmedOrder_localAddress
         FOREIGN KEY (`localAddress_id`)
             REFERENCES localAddress (`id`)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE;
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION ;
 
 -- -------------------------------------------------------------------------------------------------------
+

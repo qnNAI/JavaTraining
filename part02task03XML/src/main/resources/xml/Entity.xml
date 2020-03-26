@@ -2,7 +2,7 @@
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.training.by/entities"
        xsi:schemaLocation="http://www.training.by/entities Entity.xsd">
-    <user  id="1" role="1" state="1">
+    <user  id="1" role="1" state="0">
         <username>vasya</username>
         <password>12345</password>
         <name>Vasiliy</name>
@@ -12,15 +12,27 @@
         <phone>1112233</phone>
         <purchase id="1" state="готов" obtainingMethod="самовывоз">
             <product id="1">
-                <name>prod1</name>
+                <name>cat</name>
                 <price>500</price>
-                <description>just a product</description>
-                <image_path>aaa.jpg</image_path>
+                <description>cat</description>
+                <image_path>cat.jpg</image_path>
             </product>
-            <address>wwwww</address>
+            <address>1 Dunbar Ave. Chesterton, IN 46304</address>
             <finalprice>550</finalprice>
-            <date>20-20-2000</date>
+            <date>20-12-2000</date>
             <amount>1</amount>
+        </purchase>
+        <purchase id="5" state="готов" obtainingMethod="самовывоз">
+            <product id="5">
+                <name>bear</name>
+                <price>1000</price>
+                <description>bear</description>
+                <image_path>bear.jpg</image_path>
+            </product>
+            <address>76 Chapel St.Saint Cloud, MN 56301</address>
+            <finalprice>300</finalprice>
+            <date>12-06-2012</date>
+            <amount>5</amount>
         </purchase>
     </user>
 
@@ -34,20 +46,86 @@
         <phone>3332211</phone>
         <purchase id="2" state="изготавливается" obtainingMethod="доставка">
             <product id="2">
-                <name>prod2</name>
+                <name>dog</name>
                 <price>1000</price>
-                <description>just a product 2</description>
-                <image_path>bbb.jpg</image_path>
+                <description>dog</description>
+                <image_path>dog.jpg</image_path>
             </product>
             <product id="3">
-                <name>prod3</name>
+                <name>pig</name>
                 <price>2000</price>
-                <description>just a product 3</description>
-                <image_path>333.jpg</image_path>
+                <description>pig</description>
+                <image_path>pig.jpg</image_path>
             </product>
-            <address>qqqq</address>
+            <address>7943 Fulton Rd.Bellmore, NY 11710</address>
             <finalprice>3000</finalprice>
             <date>20-07-2000</date>
+            <amount>5</amount>
+        </purchase>
+    </user>
+
+    <user  id="2" role="1" state="1">
+        <username>JackBlack</username>
+        <password>66611</password>
+        <name>Jack</name>
+        <surname>Smith</surname>
+        <patronymic>--</patronymic>
+        <email>jackBlack@mail.ru</email>
+        <phone>6661122</phone>
+        <purchase id="4" state="изготавливается" obtainingMethod="доставка">
+            <product id="4">
+                <name>fish</name>
+                <price>8000</price>
+                <description>fish</description>
+                <image_path>fish.jpg</image_path>
+            </product>
+            <address>305 Purple Finch Court Olney, MD 20832</address>
+            <finalprice>8000</finalprice>
+            <date>07-10-2013</date>
+            <amount>5</amount>
+        </purchase>
+    </user>
+
+    <user  id="2" role="1" state="1">
+        <username>Mikky</username>
+        <password>66611</password>
+        <name>Mike</name>
+        <surname>Johnson</surname>
+        <patronymic>--</patronymic>
+        <email>mikk@mail.ru</email>
+        <phone>1745522</phone>
+        <purchase id="6" state="готов" obtainingMethod="самовывоз">
+            <product id="6">
+                <name>ball</name>
+                <price>700</price>
+                <description>ball</description>
+                <image_path>ball.jpg</image_path>
+            </product>
+            <address>894 Tarkiln Hill St. Stafford, VA 22554</address>
+            <finalprice>800</finalprice>
+            <date>11-11-2011</date>
+            <amount>5</amount>
+        </purchase>
+    </user>
+
+    <user  id="2" role="1" state="1">
+        <username>Mikky</username>
+        <password>66611</password>
+        <name>Steve</name>
+        <surname>Jones</surname>
+        <patronymic>--</patronymic>
+        <email>stevej@mail.ru</email>
+        <phone>5542628</phone>
+        <purchase id="7" state="готов" obtainingMethod="доставка">
+            <product id="7">
+                <name>car</name>
+                <price>5000</price>
+                <description>car</description>
+                <image_path>car.jpg</image_path>
+            </product>
+            <address>894 Tarkiln Hill St. Stafford, VA 22554</address>
+            <finalprice>5500</finalprice>
+            <date>30-10-2009</date>
             <amount>5</amount>
         </purchase>
     </user>

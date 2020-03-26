@@ -5,6 +5,7 @@ import by.training.task13.service.serviceException.ServiceException;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -49,11 +50,23 @@ public class Director {
         }
 
         try {
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new StreamSource(xsdPath));
+            /*SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = factory.newSchema(new StreamSource(xsdPath));*/
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+            // create schema
+            String constant = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+            SchemaFactory xsdFactory = SchemaFactory.newInstance(constant);
+            Schema schema = xsdFactory.newSchema(new File(xsdPath));
 
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(xmlPath));
+
+            // set schema
+            factory.setNamespaceAware(true);
+            factory.setValidating(false);
+            factory.setSchema(schema);
 
             return true;
         } catch (SAXException | IOException e) {

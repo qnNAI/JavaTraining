@@ -77,7 +77,7 @@
                     <element name="date" type="string"></element>
                     <element name="amount" type="int"></element>
                 </sequence>
-                <attribute name="state" use="required">
+                <attribute name="state" use="optional" default="изготавливается">
                     <simpleType>
                         <restriction base="string">
                             <enumeration value="изготавливается"></enumeration>

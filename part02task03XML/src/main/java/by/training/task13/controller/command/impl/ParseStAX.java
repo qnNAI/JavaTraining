@@ -1,6 +1,6 @@
 package by.training.task13.controller.command.impl;
 
-import by.training.task13.beans.User;
+import by.training.task13.beans.usersHandler.UsersHandler;
 import by.training.task13.controller.command.Command;
 import by.training.task13.service.builder.Director;
 import by.training.task13.service.serviceException.ServiceException;
@@ -10,10 +10,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 public class ParseStAX implements Command {
-    private static final Logger StAXlogger = LogManager.getLogger(ParseSAX.class.getName());
+   // private static final Logger StAXlogger = LogManager.getLogger(ParseSAX.class.getName());
 
     @Override
-    public String execute(String request, ArrayList<User> users) {
+    public String execute(String request, UsersHandler handler) {
         String[] params = request.split(" ");
 
         if (params.length < 2 ) {
@@ -21,11 +21,11 @@ public class ParseStAX implements Command {
         }
 
         try {
-            users = new ArrayList<>(Director.createUsers("StAX", params[0], params[1]));
+            handler.setUsers(new ArrayList<>(Director.createUsers("StAX", params[0], params[1])));
             return "success";
 
         } catch (ServiceException e) {
-            StAXlogger.error(e.getMessage());
+       //     StAXlogger.error(e.getMessage());
         }
         return "fail";
     }

@@ -11,9 +11,9 @@ public final class CommandProvider {
     private final Map<CommandName, Command> repository = new HashMap<>();
 
     public CommandProvider() {
-        repository.put(CommandName.PARSE_SAX, new ParseSAX());
-        repository.put(CommandName.PARSE_DOM, new ParseDOM());
-        repository.put(CommandName.PARSE_STAX, new ParseStAX());
+        repository.put(CommandName.SAX, new ParseSAX());
+        repository.put(CommandName.DOM, new ParseDOM());
+        repository.put(CommandName.STAX, new ParseStAX());
         repository.put(CommandName.EXIT, new Exit());
         repository.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
@@ -24,7 +24,6 @@ public final class CommandProvider {
 
         commandName = CommandName.valueOf(name.toUpperCase());
         command = repository.get(commandName);
-
         return command;
     }
 }
