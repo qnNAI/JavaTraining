@@ -2,24 +2,26 @@ package by.training.finalproject.beans;
 
 import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 
+import java.util.Date;
+
 public class ConfirmedOrder extends Entity {
-    private int orderID;
+    private Order order;
     private State state;
     private double finalPrice;
     private int amount;
     private String address;
-    private int localAddressID;
-    private String date;
+    private LocalAddress localAddress;
+    private Date date;
     private ObtainingMethod obtainingMethod;
 
     public ConfirmedOrder() {}
 
-    public int getOrderID() {
-        return orderID;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public State getState() {
@@ -54,11 +56,19 @@ public class ConfirmedOrder extends Entity {
         this.address = address;
     }
 
-    public String getDate() {
+    public LocalAddress getLocalAddress() {
+        return localAddress;
+    }
+
+    public void setLocalAddress(LocalAddress localAddress) {
+        this.localAddress = localAddress;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -70,22 +80,15 @@ public class ConfirmedOrder extends Entity {
         this.obtainingMethod = obtainingMethod;
     }
 
-    public int getLocalAddressID() {
-        return localAddressID;
-    }
-
-    public void setLocalAddressID(int localAddressID) {
-        this.localAddressID = localAddressID;
-    }
-
     @Override
     public String toString() {
         return "ConfirmedOrder{" +
-                "orderID=" + orderID +
+                "order=" + order +
                 ", state=" + state +
                 ", finalPrice=" + finalPrice +
                 ", amount=" + amount +
                 ", address='" + address + '\'' +
+                ", localAddress=" + localAddress +
                 ", date='" + date + '\'' +
                 ", obtainingMethod=" + obtainingMethod +
                 '}';

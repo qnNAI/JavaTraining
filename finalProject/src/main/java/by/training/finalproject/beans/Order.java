@@ -3,7 +3,7 @@ package by.training.finalproject.beans;
 public class Order extends Entity {
     private String name;
     private String wishes;
-    private int userID;
+    private User user;
 
     public Order() {}
 
@@ -23,12 +23,12 @@ public class Order extends Entity {
         this.wishes = wishes;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Order extends Entity {
         return "Order{" +
                 "name='" + name + '\'' +
                 ", wishes='" + wishes + '\'' +
-                ", userID=" + userID +
+                ", user=" + user +
                 '}';
     }
 }

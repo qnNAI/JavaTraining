@@ -1,4 +1,6 @@
 package by.training.finalproject.dao;
 
-public interface PurchaseDao {
+import by.training.finalproject.beans.Purchase;
+
+public interface PurchaseDao extends Dao<Purchase> {
 }

@@ -2,32 +2,34 @@ package by.training.finalproject.beans;
 
 import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 
+import java.util.Date;
+
 public class Purchase extends Entity {
-    private int productID;
-    private int userID;
+    private Product product;
+    private User user;
     private double finalPrice;
     private String address;
-    private int localAddressID;
-    private String date;
+    private LocalAddress localAddress;
+    private Date date;
     private State state;
     private ObtainingMethod obtainingMethod;
 
     public Purchase() {}
 
-    public int getProductID() {
-        return productID;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getFinalPrice() {
@@ -46,19 +48,19 @@ public class Purchase extends Entity {
         this.address = address;
     }
 
-    public int getLocalAddressID() {
-        return localAddressID;
+    public LocalAddress getLocalAddress() {
+        return localAddress;
     }
 
-    public void setLocalAddressID(int localAddressID) {
-        this.localAddressID = localAddressID;
+    public void setLocalAddress(LocalAddress localAddress) {
+        this.localAddress = localAddress;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -81,12 +83,12 @@ public class Purchase extends Entity {
     @Override
     public String toString() {
         return "Purchase{" +
-                "productID=" + productID +
-                ", userID=" + userID +
+                "product=" + product +
+                ", user=" + user +
                 ", finalPrice=" + finalPrice +
                 ", address='" + address + '\'' +
-                ", localAddressID=" + localAddressID +
-                ", date='" + date + '\'' +
+                ", localAddress=" + localAddress +
+                ", date=" + date +
                 ", state=" + state +
                 ", obtainingMethod=" + obtainingMethod +
                 '}';

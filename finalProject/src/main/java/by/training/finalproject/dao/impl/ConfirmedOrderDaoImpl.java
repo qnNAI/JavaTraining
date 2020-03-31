@@ -1,4 +1,6 @@
 package by.training.finalproject.dao.impl;
 
-public class ConfirmedOrderDaoImpl {
+import by.training.finalproject.dao.ConfirmedOrderDao;
+
+public class ConfirmedOrderDaoImpl extends DaoImpl implements ConfirmedOrderDao {
 }

@@ -18,7 +18,7 @@ public class OrderDaoImpl extends DaoImpl implements OrderDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             preparedStatement.setString(1, order.getName());
             preparedStatement.setString(2, order.getWishes());
-            preparedStatement.setInt(3, order.getUserID());
+            preparedStatement.setInt(3, order.getUser().getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class OrderDaoImpl extends DaoImpl implements OrderDao {
                 order.setId(id);
                 order.setName(resultSet.getString(1));
                 order.setWishes(resultSet.getString(2));
-                order.setUserID(resultSet.getInt(3));
+                order.getUser().setId(resultSet.getInt(3));
             }
 
             return order;
