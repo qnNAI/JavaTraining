@@ -1,0 +1,2 @@
+INSERT INTO workshopDB.user(login, password, role, state, name, surname, patronymic, email, phone)
+VALUE ("admin", "admin", '1', '0', "Василий", "Петров", "Олегович", "vasol@mail.ru", "+375 (29) 123-45-67");

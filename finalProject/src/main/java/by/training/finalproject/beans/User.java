@@ -1,9 +1,11 @@
 package by.training.finalproject.beans;
 
+import by.training.finalproject.beans.infoEnum.Role;
+
 public class User extends Entity {
-    private String username;
+    private String login;
     private String password;
-    private int role;
+    private Role role;
     private int state;
     private String name;
     private String surname;
@@ -13,12 +15,12 @@ public class User extends Entity {
 
     public User() {}
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String username) {
+        this.login = username;
     }
 
     public String getPassword() {
@@ -29,11 +31,11 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public int getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -88,7 +90,7 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "username='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", state=" + state +

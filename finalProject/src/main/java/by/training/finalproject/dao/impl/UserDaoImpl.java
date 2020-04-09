@@ -1,6 +1,7 @@
 package by.training.finalproject.dao.impl;
 
 import by.training.finalproject.beans.User;
+import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.UserDao;
 
@@ -11,7 +12,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     @Override
     public void create(User user) throws DAOException {
-        String insert = "INSERT INTO workshopDB.user ('username', 'password', 'role', 'state', 'name', " +
+        String insert = "INSERT INTO workshopDB.user ('login', 'password', 'role', 'state', 'name', " +
                 "'surname', 'patronymic', 'email', 'phone') VALUES(?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
@@ -36,12 +37,12 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     @Override
     public void updateAccount(User user) throws DAOException {
-        String update = "UPDATE workshopDB.user SET username=?, password=?, role=?, state=? WHERE id=" + user.getId();
+        String update = "UPDATE workshopDB.user SET login=?, password=?, role=?, state=? WHERE id=" + user.getId();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
-            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getRole());
+            preparedStatement.setInt(3, user.getRole().getIdentity());
             preparedStatement.setInt(4, user.getState());
 
             preparedStatement.executeUpdate();
@@ -52,7 +53,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     @Override
     public void update(User user) throws DAOException {
-        String update = "UPDATE workshopDB.user SET username=?, password=?, role=?, state=?, name=?, surname=?," +
+        String update = "UPDATE workshopDB.user SET login=?, password=?, role=?, state=?, name=?, surname=?," +
                 " patronymic=?, email=?, phone=? WHERE id=" + user.getId();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
@@ -64,7 +65,7 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
 
     @Override
     public User read(int id) throws DAOException {
-        String select = "SELECT username, password, role, state, name, surname, patronymic, email, phone " +
+        String select = "SELECT login, password, role, state, name, surname, patronymic, email, phone " +
                 "FROM workshopDB.user WHERE id=" + id;
         ResultSet resultSet = null;
 
@@ -75,9 +76,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
             if (resultSet.next()) {
                 user = new User();
                 user.setId(id);
-                user.setUsername(resultSet.getString(1));
+                user.setLogin(resultSet.getString(1));
                 user.setPassword(resultSet.getString(2));
-                user.setRole(resultSet.getInt(3));
+                user.setRole(Role.getByIdentity(resultSet.getInt(3)));
                 user.setState(resultSet.getInt(4));
                 user.setName(resultSet.getString(5));
                 user.setSurname(resultSet.getString(6));
@@ -103,20 +104,27 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     @Override
-    public boolean checkUser(User user) throws DAOException {
-        String select = "SELECT username FROM workshopDB.user WHERE id=? AND username=? AND password=?";
+    public User read(String login, String password) throws DAOException {
+        String select = "SELECT id, role FROM workshopDB.user WHERE login=? AND password=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            preparedStatement.setInt(1, user.getId());
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            User user = null;
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setLogin(login);
+                user.setPassword(password);
+                user.setRole(Role.getByIdentity(resultSet.getInt("role")));
             }
+            return user;
 
         } catch (SQLException e) {
-            throw new DAOException("Error check user ID=" + user.getId(), e);
+            throw new DAOException("Fail to read user", e);
         }
     }
 
@@ -133,9 +141,9 @@ public class UserDaoImpl extends DaoImpl implements UserDao {
     }
 
     private void setFullUserStatement(User user, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, user.getUsername());
+        preparedStatement.setString(1, user.getLogin());
         preparedStatement.setString(2, user.getPassword());
-        preparedStatement.setInt(3, user.getRole());
+        preparedStatement.setInt(3, user.getRole().getIdentity());
         preparedStatement.setInt(4, user.getState());
         preparedStatement.setString(5, user.getName());
         preparedStatement.setString(6, user.getSurname());
