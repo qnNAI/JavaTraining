@@ -5,7 +5,7 @@ import by.training.finalproject.service.serviceException.ServiceException;
 
 import java.util.List;
 
-public interface ProductService extends Service {
+public interface ProductService {
     void save(Product product) throws ServiceException;
     void delete(int id) throws ServiceException;
     void update(Product product) throws ServiceException;

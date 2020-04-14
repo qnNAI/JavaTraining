@@ -2,7 +2,6 @@ package by.training.finalproject.controller.command.commandException;
 
 public class CommandException extends Exception {
     public CommandException() {
-        super();
     }
 
     public CommandException(String message) {
@@ -17,7 +16,7 @@ public class CommandException extends Exception {
         super(cause);
     }
 
-    protected CommandException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public CommandException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

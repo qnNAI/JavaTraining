@@ -31,9 +31,11 @@ public class TransactionFactoryImpl implements TransactionFactory {
 	}
 
 	@Override
-	public void close() {
+	public void close() throws DAOException {
 		try {
 			connection.close();
-		} catch(SQLException e) {}
+		} catch(SQLException e) {
+			throw new DAOException(e);
+		}
 	}
 }

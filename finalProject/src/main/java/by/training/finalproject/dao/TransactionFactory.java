@@ -5,5 +5,5 @@ import by.training.finalproject.dao.DAOexception.DAOException;
 public interface TransactionFactory {
 	Transaction createTransaction() throws DAOException;
 
-	void close();
+	void close() throws DAOException;
 }

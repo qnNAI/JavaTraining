@@ -3,7 +3,7 @@ package by.training.finalproject.controller.command;
 import by.training.finalproject.beans.User;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.commandException.CommandException;
-import by.training.finalproject.service.ServiceFactory;
+import by.training.finalproject.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

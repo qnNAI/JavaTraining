@@ -15,35 +15,28 @@ import org.apache.logging.log4j.Logger;
 public class TransactionImpl implements Transaction {
 	private static Logger logger = LogManager.getLogger(TransactionImpl.class.getName());
 
-	private static Map<Class<? extends Dao<?>>, Class<? extends DaoImpl>> classes = new ConcurrentHashMap<>();
-	static {
-		classes.put(UserDao.class, UserDaoImpl.class);
-		classes.put(ProductDao.class, ProductDaoImpl.class);
-		classes.put(LocalAddressDao.class, LocalAddressDaoImpl.class);
-		classes.put(OrderDao.class, OrderDaoImpl.class);
-		classes.put(ConfirmedOrderDao.class, ConfirmedOrderDaoImpl.class);
-		classes.put(PurchaseDao.class, PurchaseDaoImpl.class);
-	}
-
+	private static Map<String, BaseDaoImpl> classes = new ConcurrentHashMap<>();
 	private Connection connection;
+
+	static {
+		classes.put(UserDao.class.getName(), new UserBaseDaoImpl());
+		classes.put(ProductDao.class.getName(), new ProductBaseDaoImpl());
+		classes.put(LocalAddressDao.class.getName(), new LocalAddressBaseDaoImpl());
+		classes.put(OrderDao.class.getName(), new OrderBaseDaoImpl());
+		classes.put(ConfirmedOrderDao.class.getName(), new ConfirmedOrderBaseDaoImpl());
+		classes.put(PurchaseDao.class.getName(), new PurchaseBaseDaoImpl());
+	}
 
 	public TransactionImpl(Connection connection) {
 		this.connection = connection;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public <Type extends Dao<?>> Type createDao(Class<Type> key) throws DAOException {
-		Class<? extends DaoImpl> value = classes.get(key);
-		if(value != null) {
-			try {
-				DaoImpl dao = value.newInstance();
-				dao.setConnection(connection);
-				return (Type)dao;
-			} catch(InstantiationException | IllegalAccessException e) {
-				logger.error("Fail to create data access object", e);
-				throw new DAOException(e);
-			}
+	public BaseDaoImpl createDao(String className) throws DAOException {
+		BaseDaoImpl dao = classes.get(className);
+		if(dao != null) {
+			dao.setConnection(connection);
+			return dao;
 		}
 		return null;
 	}

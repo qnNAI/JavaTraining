@@ -3,9 +3,7 @@ package by.training.finalproject.dao.pool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import by.training.finalproject.dao.DAOexception.DAOException;
@@ -23,7 +21,7 @@ final public class ConnectionPool {
 	private int checkConnectionTimeout;
 
 	private BlockingQueue<Connection> freeConnections = new LinkedBlockingQueue<>();
-	private Set<Connection> usedConnections = new ConcurrentSkipListSet<>();
+	private BlockingQueue<Connection> usedConnections = new LinkedBlockingQueue<>();
 
 	private ConnectionPool() {}
 
