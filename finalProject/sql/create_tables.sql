@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS workshopDB.user (
                                     `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                     `login` VARCHAR(45) NOT NULL UNIQUE,
                                     `password` VARCHAR(45) NOT NULL,
-                                    `role` ENUM('0', '1') NOT NULL,
+                                    `role` ENUM('0', '1', '2') NOT NULL,
                                     `state` ENUM('0', '1') NOT NULL,
                                     `name` VARCHAR(45) NOT NULL,
                                     `surname` VARCHAR(45) NOT NULL,

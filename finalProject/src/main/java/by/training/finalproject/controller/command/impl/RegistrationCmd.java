@@ -12,34 +12,40 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Set;
 
-public class LoginCmd extends Command {
-    private static Logger logger = LogManager.getLogger(LoginCmd.class.getName());
+public class RegistrationCmd extends Command {
+    private static Logger logger = LogManager.getLogger(RegistrationCmd.class.getName());
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if(login != null && password != null) {
+        if (login != null && password != null) {
             User user;
             try {
                 UserService service = factory.getUserService();
                 user = service.checkUserByLoginPassword(login, password);
+
+                if (user != null) {
+                    // TODO return error message
+                    return new Forward("/login.html");
+                } else {
+                    user = new User();
+                    user.setLogin(login);
+                    user.setPassword(password);
+                    user.setRole(Role.USER);
+                    user.setState(0);
+                    user.setName(request.getParameter("name"));
+                    user.setSurname(request.getParameter("surname"));
+                    user.setPatronymic(request.getParameter("patronymic"));
+                    user.setEmail(request.getParameter("email"));
+                    user.setPhone(request.getParameter("phone"));
+                    service.save(user);
+                    return new Forward("/login.html", true);
+                }
             } catch (ServiceException | DAOException e) {
                 throw new CommandException(e);
-            }
-
-            if(user != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("authorizedUser", user);
-                //session.setAttribute("menu", menu.get(user.getRole()));
-                logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
-                return new Forward("/main.html", true);
-            } else {
-                request.setAttribute("message", "Имя пользователя или пароль не опознаны");
-                logger.info(String.format("user \"%s\" unsuccessfully tried to log in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
             }
         }
         return null;

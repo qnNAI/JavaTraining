@@ -29,11 +29,11 @@ public abstract class Command {
         this.allowedRoles = allowedRoles;
     }
 
-    public User getCurrentUser() {
+    public User getAuthorizedUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setAuthorizedUser(User currentUser) {
         this.currentUser = currentUser;
     }
 

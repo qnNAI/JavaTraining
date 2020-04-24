@@ -3,7 +3,7 @@ package by.training.finalproject.service;
 import by.training.finalproject.dao.Transaction;
 
 public abstract class Service {
-    protected Transaction transaction = null;
+    protected Transaction transaction;
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;

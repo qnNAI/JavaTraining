@@ -3,6 +3,8 @@ package by.training.finalproject.controller.filter;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.controller.command.impl.LoginCmd;
 import by.training.finalproject.controller.command.impl.LogoutCmd;
+import by.training.finalproject.controller.command.impl.MainCmd;
+import by.training.finalproject.controller.command.impl.RegistrationCmd;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +24,9 @@ public class CommandFromUriFilter implements Filter {
         //commands.put("/index", MainCmd.class);
         commands.put("/login", LoginCmd.class);
         commands.put("/menu", LogoutCmd.class);
+        commands.put("/registration", RegistrationCmd.class);
+        commands.put("/main", MainCmd.class);
+        commands.put("/basket", LoginCmd.class);
        // commands.put("/logout", LogoutCmd.class);
 
     }

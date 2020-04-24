@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Sign In</title>
+    <title>Products</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -20,7 +21,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}/main.html" style="color: #1E90FF">WORKSHOP</a>
+    <a class="navbar-brand" href="#" style="color: #1E90FF">WORKSHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,36 +43,45 @@
             </li>
         </ul>
 
-
-        <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/basket.html" method="post">
-            <button class="btn btn-outline-secondary my-2 my-sm-0 form-control" type="button">
-                <text style="color: silver">Корзина</text>
-            </button>
-        </form>
+        <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
+        <c:if test="${not empty authorizedUser}">
+            <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/basket.html"
+                  method="post">
+                <button class="btn btn-outline-secondary my-2 my-sm-0 form-control" type="submit">
+                    <text style="color: silver">Корзина</text>
+                </button>
+            </form>
+        </c:if>
     </div>
 </nav>
 
 <h2>
-    <div style="text-align: center; margin-top: 25px;">Вход</div>
+    <div style="text-align: center; margin-top: 25px;">Товары</div>
 </h2>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <form class="form" action="${pageContext.request.contextPath}/login.html" method="post"
-              style="max-width: 500px; width: 100%; margin: 75px auto auto;">
-            <div class="form-group">
-                <LABEL for="login">Имя пользователя</LABEL>
-                <INPUT type="text" class="form-control" id="login" name="login" placeholder="Имя пользователя" required>
+
+<div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-3">
+        <c:forEach items="${products}" var="product">
+            <c:url var="path" value="/img/kt_statuette.jpg"/>
+            <div class="col mb-4">
+                <div class="card border-primary h-100">
+                    <img src="${path}" class="img-fluid" alt="Card image cap">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${product.name}</h5>
+                        <div class="card-text">
+                            <p>Price: ${product.price}</p>
+                            <p>Description: ${product.description}</p>
+                        </div>
+                        <a href="#" class="btn btn-primary float-right align-self-end"
+                           style="margin-top: auto">Заказать</a>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <LABEL for="password">Пароль</LABEL>
-                <INPUT type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
-            </div>
-            <BUTTON class="btn btn-outline-success my-2 my-sm-0" type="submit">Войти</BUTTON>
-            <a class="float-right" style="margin-top: 5px;" href="/registration.html">Регистрация</a>
-        </form>
+        </c:forEach>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -82,6 +92,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

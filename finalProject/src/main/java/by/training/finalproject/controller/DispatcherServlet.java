@@ -89,7 +89,6 @@ public class DispatcherServlet extends HttpServlet {
             if(session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
             }
-
             String requestedUri = request.getRequestURI();
             if(forward != null && forward.isRedirect()) {
                 String redirectedUri = request.getContextPath() + forward.getForward();
