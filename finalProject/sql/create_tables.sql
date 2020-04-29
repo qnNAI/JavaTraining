@@ -64,6 +64,26 @@ ALTER TABLE workshopDB.purchase
             ON UPDATE NO ACTION;
 
 
+CREATE TABLE IF NOT EXISTS workshopDB.productList (
+                                                       `purchase_id` INT NOT NULL,
+                                                       `product_id` INT NOT NULL,
+                                                       `finalPrice` DOUBLE NOT NULL,
+                                                       `amount` INT NOT NULL,
+                                                       PRIMARY KEY (`purchase_id`, `product_id`) );
+
+ALTER TABLE workshopDB.productList
+    ADD CONSTRAINT `fk_productList_product`
+        FOREIGN KEY (`product_id`)
+            REFERENCES `workshopDB`.`product` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE ,
+    ADD CONSTRAINT `fk_productList_purchase`
+        FOREIGN KEY (`purchase_id`)
+            REFERENCES `workshopDB`.`purchase` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
+
+
 CREATE TABLE IF NOT EXISTS workshopDB.confirmedOrder (
                                               `id` INT NOT NULL AUTO_INCREMENT,
                                               `order_id` INT NOT NULL,
@@ -89,22 +109,5 @@ ALTER TABLE workshopDB.confirmedOrder
             ON UPDATE NO ACTION ;
 
 
-CREATE TABLE IF NOT EXISTS workshopDB.productsList (
-                                                     `purchase_id` INT NOT NULL,
-                                                     `product_id` INT NOT NULL,
-                                                     `finalPrice` DOUBLE NOT NULL,
-                                                     `amount` INT NOT NULL,
-                                                     PRIMARY KEY (`purchase_id`, `product_id`) );
 
-ALTER TABLE workshopDB.productsList
-    ADD CONSTRAINT `fk_productsList_product`
-        FOREIGN KEY (`product_id`)
-            REFERENCES `workshopDB`.`product` (`id`)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE ,
-    ADD CONSTRAINT `fk_productsList_purchase`
-        FOREIGN KEY (`purchase_id`)
-            REFERENCES `workshopDB`.`purchase` (`id`)
-            ON DELETE CASCADE
-            ON UPDATE CASCADE
 

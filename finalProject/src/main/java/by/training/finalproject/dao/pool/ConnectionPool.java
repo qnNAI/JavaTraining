@@ -53,7 +53,7 @@ final public class ConnectionPool {
 		return connection;
 	}
 
-	synchronized void freeConnection(Connection connection) {
+	public synchronized void freeConnection(Connection connection) {
 		try {
 			if(connection.isValid(checkConnectionTimeout)) {
 				connection.clearWarnings();

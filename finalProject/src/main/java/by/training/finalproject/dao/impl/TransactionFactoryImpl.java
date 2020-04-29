@@ -20,7 +20,7 @@ public class TransactionFactoryImpl implements TransactionFactory {
 		try {
 			connection.setAutoCommit(false);
 		} catch(SQLException e) {
-			logger.error("Fail to turn off autocommit for database connection", e);
+			logger.error("Failed to turn off autocommit for database connection", e);
 			throw new DAOException(e);
 		}
 	}
@@ -32,10 +32,6 @@ public class TransactionFactoryImpl implements TransactionFactory {
 
 	@Override
 	public void close() throws DAOException {
-		try {
-			connection.close();
-		} catch(SQLException e) {
-			throw new DAOException(e);
-		}
+		ConnectionPool.getInstance().freeConnection(connection);
 	}
 }

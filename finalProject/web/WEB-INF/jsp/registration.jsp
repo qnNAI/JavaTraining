@@ -42,19 +42,15 @@
             </li>
         </ul>
     </div>
-
-    <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/basket.html" method="post">
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Корзина</button>
-    </form>
 </nav>
 
 <h2>
     <div style="text-align: center; margin-top: 25px;">Вход</div>
 </h2>
 
-<div class="container-fluid">
+<div class="container-fluid mb-5">
     <div class="row justify-content-center">
-        <form class="form mb-5" action="${pageContext.request.contextPath}/registration.html" method="post"
+        <form class="form" action="${pageContext.request.contextPath}/registration.html" method="post"
               style="max-width: 800px; width: 100%; padding-left: 15px; padding-right: 15px;">
             <div class="row">
                 <div class="col form-group">
@@ -63,8 +59,20 @@
                            required>
                 </div>
                 <div class="col form-group">
+                    <LABEL for="email">Почта</LABEL>
+                    <INPUT type="email" class="form-control" id="email" name="email" placeholder="Почта" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col form-group">
                     <LABEL for="password">Пароль</LABEL>
                     <INPUT type="password" class="form-control" id="password" name="password" placeholder="Пароль"
+                           required>
+                </div>
+                <div class="col form-group">
+                    <LABEL for="password">Подтвердите пароль</LABEL>
+                    <INPUT type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                           placeholder="Пароль"
                            required>
                 </div>
             </div>
@@ -85,13 +93,7 @@
                            required>
                 </div>
                 <div class="col form-group">
-                    <LABEL for="email">Почта</LABEL>
-                    <INPUT type="text" class="form-control" id="email" name="email" placeholder="Почта" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 form-group">
-                    <LABEL for="phone">Пароль</LABEL>
+                    <LABEL for="phone">Телефон</LABEL>
                     <INPUT type="text" class="form-control" id="phone" name="phone" placeholder="Телефон">
                 </div>
             </div>

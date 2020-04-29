@@ -41,13 +41,6 @@
                 <a class="nav-link" href="#">О нас</a>
             </li>
         </ul>
-
-
-        <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/basket.html" method="post">
-            <button class="btn btn-outline-secondary my-2 my-sm-0 form-control" type="button">
-                <text style="color: silver">Корзина</text>
-            </button>
-        </form>
     </div>
 </nav>
 

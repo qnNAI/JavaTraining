@@ -45,12 +45,20 @@
 
         <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
         <c:if test="${not empty authorizedUser}">
+            <form class="form-inline my-2 my-lg-0 mr-1" action="${pageContext.request.contextPath}/profile.html"
+                  method="post">
+                <button class="btn btn-outline-primary my-2 my-sm-0 form-control" type="submit">Личный кабинет</text>
+                </button>
+            </form>
             <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/basket.html"
                   method="post">
                 <button class="btn btn-outline-secondary my-2 my-sm-0 form-control" type="submit">
                     <text style="color: silver">Корзина</text>
                 </button>
             </form>
+        </c:if>
+        <c:if test="${empty authorizedUser}">
+            <a class="btn btn-outline-success my-2 my-sm-0" href="${pageContext.request.contextPath}/login.html">Войти</a>
         </c:if>
     </div>
 </nav>
@@ -63,10 +71,11 @@
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-3">
         <c:forEach items="${products}" var="product">
-            <c:url var="path" value="/img/kt_statuette.jpg"/>
+            <c:url var="path" value="/img/sakura2.jpg"/>
             <div class="col mb-4">
                 <div class="card border-primary h-100">
                     <img src="${path}" class="img-fluid" alt="Card image cap">
+                    <hr>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${product.name}</h5>
                         <div class="card-text">

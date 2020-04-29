@@ -25,7 +25,14 @@ public class ProductServiceImpl extends Service implements ProductService {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             dao.create(product);
+            transaction.commit();
         } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Fail to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
             logger.error("Fail to save product", e);
             throw new ServiceException(e);
         }
@@ -36,7 +43,14 @@ public class ProductServiceImpl extends Service implements ProductService {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             dao.delete(id);
+            transaction.commit();
         } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Fail to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
             logger.error("Fail to delete product", e);
             throw new ServiceException(e);
         }
@@ -47,7 +61,14 @@ public class ProductServiceImpl extends Service implements ProductService {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             dao.update(product);
+            transaction.commit();
         } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Fail to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
             logger.error("Fail to update product", e);
             throw new ServiceException(e);
         }
@@ -57,8 +78,16 @@ public class ProductServiceImpl extends Service implements ProductService {
     public Product findProductByID(int id) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            return dao.read(id);
+            Product product = dao.read(id);
+            transaction.commit();
+            return product;
         } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Fail to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
             logger.error("Fail to find product by id", e);
             throw new ServiceException(e);
         }
@@ -113,9 +142,15 @@ public class ProductServiceImpl extends Service implements ProductService {
             products.add(product5);
             products.add(product6);
 
-
+            transaction.commit();
             return products;
         } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Fail to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
             logger.error("Fail to make products list", e);
             throw new ServiceException(e);
         }

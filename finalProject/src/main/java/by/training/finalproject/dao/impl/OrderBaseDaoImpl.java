@@ -1,16 +1,17 @@
 package by.training.finalproject.dao.impl;
 
 import by.training.finalproject.beans.Order;
+import by.training.finalproject.beans.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.OrderDao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
-   // private OrderBaseDaoImpl() {}
-
     @Override
     public void create(Order order) throws DAOException {
         String insert = "INSERT INTO workshopDB.order (name, wishes, user_id) VALUES (?,?,?)";
@@ -22,7 +23,7 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error add order", e);
+            throw new DAOException("Failed to add order", e);
         }
     }
 
@@ -34,7 +35,7 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DAOException("Error remove order ID=" + id, e);
+            throw new DAOException("Failed to remove order", e);
         }
     }
 
@@ -46,18 +47,20 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             resultSet = preparedStatement.executeQuery();
             Order order = null;
+            User user;
 
             if (resultSet.next()) {
                 order = new Order();
                 order.setId(id);
-                order.setName(resultSet.getString(1));
-                order.setWishes(resultSet.getString(2));
-                order.getUser().setId(resultSet.getInt(3));
+                order.setName(resultSet.getString("name"));
+                order.setWishes(resultSet.getString("wishes"));
+                user = new User();
+                user.setId(resultSet.getInt("user_id"));
+                order.setUser(user);
             }
-
             return order;
         } catch (SQLException e) {
-            throw new DAOException("Error read order id=" + id, e);
+            throw new DAOException("Failed to read order", e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -68,19 +71,50 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
     }
 
     @Override
-    public void update(Order entity) throws DAOException {
-        throw new DAOException("Updating order is not allowed");
+    public void update(Order order) throws DAOException {
+        String update = "UPDATE workshopDB.order SET name=?, wishes=?, user_id=? WHERE id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
+            preparedStatement.setString(1, order.getName());
+            preparedStatement.setString(2, order.getWishes());
+            preparedStatement.setInt(3, order.getUser().getId());
+            preparedStatement.setInt(4, order.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Failed to update order", e);
+        }
     }
 
     @Override
-    public ResultSet makeOrdersSet() throws DAOException {
+    public List<Order> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.order";
+        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            return preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
+            List<Order> orders = new ArrayList<>();
+            Order order;
+            User user;
 
+            while(resultSet.next()) {
+                order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setName(resultSet.getString("name"));
+                order.setWishes(resultSet.getString("wishes"));
+                user = new User();
+                user.setId(resultSet.getInt("user_id"));
+                order.setUser(user);
+                orders.add(order);
+            }
+            return orders;
         } catch (SQLException e) {
-            throw new DAOException("Error make orders set", e);
+            throw new DAOException("Failed to read orders", e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {}
         }
     }
 }

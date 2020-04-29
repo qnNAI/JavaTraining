@@ -5,6 +5,8 @@ import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
@@ -16,7 +18,7 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error add product", e);
+            throw new DAOException("Failed to add product", e);
         }
     }
 
@@ -30,7 +32,7 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error update product ID=" + product.getId(), e);
+            throw new DAOException("Failed to update product", e);
         }
     }
 
@@ -42,7 +44,7 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DAOException("Error remove product ID=" + id, e);
+            throw new DAOException("Failed to remove product", e);
         }
     }
 
@@ -58,21 +60,11 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             if (resultSet.next()) {
                 product = new Product();
                 product.setId(id);
-                product.setName(resultSet.getString(1));
-                product.setPrice(resultSet.getDouble(2));
-                String description = resultSet.getString(3);
-                if (!resultSet.wasNull()) {
-                    product.setDescription(description);
-                }
-                String path = resultSet.getString(4);
-                if (!resultSet.wasNull()) {
-                    product.setImagePath(path);
-                }
+                setProductFields(resultSet, product);
             }
-
             return product;
         } catch (SQLException e) {
-            throw new DAOException("Error read product id=" + id, e);
+            throw new DAOException("Failed to read product", e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -83,15 +75,33 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
     }
 
     @Override
-    public ResultSet makeProductsSet() throws DAOException {
+    public List<Product> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.product";
+        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            return preparedStatement.executeQuery();
 
+            resultSet = preparedStatement.executeQuery();
+            List<Product> products = new ArrayList<>();
+            Product product;
+
+            while (resultSet.next()) {
+                product = new Product();
+                product.setId(resultSet.getInt("id"));
+                setProductFields(resultSet, product);
+                products.add(product);
+            }
+            return products;
         } catch (SQLException e) {
-            throw new DAOException("Error make products set", e);
+            throw new DAOException("Failed to read products", e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {}
         }
+
     }
 
     private void setProductStatement(Product product, PreparedStatement preparedStatement) throws SQLException {
@@ -108,6 +118,20 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             preparedStatement.setNull(4, Types.VARCHAR);
         } else {
             preparedStatement.setString(4, product.getImagePath());
+        }
+    }
+
+
+    private void setProductFields(ResultSet resultSet, Product product) throws SQLException {
+        product.setName(resultSet.getString("name"));
+        product.setPrice(resultSet.getDouble("price"));
+        String description = resultSet.getString("description");
+        if (!resultSet.wasNull()) {
+            product.setDescription(description);
+        }
+        String path = resultSet.getString("image_path");
+        if (!resultSet.wasNull()) {
+            product.setImagePath(path);
         }
     }
 }

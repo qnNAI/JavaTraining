@@ -2,7 +2,7 @@ package by.training.finalproject.beans;
 
 import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Purchase extends Entity {
     private Product product;
@@ -10,7 +10,7 @@ public class Purchase extends Entity {
     private double finalPrice;
     private String address;
     private LocalAddress localAddress;
-    private Date date;
+    private LocalDate date;
     private State state;
     private ObtainingMethod obtainingMethod;
 
@@ -56,11 +56,11 @@ public class Purchase extends Entity {
         this.localAddress = localAddress;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -95,8 +95,35 @@ public class Purchase extends Entity {
     }
 
     public enum State {
-        ADDED,
-        ORDERED,
-        DELIVERED
+        ADDED("добавлена"),
+        ORDERED("заказана"),
+        DELIVERED("доставлена");
+
+        private String name;
+
+        State(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Integer getIdentity() {
+            return ordinal();
+        }
+
+        public static ConfirmedOrder.State getByIdentity(Integer identity) {
+            return ConfirmedOrder.State.values()[identity];
+        }
+
+        public static ConfirmedOrder.State getByName(String name) {
+            for (ConfirmedOrder.State s : ConfirmedOrder.State.values()) {
+                if (s.getName().equals(name)) {
+                    return s;
+                }
+            }
+            return null;
+        }
     }
 }

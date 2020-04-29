@@ -7,6 +7,8 @@ import by.training.finalproject.dao.LocalAddressDao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddressDao {
     @Override
@@ -17,7 +19,7 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
             preparedStatement.setString(1, localAddress.getAddress());
 
         } catch (SQLException e) {
-            throw new DAOException("Error add local address", e);
+            throw new DAOException("Failed to add local address", e);
         }
     }
 
@@ -29,7 +31,7 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new DAOException("Error remove local address ID=" + id, e);
+            throw new DAOException("Failed to remove local address", e);
         }
     }
 
@@ -44,12 +46,12 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
 
             if (resultSet.next()) {
                 localAddress = new LocalAddress();
-                localAddress.setId(resultSet.getInt(1));
-                localAddress.setAddress(resultSet.getString(2));
+                localAddress.setId(resultSet.getInt("id"));
+                localAddress.setAddress(resultSet.getString("address"));
             }
             return localAddress;
         } catch (SQLException e) {
-            throw new DAOException("Error read local address", e);
+            throw new DAOException("Failed to read local address", e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -60,18 +62,42 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
     }
 
     @Override
-    public void update(LocalAddress entity) throws DAOException {
-        throw new DAOException("Updating local address is not allowed");
+    public void update(LocalAddress localAddress) throws DAOException {
+        String update = "UPDATE workshopDB.localaddress SET address=? WHERE id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
+            preparedStatement.setString(1, localAddress.getAddress());
+            preparedStatement.setInt(2, localAddress.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Failed to update local address", e);
+        }
     }
 
-    public ResultSet makeLocalAddressesSet() throws DAOException {
+    public List<LocalAddress> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.localAddress";
+        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            return preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
+            List<LocalAddress> localAddresses = new ArrayList<>();
+            LocalAddress localAddress;
 
+            while (resultSet.next()) {
+                localAddress = new LocalAddress();
+                localAddress.setId(resultSet.getInt("id"));
+                localAddress.setAddress(resultSet.getString("address"));
+                localAddresses.add(localAddress);
+            }
+            return localAddresses;
         } catch (SQLException e) {
-            throw new DAOException("Error make local addresses set", e);
+            throw new DAOException("Failed to read local addresses", e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {}
         }
     }
 

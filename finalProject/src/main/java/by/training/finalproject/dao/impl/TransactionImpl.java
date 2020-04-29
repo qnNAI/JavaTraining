@@ -46,7 +46,7 @@ public class TransactionImpl implements Transaction {
 		try {
 			connection.commit();
 		} catch(SQLException e) {
-			logger.error("Fail to commit transaction", e);
+			logger.error("Failed to commit transaction", e);
 			throw new DAOException(e);
 		}
 	}
@@ -56,7 +56,7 @@ public class TransactionImpl implements Transaction {
 		try {
 			connection.rollback();
 		} catch(SQLException e) {
-			logger.error("Fail to rollback transaction", e);
+			logger.error("Failed to rollback transaction", e);
 			throw new DAOException(e);
 		}
 	}
