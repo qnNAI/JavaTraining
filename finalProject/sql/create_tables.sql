@@ -76,12 +76,13 @@ ALTER TABLE workshopDB.productList
         FOREIGN KEY (`product_id`)
             REFERENCES `workshopDB`.`product` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE ,
+            ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_productList_purchase`
         FOREIGN KEY (`purchase_id`)
             REFERENCES `workshopDB`.`purchase` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE;
+
 
 
 CREATE TABLE IF NOT EXISTS workshopDB.confirmedOrder (

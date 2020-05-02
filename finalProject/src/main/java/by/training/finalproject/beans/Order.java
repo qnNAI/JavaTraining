@@ -1,11 +1,20 @@
 package by.training.finalproject.beans;
 
-public class Order extends Entity {
+public class Order implements Entity {
+    private int id;
     private String name;
     private String wishes;
     private User user;
 
     public Order() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -34,7 +43,8 @@ public class Order extends Entity {
     @Override
     public String toString() {
         return "Order{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", wishes='" + wishes + '\'' +
                 ", user=" + user +
                 '}';

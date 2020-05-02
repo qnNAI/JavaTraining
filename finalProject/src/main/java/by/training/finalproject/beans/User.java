@@ -2,7 +2,8 @@ package by.training.finalproject.beans;
 
 import by.training.finalproject.beans.infoEnum.Role;
 
-public class User extends Entity {
+public class User implements Entity {
+    private int id;
     private String login;
     private String password;
     private Role role;
@@ -14,6 +15,14 @@ public class User extends Entity {
     private String phone;
 
     public User() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getLogin() {
         return login;
@@ -90,7 +99,8 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + login + '\'' +
+                "id=" + id +
+                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", state=" + state +

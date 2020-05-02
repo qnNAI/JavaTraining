@@ -1,15 +1,17 @@
 package by.training.finalproject.beans;
 
-public class LocalAddress extends Entity {
+public class LocalAddress implements Entity {
+    private int id;
     private String address;
 
     public LocalAddress() {}
 
-    @Override
-    public String toString() {
-        return "LocalAddress{" +
-                "address='" + address + '\'' +
-                '}';
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAddress() {
@@ -18,5 +20,13 @@ public class LocalAddress extends Entity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalAddress{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

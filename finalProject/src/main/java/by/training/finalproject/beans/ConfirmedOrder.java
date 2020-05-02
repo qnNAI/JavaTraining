@@ -4,7 +4,8 @@ import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 
 import java.time.LocalDate;
 
-public class ConfirmedOrder extends Entity {
+public class ConfirmedOrder implements Entity {
+    private int id;
     private Order order;
     private State state;
     private double finalPrice;
@@ -15,6 +16,14 @@ public class ConfirmedOrder extends Entity {
     private ObtainingMethod obtainingMethod;
 
     public ConfirmedOrder() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Order getOrder() {
         return order;
@@ -83,13 +92,14 @@ public class ConfirmedOrder extends Entity {
     @Override
     public String toString() {
         return "ConfirmedOrder{" +
-                "order=" + order +
+                "id=" + id +
+                ", order=" + order +
                 ", state=" + state +
                 ", finalPrice=" + finalPrice +
                 ", amount=" + amount +
                 ", address='" + address + '\'' +
                 ", localAddress=" + localAddress +
-                ", date='" + date + '\'' +
+                ", date=" + date +
                 ", obtainingMethod=" + obtainingMethod +
                 '}';
     }

@@ -4,7 +4,8 @@ import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 
 import java.time.LocalDate;
 
-public class Purchase extends Entity {
+public class Purchase implements Entity {
+    private int id;
     private Product product;
     private User user;
     private double finalPrice;
@@ -15,6 +16,14 @@ public class Purchase extends Entity {
     private ObtainingMethod obtainingMethod;
 
     public Purchase() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Product getProduct() {
         return product;
@@ -83,7 +92,8 @@ public class Purchase extends Entity {
     @Override
     public String toString() {
         return "Purchase{" +
-                "product=" + product +
+                "id=" + id +
+                ", product=" + product +
                 ", user=" + user +
                 ", finalPrice=" + finalPrice +
                 ", address='" + address + '\'' +

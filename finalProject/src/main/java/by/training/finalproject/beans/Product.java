@@ -1,12 +1,21 @@
 package by.training.finalproject.beans;
 
-public class Product extends Entity {
+public class Product implements Entity {
+    private int id;
     private String name;
     private double price;
     private String description;
     private String imagePath;
 
     public Product() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -43,7 +52,8 @@ public class Product extends Entity {
     @Override
     public String toString() {
         return "Product{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", imagePath='" + imagePath + '\'' +

@@ -68,7 +68,6 @@ public class DispatcherServlet extends HttpServlet {
         return new ServiceFactory(new TransactionFactoryImpl());
     }
 
-
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Command command = (Command) request.getAttribute("command");
         try {

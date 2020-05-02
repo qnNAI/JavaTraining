@@ -7,6 +7,8 @@ import by.training.finalproject.dao.UserDao;
 import by.training.finalproject.service.Service;
 import by.training.finalproject.service.UserService;
 import by.training.finalproject.service.serviceException.ServiceException;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +23,8 @@ public class UserServiceImpl extends Service implements UserService {
     public void save(User user) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
+            String md5 = DigestUtils.md5Hex(user.getPassword());
+            user.setPassword(md5);
             dao.create(user);
             transaction.commit();
         } catch (DAOException e) {
@@ -57,7 +61,8 @@ public class UserServiceImpl extends Service implements UserService {
     public User checkUserByLoginPassword(String login, String password) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
-            User user = dao.read(login, password);
+            String md5 = DigestUtils.md5Hex(password);
+            User user = dao.read(login, md5);
             transaction.commit();
             return user;
         } catch (DAOException e) {
@@ -95,6 +100,8 @@ public class UserServiceImpl extends Service implements UserService {
     public void updateFullUserInfo(User user) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
+            String md5 = DigestUtils.md5Hex(user.getPassword());
+            user.setPassword(md5);
             dao.update(user);
             transaction.commit();
         } catch (DAOException e) {
@@ -113,6 +120,8 @@ public class UserServiceImpl extends Service implements UserService {
     public void updateUserAccount(User user) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
+            String md5 = DigestUtils.md5Hex(user.getPassword());
+            user.setPassword(md5);
             dao.updateAccount(user);
             transaction.commit();
         } catch (DAOException e) {

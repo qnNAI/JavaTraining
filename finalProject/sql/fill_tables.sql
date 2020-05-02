@@ -1,10 +1,10 @@
 INSERT INTO workshopdb.user (login, password, role, state, name, surname, patronymic, email, phone)
-VALUES ("user1", "user", '0', '0', "Вася", "Васильков", "Васильевич", "olkov@mail.ru", "+375 (33) 987-65-43"),
-       ("user2", "user", '0', '0', "Сидоров", "Сидор", "Сидорович", "sidor@mail.ru", "+375 (29) 135-79-13"),
-       ("user3", "user", '0', '0', "Петров", "Пётр", "Петрович", "petpet@mail.ru", "+375 (29) 246-80-24"),
-       ("user4", "user", '0', '0', "Иванов", "Иван", "Иванович", "ivanvan@mail.ru", "+375 (29) 129-38-47"),
-       ("user5", "user", '2', '0', "Александров", "Александр", "Александрович", "alexlex@mail.ru", "+375 (29) 567-12-89");
-
+VALUES ("user1", "ee11cbb19052e40b07aac0ca060c23ee", '0', '0', "Вася", "Васильков", "Васильевич", "olkov@mail.ru", "+375 (33) 987-65-43"),
+       ("user2", "ee11cbb19052e40b07aac0ca060c23ee", '0', '0', "Сидоров", "Сидор", "Сидорович", "sidor@mail.ru", "+375 (29) 135-79-13"),
+       ("user3", "ee11cbb19052e40b07aac0ca060c23ee", '0', '0', "Петров", "Пётр", "Петрович", "petpet@mail.ru", "+375 (29) 246-80-24"),
+       ("user4", "ee11cbb19052e40b07aac0ca060c23ee", '0', '0', "Иванов", "Иван", "Иванович", "ivanvan@mail.ru", "+375 (29) 129-38-47"),
+       ("user5", "ee11cbb19052e40b07aac0ca060c23ee", '2', '0', "Александров", "Александр", "Александрович", "alexlex@mail.ru", "+375 (29) 567-12-89");
+        /* password = user */
 INSERT INTO workshopdb.product (name, price, description, image_path)
 VALUES ("Медведь Пух", 10.5, "Плюшевый медведь Винни Пух", "bear_pyh.jpg"),
        ("Рыбка золотая", 7.5, "Плюшевая золотая рыбка", "gold_fish.jpg"),

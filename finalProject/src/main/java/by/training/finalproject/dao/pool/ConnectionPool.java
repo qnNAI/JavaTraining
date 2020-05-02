@@ -39,6 +39,7 @@ final public class ConnectionPool {
 					}
 				} else if(usedConnections.size() < maxSize) {
 					connection = createConnection();
+					usedConnections.put(connection);
 				} else {
 					logger.error("The limit of number of database connections is exceeded");
 					throw new DAOException();
