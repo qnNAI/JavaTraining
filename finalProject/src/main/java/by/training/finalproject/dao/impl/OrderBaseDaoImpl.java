@@ -42,10 +42,9 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public Order read(int id) throws DAOException {
         String select = "SELECT name, wishes, user_id FROM workshopDB.order WHERE id=" + id;
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             Order order = null;
             User user;
 
@@ -61,12 +60,6 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
             return order;
         } catch (SQLException e) {
             throw new DAOException("Failed to read order", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
@@ -88,10 +81,9 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public List<Order> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.order";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Order> orders = new ArrayList<>();
             Order order;
             User user;
@@ -109,12 +101,6 @@ public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
             return orders;
         } catch (SQLException e) {
             throw new DAOException("Failed to read orders", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 }

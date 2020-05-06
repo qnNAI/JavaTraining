@@ -18,8 +18,7 @@ import java.util.List;
 public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedOrderDao {
     @Override
     public void create(ConfirmedOrder confirmedOrder) throws DAOException {
-        String insert = "INSERT INTO workshopDB.confirmedOrder (order_id, state, finalPrice, amount, address, localAddress_id, date, obtainingMethod) " +
-                "VALUES (?,?,?,?,?,?,?,?)";
+        String insert = "INSERT INTO workshopDB.confirmedOrder (order_id, state, finalPrice, amount, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?,?,?)";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             setFullConfirmedOrderStatement(confirmedOrder, preparedStatement);
@@ -31,12 +30,10 @@ public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedO
 
     @Override
     public ConfirmedOrder read(int id) throws DAOException {
-        String select = "SELECT order_id, state, finalPrice, amount, address, localAddress_id, date, obtainingMethod" +
-                " FROM workshopdb.confirmedOrder WHERE id=" + id;
-        ResultSet resultSet = null;
+        String select = "SELECT order_id, state, finalPrice, amount, address, localAddress_id, date, obtainingMethod FROM workshopdb.confirmedOrder WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             ConfirmedOrder confirmedOrder = null;
 
             if (resultSet.next()) {
@@ -47,19 +44,12 @@ public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedO
             return confirmedOrder;
         } catch (SQLException e) {
             throw new DAOException("Failed to read confirmed order", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
     @Override
     public void update(ConfirmedOrder confirmedOrder) throws DAOException {
-        String update = "UPDATE workshopdb.confirmedorder SET order_id=?, state=?, finalPrice=?, amount=?, address=?," +
-                " localAddress_id=?, date=?, obtainingMethod=? WHERE id=" + confirmedOrder.getId();
+        String update = "UPDATE workshopdb.confirmedorder SET order_id=?, state=?, finalPrice=?, amount=?, address=?, localAddress_id=?, date=?, obtainingMethod=? WHERE id=" + confirmedOrder.getId();
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             setFullConfirmedOrderStatement(confirmedOrder, preparedStatement);
@@ -83,10 +73,9 @@ public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedO
     @Override
     public List<ConfirmedOrder> read() throws DAOException {
         String select = "SELECT * FROM workshopdb.confirmedOrder";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<ConfirmedOrder> confirmedOrders = new ArrayList<>();
             ConfirmedOrder confirmedOrder;
 
@@ -99,12 +88,6 @@ public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedO
             return confirmedOrders;
         } catch (SQLException e) {
             throw new DAOException("Failed to read confirmed orders", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 

@@ -38,10 +38,9 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
     @Override
     public LocalAddress read(int id) throws DAOException {
         String select = "SELECT * FROM workshopDB.localAddress WHERE id=" + id;
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             LocalAddress localAddress = null;
 
             if (resultSet.next()) {
@@ -52,12 +51,6 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
             return localAddress;
         } catch (SQLException e) {
             throw new DAOException("Failed to read local address", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
@@ -76,10 +69,9 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
 
     public List<LocalAddress> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.localAddress";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<LocalAddress> localAddresses = new ArrayList<>();
             LocalAddress localAddress;
 
@@ -92,13 +84,6 @@ public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddress
             return localAddresses;
         } catch (SQLException e) {
             throw new DAOException("Failed to read local addresses", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
-
 }

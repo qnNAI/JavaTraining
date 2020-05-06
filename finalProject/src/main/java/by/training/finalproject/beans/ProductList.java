@@ -1,6 +1,4 @@
-package by.training.finalproject;
-
-import by.training.finalproject.beans.Entity;
+package by.training.finalproject.beans;
 
 public class ProductList implements Entity {
     private int purchaseID;

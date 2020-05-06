@@ -12,8 +12,7 @@ import java.util.List;
 public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public void create(User user) throws DAOException {
-        String insert = "INSERT INTO workshopDB.user (login, password, role, state, name, " +
-                "surname, patronymic, email, phone) VALUES(?,?,?,?,?,?,?,?,?)";
+        String insert = "INSERT INTO workshopDB.user (login, password, role, state, name, surname, patronymic, email, phone) VALUES(?,?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             setFullUserStatement(user, preparedStatement);
@@ -52,8 +51,7 @@ public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public void update(User user) throws DAOException {
-        String update = "UPDATE workshopDB.user SET login=?, password=?, role=?, state=?, name=?, surname=?," +
-                " patronymic=?, email=?, phone=? WHERE id=" + user.getId();
+        String update = "UPDATE workshopDB.user SET login=?, password=?, role=?, state=?, name=?, surname=?, patronymic=?, email=?, phone=? WHERE id=" + user.getId();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             setFullUserStatement(user, preparedStatement);
@@ -65,12 +63,10 @@ public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public User read(int id) throws DAOException {
-        String select = "SELECT login, password, role, state, name, surname, patronymic, email, phone " +
-                "FROM workshopDB.user WHERE id=" + id;
-        ResultSet resultSet = null;
+        String select = "SELECT login, password, role, state, name, surname, patronymic, email, phone FROM workshopDB.user WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             User user = null;
 
             if (resultSet.next()) {
@@ -81,25 +77,18 @@ public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
             return user;
         } catch (SQLException e) {
             throw new DAOException("Failed to read user", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
     @Override
     public User read(String login, String password) throws DAOException {
         String select = "SELECT id, role FROM workshopDB.user WHERE login=? AND password=?";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
 
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             User user = null;
 
             if (resultSet.next()) {
@@ -110,25 +99,17 @@ public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
                 user.setRole(Role.getByIdentity(resultSet.getInt("role")));
             }
             return user;
-
         } catch (SQLException e) {
             throw new DAOException("Failed to read user by login and password", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
     @Override
     public List<User> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.user";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
             User user;
 
@@ -141,12 +122,6 @@ public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
             return users;
         } catch (SQLException e) {
             throw new DAOException("Failed to read users", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 

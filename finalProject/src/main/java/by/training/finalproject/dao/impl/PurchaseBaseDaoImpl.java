@@ -18,8 +18,7 @@ import java.util.List;
 public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
     @Override
     public void create(Purchase purchase) throws DAOException {
-        String insert = "INSERT INTO workshopDB.purchase (user_id, state, address, localAddress_id, date, obtainingMethod)" +
-                " VALUES (?,?,?,?,?,?)";
+        String insert = "INSERT INTO workshopDB.purchase (user_id, state, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             setFullPurchaseStatement(purchase, preparedStatement);
@@ -33,10 +32,9 @@ public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
     @Override
     public Purchase read(int id) throws DAOException {
         String select = "SELECT user_id, state, address, localAddress_id, date, obtainingMethod FROM workshopdb.purchase WHERE id=" + id;
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             Purchase purchase = null;
 
             if (resultSet.next()) {
@@ -47,19 +45,12 @@ public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
             return purchase;
         } catch (SQLException e) {
             throw new DAOException("Failed to read purchase", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
     @Override
     public void update(Purchase purchase) throws DAOException {
-        String update = "UPDATE workshopdb.purchase SET id=?, user_id=?, state=?, address=?, localAddress_id=?, date=?," +
-                " obtainingMethod=? WHERE id=" + purchase.getId() ;
+        String update = "UPDATE workshopdb.purchase SET id=?, user_id=?, state=?, address=?, localAddress_id=?, date=?, obtainingMethod=? WHERE id=" + purchase.getId() ;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             setFullPurchaseStatement(purchase, preparedStatement);
@@ -83,10 +74,9 @@ public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
     @Override
     public List<Purchase> read() throws DAOException {
         String select = "SELECT * FROM workshopdb.purchase";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Purchase> purchases = new ArrayList<>();
             Purchase purchase = null;
 
@@ -99,12 +89,6 @@ public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
             return purchases;
         } catch (SQLException e) {
             throw new DAOException("Failed to read purchases", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 

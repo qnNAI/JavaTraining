@@ -45,7 +45,7 @@
 </nav>
 
 <h2>
-    <div style="text-align: center; margin-top: 25px;">Вход</div>
+    <div style="text-align: center; margin-top: 25px;">Регистрация</div>
 </h2>
 
 <div class="container-fluid mb-5">

@@ -47,6 +47,8 @@ public class DispatcherServlet extends HttpServlet {
             root.addAppender(new ConsoleAppender(layout));
             root.setLevel(LOG_LEVEL);*/
 
+            /* TODO log appender*/
+
             ConnectionPool.getInstance().init(DB_DRIVER_CLASS, DB_URL, DB_USER, DB_PASSWORD, DB_POOL_START_SIZE, DB_POOL_MAX_SIZE, DB_POOL_CHECK_CONNECTION_TIMEOUT);
         } catch(DAOException e) {
             logger.error("It is impossible to initialize application", e);

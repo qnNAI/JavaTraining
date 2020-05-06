@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,6 +20,8 @@
 
 </head>
 <body>
+<c:url value="/registration.html" var="registrationLink"/>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/main.html" style="color: #1E90FF">WORKSHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -61,7 +64,7 @@
                 <INPUT type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
             </div>
             <BUTTON class="btn btn-outline-success my-2 my-sm-0" type="submit">Войти</BUTTON>
-            <a class="float-right" style="margin-top: 5px;" href="/registration.html">Регистрация</a>
+            <a class="float-right" style="margin-top: 5px;" href="${registrationLink}">Регистрация</a>
         </form>
     </div>
 </div>

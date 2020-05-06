@@ -7,7 +7,13 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface UserDao extends Dao<User> {
-    List<User> read() throws DAOException;
+    User read(int id) throws DAOException;
+
     User read(String login, String password) throws DAOException;
+
+    List<User> read() throws DAOException;
+
     void updateAccount(User user) throws DAOException;
+
+    void delete(int id) throws DAOException;
 }

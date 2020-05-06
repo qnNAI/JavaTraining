@@ -3,7 +3,6 @@ package by.training.part02.task02.controller;
 import by.training.part02.task02.controller.thread.locker.LockerFinishThread;
 import by.training.part02.task02.controller.thread.locker.LockerThread;
 import by.training.part02.task02.beans.LockerArray;
-import by.training.part02.task02.controller.thread.semaphore.SemaphoreThread;
 import by.training.part02.task02.service.factory.ServiceFactory;
 import by.training.part02.task02.service.serviceException.ServiceException;
 import by.training.part02.task02.view.viewFactory.ViewFactory;

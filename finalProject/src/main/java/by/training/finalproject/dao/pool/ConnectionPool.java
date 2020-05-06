@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import by.training.finalproject.dao.DAOexception.DAOException;
 
@@ -20,12 +22,21 @@ final public class ConnectionPool {
 	private int maxSize;
 	private int checkConnectionTimeout;
 
+	private Lock locker = new ReentrantLock();
+
 	private BlockingQueue<Connection> freeConnections = new LinkedBlockingQueue<>();
 	private BlockingQueue<Connection> usedConnections = new LinkedBlockingQueue<>();
 
+	private static ConnectionPool instance = new ConnectionPool();
+
 	private ConnectionPool() {}
 
+	public static ConnectionPool getInstance() {
+		return instance;
+	}
+
 	public synchronized Connection getConnection() throws DAOException {
+		locker.lock();
 		Connection connection = null;
 		while(connection == null) {
 			try {
@@ -51,6 +62,7 @@ final public class ConnectionPool {
 		}
 		usedConnections.add(connection);
 		logger.debug(String.format("Connection was received from pool. Current pool size: %d used connections; %d free connection", usedConnections.size(), freeConnections.size()));
+		locker.unlock();
 		return connection;
 	}
 
@@ -88,12 +100,6 @@ final public class ConnectionPool {
 			logger.fatal("Error initialize connection pool", e);
 			throw new DAOException(e);
 		}
-	}
-
-	private static ConnectionPool instance = new ConnectionPool();
-
-	public static ConnectionPool getInstance() {
-		return instance;
 	}
 
 	private Connection createConnection() throws SQLException {

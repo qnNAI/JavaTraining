@@ -51,10 +51,9 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
     public Product read(int id) throws DAOException {
         String select = "SELECT name, price, description, image_path FROM workshopDB.product WHERE id=" + id;
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             Product product = null;
 
             if (resultSet.next()) {
@@ -65,23 +64,15 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             return product;
         } catch (SQLException e) {
             throw new DAOException("Failed to read product", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
     }
 
     @Override
     public List<Product> read() throws DAOException {
         String select = "SELECT * FROM workshopDB.product";
-        ResultSet resultSet = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
-
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<Product> products = new ArrayList<>();
             Product product;
 
@@ -94,14 +85,7 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             return products;
         } catch (SQLException e) {
             throw new DAOException("Failed to read products", e);
-        } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {}
         }
-
     }
 
     private void setProductStatement(Product product, PreparedStatement preparedStatement) throws SQLException {
@@ -120,7 +104,6 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
             preparedStatement.setString(4, product.getImagePath());
         }
     }
-
 
     private void setProductFields(ResultSet resultSet, Product product) throws SQLException {
         product.setName(resultSet.getString("name"));
