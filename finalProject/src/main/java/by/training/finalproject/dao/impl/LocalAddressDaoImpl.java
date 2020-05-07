@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalAddressBaseDaoImpl extends BaseDaoImpl implements LocalAddressDao {
+public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao {
     @Override
     public void create(LocalAddress localAddress) throws DAOException {
         String insert = "INSERT INTO workshopDB.localAddress (address) VALUE (?)";

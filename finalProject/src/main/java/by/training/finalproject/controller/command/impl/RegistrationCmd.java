@@ -25,8 +25,7 @@ public class RegistrationCmd extends Command {
             User user;
             try {
                 UserService service = factory.getUserService();
-                user = service.checkUserByLoginPassword(login, password);
-
+                user = service.findUserByLoginPassword(login, password);
                 if (user != null) {
                     // TODO return error message
                     return new Forward("/login.html");

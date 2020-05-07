@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderBaseDaoImpl extends BaseDaoImpl implements OrderDao {
+public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
     @Override
     public void create(Order order) throws DAOException {
         String insert = "INSERT INTO workshopDB.order (name, wishes, user_id) VALUES (?,?,?)";

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductListBaseDaoImpl extends BaseDaoImpl implements ProductListDao {
+public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
     @Override
     public void create(ProductList productList) throws DAOException {
         String insert = "INSERT INTO workshopdb.productlist (purchase_id, product_id, finalPrice, amount) VALUES (?,?,?,?)";

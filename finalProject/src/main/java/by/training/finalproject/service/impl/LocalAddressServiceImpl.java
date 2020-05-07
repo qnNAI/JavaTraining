@@ -5,7 +5,6 @@ import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.LocalAddressDao;
 import by.training.finalproject.dao.Transaction;
 import by.training.finalproject.service.LocalAddressService;
-import by.training.finalproject.service.Service;
 import by.training.finalproject.service.serviceException.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 
-public class LocalAddressServiceImpl extends Service implements LocalAddressService {
+public class LocalAddressServiceImpl extends BaseServiceImpl implements LocalAddressService {
     private static Logger logger = LogManager.getLogger(LocalAddressServiceImpl.class.getName());
 
     public LocalAddressServiceImpl(Transaction transaction) {
@@ -61,7 +60,7 @@ public class LocalAddressServiceImpl extends Service implements LocalAddressServ
     }
 
     @Override
-    public LocalAddress findLocalAddressByID(int id) throws ServiceException {
+    public LocalAddress findByID(int id) throws ServiceException {
         try {
             LocalAddressDao dao = (LocalAddressDao) transaction.createDao(LocalAddressDao.class.getName());
             LocalAddress localAddress = dao.read(id);

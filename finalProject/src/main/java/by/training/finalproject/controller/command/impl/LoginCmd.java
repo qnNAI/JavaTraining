@@ -26,7 +26,7 @@ public class LoginCmd extends Command {
             User user;
             try {
                 UserService service = factory.getUserService();
-                user = service.checkUserByLoginPassword(login, password);
+                user = service.findUserByLoginPassword(login, password);
             } catch (ServiceException | DAOException e) {
                 throw new CommandException(e);
             }

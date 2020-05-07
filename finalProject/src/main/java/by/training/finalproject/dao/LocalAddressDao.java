@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public interface LocalAddressDao extends Dao<LocalAddress> {
-    void delete(int id) throws DAOException;
-
     LocalAddress read(int id) throws DAOException;
 
-    List<LocalAddress> read() throws DAOException;
+    void delete(int id) throws DAOException;
 }

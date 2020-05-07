@@ -4,7 +4,6 @@ import by.training.finalproject.beans.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.Transaction;
 import by.training.finalproject.dao.UserDao;
-import by.training.finalproject.service.Service;
 import by.training.finalproject.service.UserService;
 import by.training.finalproject.service.serviceException.ServiceException;
 
@@ -14,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class UserServiceImpl extends Service implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
     public UserServiceImpl(Transaction transaction) {
@@ -84,7 +83,7 @@ public class UserServiceImpl extends Service implements UserService {
     }
 
     @Override
-    public User findUserByID(int id) throws ServiceException {
+    public User findByID(int id) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
             User user = dao.read(id);

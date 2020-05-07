@@ -15,7 +15,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseBaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
+public class PurchaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
     @Override
     public void create(Purchase purchase) throws DAOException {
         String insert = "INSERT INTO workshopDB.purchase (user_id, state, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?)";

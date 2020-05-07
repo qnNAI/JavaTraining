@@ -15,7 +15,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfirmedOrderBaseDaoImpl extends BaseDaoImpl implements ConfirmedOrderDao {
+public class ConfirmedOrderDaoImpl extends BaseDaoImpl implements ConfirmedOrderDao {
     @Override
     public void create(ConfirmedOrder confirmedOrder) throws DAOException {
         String insert = "INSERT INTO workshopDB.confirmedOrder (order_id, state, finalPrice, amount, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?,?,?)";

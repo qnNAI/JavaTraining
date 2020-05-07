@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserBaseDaoImpl extends BaseDaoImpl implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public void create(User user) throws DAOException {
         String insert = "INSERT INTO workshopDB.user (login, password, role, state, name, surname, patronymic, email, phone) VALUES(?,?,?,?,?,?,?,?,?)";

@@ -5,32 +5,22 @@ import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 import java.time.LocalDate;
 
 public class Purchase implements Entity {
-    private int id;
-    private Product product;
+    private Integer id;
     private User user;
-    private double finalPrice;
+    private State state;
     private String address;
     private LocalAddress localAddress;
     private LocalDate date;
-    private State state;
     private ObtainingMethod obtainingMethod;
 
     public Purchase() {}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public User getUser() {
@@ -39,14 +29,6 @@ public class Purchase implements Entity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public double getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(double finalPrice) {
-        this.finalPrice = finalPrice;
     }
 
     public String getAddress() {
@@ -93,13 +75,11 @@ public class Purchase implements Entity {
     public String toString() {
         return "Purchase{" +
                 "id=" + id +
-                ", product=" + product +
                 ", user=" + user +
-                ", finalPrice=" + finalPrice +
+                ", state=" + state +
                 ", address='" + address + '\'' +
                 ", localAddress=" + localAddress +
                 ", date=" + date +
-                ", state=" + state +
                 ", obtainingMethod=" + obtainingMethod +
                 '}';
     }

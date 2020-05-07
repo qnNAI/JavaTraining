@@ -7,15 +7,13 @@ import by.training.finalproject.dao.ProductDao;
 import by.training.finalproject.dao.Transaction;
 import by.training.finalproject.dao.UserDao;
 import by.training.finalproject.service.ProductService;
-import by.training.finalproject.service.Service;
 import by.training.finalproject.service.serviceException.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import java.util.*;
 
-public class ProductServiceImpl extends Service implements ProductService {
+public class ProductServiceImpl extends BaseServiceImpl implements ProductService {
     private static Logger logger = LogManager.getLogger(ProductServiceImpl.class.getName());
 
     public ProductServiceImpl(Transaction transaction) {
@@ -57,31 +55,13 @@ public class ProductServiceImpl extends Service implements ProductService {
                 logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to delete product", e);
+            logger.error("Failed to delete product", e);
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void update(Product product) throws ServiceException {
-        try {
-            ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            dao.update(product);
-            transaction.commit();
-        } catch (DAOException e) {
-            try {
-                transaction.rollback();
-            } catch (DAOException ex) {
-                logger.error("Failed to rollback transaction", e);
-                throw new ServiceException(ex);
-            }
-            logger.error("Fail to update product", e);
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Product findProductByID(int id) throws ServiceException {
+    public Product findByID(int id) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             Product product = dao.read(id);
@@ -132,17 +112,14 @@ public class ProductServiceImpl extends Service implements ProductService {
                 user = product.getUser();
                 if (user != null) {     // if user set in product
                     userID = user.getId();
-                    if (userID != null) {      // if user id is not null
-                        user = users.get(userID);
-                        if (user == null) {     // if there is no user in map
-                            user = userDao.read(userID);
-                            users.put(userID, user);
-                        }
-                        product.setUser(user);
+                    user = users.get(userID);
+                    if (user == null) {     // if there is no user in map
+                        user = userDao.read(userID);
+                        users.put(userID, user);
                     }
+                    product.setUser(user);
                 }
             }
-
         } catch (DAOException e) {
             logger.error("Failed to build product", e);
             throw new ServiceException(e);

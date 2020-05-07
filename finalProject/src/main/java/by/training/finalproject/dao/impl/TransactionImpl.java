@@ -19,12 +19,12 @@ public class TransactionImpl implements Transaction {
 	private Connection connection;
 
 	static {
-		classes.put(UserDao.class.getName(), new UserBaseDaoImpl());
-		classes.put(ProductDao.class.getName(), new ProductBaseDaoImpl());
-		classes.put(LocalAddressDao.class.getName(), new LocalAddressBaseDaoImpl());
-		classes.put(OrderDao.class.getName(), new OrderBaseDaoImpl());
-		classes.put(ConfirmedOrderDao.class.getName(), new ConfirmedOrderBaseDaoImpl());
-		classes.put(PurchaseDao.class.getName(), new PurchaseBaseDaoImpl());
+		classes.put(UserDao.class.getName(), new UserDaoImpl());
+		classes.put(ProductDao.class.getName(), new ProductDaoImpl());
+		classes.put(LocalAddressDao.class.getName(), new LocalAddressDaoImpl());
+		classes.put(OrderDao.class.getName(), new OrderDaoImpl());
+		classes.put(ConfirmedOrderDao.class.getName(), new ConfirmedOrderDaoImpl());
+		classes.put(PurchaseDao.class.getName(), new PurchaseDaoImpl());
 	}
 
 	public TransactionImpl(Connection connection) {

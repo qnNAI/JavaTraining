@@ -1,15 +1,16 @@
 package by.training.finalproject.service;
 
-import by.training.finalproject.dao.Transaction;
+import by.training.finalproject.beans.Entity;
+import by.training.finalproject.service.serviceException.ServiceException;
 
-public abstract class Service {
-    protected Transaction transaction;
+import java.util.List;
 
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
+public interface Service<Type extends Entity> {
+    void save(Type entity) throws ServiceException;
 
-    public Service(Transaction transaction) {
-        this.transaction = transaction;
-    }
+    void delete(int id) throws ServiceException;
+
+    Type findByID(int id) throws ServiceException;
+
+    List<Type> findAll() throws ServiceException;
 }

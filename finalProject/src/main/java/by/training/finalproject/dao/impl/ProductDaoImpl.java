@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
+public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
     public void create(Product product) throws DAOException {
         String insert = "INSERT INTO workshopDB.product (user_id, name, price, description, image_path) VALUES (?,?,?,?,?)";
