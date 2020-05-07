@@ -1,7 +1,8 @@
 package by.training.finalproject.beans;
 
 public class Product implements Entity {
-    private int id;
+    private Integer id;
+    private User user;
     private String name;
     private double price;
     private String description;
@@ -9,12 +10,20 @@ public class Product implements Entity {
 
     public Product() {}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {
@@ -53,6 +62,7 @@ public class Product implements Entity {
     public String toString() {
         return "Product{" +
                 "id=" + id +
+                ", user=" + user +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +

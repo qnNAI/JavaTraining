@@ -20,7 +20,7 @@ public class MainCmd extends Command {
         List<Product> products;
         try {
             ProductService productService = factory.getProductService();
-            products = productService.makeProductsList();
+            products = productService.findAll();
         } catch (DAOException | ServiceException e) {
             throw new CommandException(e);
         }

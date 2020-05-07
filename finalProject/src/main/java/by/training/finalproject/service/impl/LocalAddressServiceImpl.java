@@ -10,6 +10,8 @@ import by.training.finalproject.service.serviceException.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 
 public class LocalAddressServiceImpl extends Service implements LocalAddressService {
     private static Logger logger = LogManager.getLogger(LocalAddressServiceImpl.class.getName());
@@ -22,16 +24,20 @@ public class LocalAddressServiceImpl extends Service implements LocalAddressServ
     public void save(LocalAddress localAddress) throws ServiceException {
         try {
             LocalAddressDao dao = (LocalAddressDao) transaction.createDao(LocalAddressDao.class.getName());
-            dao.create(localAddress);
+            if (localAddress.getId() == null) {
+                dao.create(localAddress);
+            } else {
+                dao.update(localAddress);
+            }
             transaction.commit();
         } catch (DAOException e) {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to save local address", e);
+            logger.error("Failed to save or update local address", e);
             throw new ServiceException(e);
         }
     }
@@ -46,10 +52,10 @@ public class LocalAddressServiceImpl extends Service implements LocalAddressServ
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to delete local address", e);
+            logger.error("Failed to delete local address", e);
             throw new ServiceException(e);
         }
     }
@@ -65,10 +71,29 @@ public class LocalAddressServiceImpl extends Service implements LocalAddressServ
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to find local address by id", e);
+            logger.error("Failed to find local address by id", e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<LocalAddress> findAll() throws ServiceException {
+        try {
+            LocalAddressDao dao = (LocalAddressDao) transaction.createDao(LocalAddressDao.class.getName());
+            List<LocalAddress> localAddresses = dao.read();
+            transaction.commit();
+            return localAddresses;
+        } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Failed to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
+            logger.error("Failed to find all local addresses", e);
             throw new ServiceException(e);
         }
     }

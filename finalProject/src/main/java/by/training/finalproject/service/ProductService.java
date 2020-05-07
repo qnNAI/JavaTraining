@@ -10,5 +10,5 @@ public interface ProductService {
     void delete(int id) throws ServiceException;
     void update(Product product) throws ServiceException;
     Product findProductByID(int id) throws ServiceException;
-    List<Product> makeProductsList() throws ServiceException;
+    List<Product> findAll() throws ServiceException;
 }

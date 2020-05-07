@@ -12,6 +12,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public class UserServiceImpl extends Service implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class.getName());
 
@@ -25,16 +27,20 @@ public class UserServiceImpl extends Service implements UserService {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
             String md5 = DigestUtils.md5Hex(user.getPassword());
             user.setPassword(md5);
-            dao.create(user);
+            if (user.getId() == null) {
+                dao.create(user);
+            } else {
+                dao.update(user);
+            }
             transaction.commit();
         } catch (DAOException e) {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to save user", e);
+            logger.error("Failed to save or update user", e);
             throw new ServiceException(e);
         }
     }
@@ -49,16 +55,16 @@ public class UserServiceImpl extends Service implements UserService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to delete user", e);
+            logger.error("Failed to delete user", e);
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public User checkUserByLoginPassword(String login, String password) throws ServiceException {
+    public User findUserByLoginPassword(String login, String password) throws ServiceException {
         try {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
             String md5 = DigestUtils.md5Hex(password);
@@ -69,10 +75,10 @@ public class UserServiceImpl extends Service implements UserService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to check user by login password", e);
+            logger.error("Failed to check user by login password", e);
             throw new ServiceException(e);
         }
     }
@@ -88,30 +94,10 @@ public class UserServiceImpl extends Service implements UserService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to find user by id", e);
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void updateFullUserInfo(User user) throws ServiceException {
-        try {
-            UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
-            String md5 = DigestUtils.md5Hex(user.getPassword());
-            user.setPassword(md5);
-            dao.update(user);
-            transaction.commit();
-        } catch (DAOException e) {
-            try {
-                transaction.rollback();
-            } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
-                throw new ServiceException(ex);
-            }
-            logger.error("Fail to update full user info", e);
+            logger.error("Failed to find user by id", e);
             throw new ServiceException(e);
         }
     }
@@ -128,10 +114,29 @@ public class UserServiceImpl extends Service implements UserService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to update user account", e);
+            logger.error("Failed to update user account", e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> findAll() throws ServiceException {
+        try {
+            UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
+            List<User> users = dao.read();
+            transaction.commit();
+            return users;
+        } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Failed to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
+            logger.error("Failed to find all users", e);
             throw new ServiceException(e);
         }
     }

@@ -105,9 +105,9 @@ public class Purchase implements Entity {
     }
 
     public enum State {
-        ADDED("добавлена"),
-        ORDERED("заказана"),
-        DELIVERED("доставлена");
+        ADDED("добавлен"),
+        ORDERED("заказан"),
+        DELIVERED("доставлен");
 
         private String name;
 

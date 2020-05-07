@@ -3,7 +3,7 @@ package by.training.finalproject.beans;
 import by.training.finalproject.beans.infoEnum.Role;
 
 public class User implements Entity {
-    private int id;
+    private Integer id;
     private String login;
     private String password;
     private Role role;
@@ -16,11 +16,11 @@ public class User implements Entity {
 
     public User() {}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

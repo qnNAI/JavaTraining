@@ -71,7 +71,7 @@
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-3">
         <c:forEach items="${products}" var="product">
-            <c:url var="path" value="/img/sakura2.jpg"/>
+            <c:url var="path" value="${product.imagePath}"/>
             <div class="col mb-4">
                 <div class="card border-primary h-100">
                     <img src="${path}" class="img-fluid" alt="Card image cap">

@@ -16,11 +16,16 @@ CREATE TABLE IF NOT EXISTS workshopDB.user (
 
 CREATE TABLE IF NOT EXISTS workshopDB.product (
                                        `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
+                                       `user_id` INT NULL,
                                        `name` VARCHAR(45) NOT NULL,
-                                       `price` DOUBLE NOT NULL,
+                                       `price` DOUBLE NULL,
                                        `description` VARCHAR(45) NULL,
                                        `image_path` VARCHAR(45) NULL,
-                                       PRIMARY KEY (`id`) );
+                                       PRIMARY KEY (`id`),
+                                       FOREIGN KEY (user_id)
+                                       REFERENCES user (id)
+                                       ON DELETE CASCADE
+                                       ON UPDATE CASCADE );
 
 
 CREATE TABLE IF NOT EXISTS workshopDB.localAddress (
@@ -29,7 +34,7 @@ CREATE TABLE IF NOT EXISTS workshopDB.localAddress (
                                             PRIMARY KEY (`id`) );
 
 
-CREATE TABLE IF NOT EXISTS workshopDB.order (
+/*CREATE TABLE IF NOT EXISTS workshopDB.order (
                                                 `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                                 `name` VARCHAR(45) NOT NULL,
                                                 `wishes` VARCHAR(255) NOT NULL,
@@ -38,13 +43,15 @@ CREATE TABLE IF NOT EXISTS workshopDB.order (
                                                 FOREIGN KEY (user_id)
                                                 REFERENCES user (id)
                                                 ON DELETE CASCADE
-                                                ON UPDATE CASCADE );
+                                                ON UPDATE CASCADE ); */
+
+/*ALTER TABLE workshopDB.order AUTO_INCREMENT=1000000;*/ /* start from 1 000 000 */
 
 
 CREATE TABLE IF NOT EXISTS workshopDB.purchase (
-                                        `id` INT NOT NULL AUTO_INCREMENT,
+                                        `id` INT NOT NULL UNIQUE AUTO_INCREMENT,
                                         `user_id` INT NOT NULL,
-                                        `state` ENUM('добавлена', 'заказана', 'доставлена') NOT NULL,
+                                        `state` ENUM('добавлен', 'заказан', 'доставлен') NOT NULL,
                                         `address` VARCHAR(45) NULL,
                                         `localAddress_id` INT NULL,
                                         `date` DATE NOT NULL,
@@ -72,7 +79,7 @@ CREATE TABLE IF NOT EXISTS workshopDB.productList (
                                                        PRIMARY KEY (`purchase_id`, `product_id`) );
 
 ALTER TABLE workshopDB.productList
-    ADD CONSTRAINT `fk_productList_product`
+    ADD CONSTRAINT  `fk_productList_product`
         FOREIGN KEY (`product_id`)
             REFERENCES `workshopDB`.`product` (`id`)
             ON DELETE CASCADE
@@ -85,7 +92,7 @@ ALTER TABLE workshopDB.productList
 
 
 
-CREATE TABLE IF NOT EXISTS workshopDB.confirmedOrder (
+/*CREATE TABLE IF NOT EXISTS workshopDB.confirmedOrder (
                                               `id` INT NOT NULL AUTO_INCREMENT,
                                               `order_id` INT NOT NULL,
                                               `state` ENUM('изготавливается', 'готов', 'доставлен') NOT NULL,
@@ -107,7 +114,7 @@ ALTER TABLE workshopDB.confirmedOrder
         FOREIGN KEY (`localAddress_id`)
             REFERENCES localAddress (`id`)
             ON DELETE NO ACTION
-            ON UPDATE NO ACTION ;
+            ON UPDATE NO ACTION ;*/
 
 
 

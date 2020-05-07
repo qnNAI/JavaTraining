@@ -1,17 +1,19 @@
 package by.training.finalproject.service.impl;
 
 import by.training.finalproject.beans.Product;
+import by.training.finalproject.beans.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
 import by.training.finalproject.dao.Transaction;
+import by.training.finalproject.dao.UserDao;
 import by.training.finalproject.service.ProductService;
 import by.training.finalproject.service.Service;
 import by.training.finalproject.service.serviceException.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class ProductServiceImpl extends Service implements ProductService {
     private static Logger logger = LogManager.getLogger(ProductServiceImpl.class.getName());
@@ -24,16 +26,20 @@ public class ProductServiceImpl extends Service implements ProductService {
     public void save(Product product) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            dao.create(product);
+            if (product.getId() == null) {
+                dao.create(product);
+            } else {
+                dao.update(product);
+            }
             transaction.commit();
         } catch (DAOException e) {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to save product", e);
+            logger.error("Failed to save or update product", e);
             throw new ServiceException(e);
         }
     }
@@ -48,7 +54,7 @@ public class ProductServiceImpl extends Service implements ProductService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
             logger.error("Fail to delete product", e);
@@ -66,7 +72,7 @@ public class ProductServiceImpl extends Service implements ProductService {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
             logger.error("Fail to update product", e);
@@ -79,80 +85,68 @@ public class ProductServiceImpl extends Service implements ProductService {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             Product product = dao.read(id);
+            buildProduct(Collections.singletonList(product));
             transaction.commit();
             return product;
         } catch (DAOException e) {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to find product by id", e);
+            logger.error("Failed to find product by id", e);
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<Product> makeProductsList() throws ServiceException {
+    public List<Product> findAll() throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            ArrayList<Product> products = new ArrayList<>();
-
-            Product product = new Product();
-            product.setId(1);
-            product.setName("Product 1");
-            product.setPrice(1000);
-            product.setDescription("Cat");
-
-            Product product4 = new Product();
-            product4.setId(4);
-            product4.setName("Product 4");
-            product4.setPrice(500);
-            product4.setDescription("44444");
-
-            Product product2 = new Product();
-            product2.setId(2);
-            product2.setName("Product 2");
-            product2.setPrice(700);
-            product2.setDescription("222222");
-
-            Product product3 = new Product();
-            product3.setId(3);
-            product3.setName("Product 3");
-            product3.setPrice(5000);
-            product3.setDescription("333333 \n qwewweqpoege \n wopkgowg");
-
-            Product product5 = new Product();
-            product5.setId(5);
-            product5.setName("Product 5");
-            product5.setPrice(100);
-            product5.setDescription("333333 \n qwewweqpoege \n wopkgowg");
-
-            Product product6 = new Product();
-            product6.setId(6);
-            product6.setName("Product 6");
-            product6.setPrice(10);
-            product6.setDescription("333333 \n qwewweqpoege \n wopkgowg");
-
-            products.add(product);
-            products.add(product2);
-            products.add(product3);
-            products.add(product4);
-            products.add(product5);
-            products.add(product6);
-
+            List<Product> products = dao.read();
+            buildProduct(products);
             transaction.commit();
             return products;
         } catch (DAOException e) {
             try {
                 transaction.rollback();
             } catch (DAOException ex) {
-                logger.error("Fail to rollback transaction", e);
+                logger.error("Failed to rollback transaction", e);
                 throw new ServiceException(ex);
             }
-            logger.error("Fail to make products list", e);
+            logger.error("Failed to find all products", e);
             throw new ServiceException(e);
         }
+    }
+
+    private void buildProduct(List<Product> products) throws ServiceException {
+        try {
+            UserDao userDao = (UserDao) transaction.createDao(UserDao.class.getName());
+            ProductDao productDao = (ProductDao) transaction.createDao(ProductDao.class.getName());
+            Map<Integer, User> users = new HashMap<>();
+            User user;
+            Integer userID;
+
+            for (Product product : products) {
+                user = product.getUser();
+                if (user != null) {     // if user set in product
+                    userID = user.getId();
+                    if (userID != null) {      // if user id is not null
+                        user = users.get(userID);
+                        if (user == null) {     // if there is no user in map
+                            user = userDao.read(userID);
+                            users.put(userID, user);
+                        }
+                        product.setUser(user);
+                    }
+                }
+            }
+
+        } catch (DAOException e) {
+            logger.error("Failed to build product", e);
+            throw new ServiceException(e);
+        }
+
     }
 }

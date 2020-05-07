@@ -1,8 +1,8 @@
 package by.training.finalproject.beans.infoEnum;
 
 public enum Role {
-    ADMINISTRATOR("администратор"),
     USER("пользователь"),
+    ADMINISTRATOR("администратор"),
     MASTER("мастер");
 
     private String name;

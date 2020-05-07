@@ -1,6 +1,7 @@
 package by.training.finalproject.dao.impl;
 
 import by.training.finalproject.beans.Product;
+import by.training.finalproject.beans.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
 
@@ -11,13 +12,13 @@ import java.util.List;
 public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
     public void create(Product product) throws DAOException {
-        String insert = "INSERT INTO workshopDB.product (name, price, description, image_path) VALUES (?,?,?,?)";
+        String insert = "INSERT INTO workshopDB.product (user_id, name, price, description, image_path) VALUES (?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             setProductStatement(product, preparedStatement);
-
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            /* TODO write logger error */
             throw new DAOException("Failed to add product", e);
         }
     }
@@ -89,23 +90,35 @@ public class ProductBaseDaoImpl extends BaseDaoImpl implements ProductDao {
     }
 
     private void setProductStatement(Product product, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, product.getName());
-        preparedStatement.setDouble(2, product.getPrice());
+        if (product.getUser() == null) {
+            preparedStatement.setNull(1, Types.INTEGER);
+        } else {
+            preparedStatement.setInt(1, product.getUser().getId());
+        }
+
+        preparedStatement.setString(2, product.getName());
+        preparedStatement.setDouble(3, product.getPrice());
 
         if (product.getDescription().isEmpty()) {
-            preparedStatement.setNull(3, Types.VARCHAR);
+            preparedStatement.setNull(4, Types.VARCHAR);
         } else {
-            preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setString(4, product.getDescription());
         }
 
         if (product.getImagePath().isEmpty()) {
-            preparedStatement.setNull(4, Types.VARCHAR);
+            preparedStatement.setNull(5, Types.VARCHAR);
         } else {
-            preparedStatement.setString(4, product.getImagePath());
+            preparedStatement.setString(5, product.getImagePath());
         }
     }
 
     private void setProductFields(ResultSet resultSet, Product product) throws SQLException {
+        int userID = resultSet.getInt("user_id");
+        if (!resultSet.wasNull()) {
+            User user = new User();
+            user.setId(userID);
+            product.setUser(user);
+        }
         product.setName(resultSet.getString("name"));
         product.setPrice(resultSet.getDouble("price"));
         String description = resultSet.getString("description");
