@@ -42,6 +42,9 @@
         <Logger name="by.training.finalproject.controller.filter.CommandFromUriFilter" level="info">
             <AppenderRef ref="errorLogFile"/>
         </Logger>
+        <Logger name="by/training/finalproject/controller/command/impl/BasketCmd.java" level="info">
+            <AppenderRef ref="errorLogFile"/>
+        </Logger>
 
         <Root level="info">
             <AppenderRef ref="console"/>

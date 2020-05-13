@@ -20,21 +20,20 @@ public class LoginCmd extends Command {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+        HttpSession session = request.getSession();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if(login != null && password != null) {
+        if (login != null && password != null && session.getAttribute("authorizedUser") == null) {
             User user;
             try {
                 UserService service = factory.getUserService();
                 user = service.findUserByLoginPassword(login, password);
-            } catch (ServiceException | DAOException e) {
+            } catch (ServiceException e) {
                 throw new CommandException(e);
             }
 
             if(user != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("authorizedUser", user);
-                //session.setAttribute("menu", menu.get(user.getRole()));
                 logger.info(String.format("user \"%s\" is logged in from %s (%s:%s)", login, request.getRemoteAddr(), request.getRemoteHost(), request.getRemotePort()));
                 return new Forward("/main.html", true);
             } else {

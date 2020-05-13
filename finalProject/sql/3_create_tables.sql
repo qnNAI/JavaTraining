@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS workshopDB.product (
                                        `user_id` INT NULL,
                                        `name` VARCHAR(45) NOT NULL,
                                        `price` DOUBLE NULL,
-                                       `description` VARCHAR(45) NULL,
+                                       `description` VARCHAR(255) NULL,
                                        `image_path` VARCHAR(45) NULL,
                                        PRIMARY KEY (`id`),
                                        FOREIGN KEY (user_id)
@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS workshopDB.purchase (
                                         `state` ENUM('добавлен', 'заказан', 'доставлен') NOT NULL,
                                         `address` VARCHAR(45) NULL,
                                         `localAddress_id` INT NULL,
-                                        `date` DATE NOT NULL,
-                                        `obtainingMethod` ENUM('доставка', 'самовывоз') NOT NULL,
+                                        `date` DATE NULL,
+                                        `obtainingMethod` ENUM('доставка', 'самовывоз') NULL,
                                         PRIMARY KEY (`id`, `user_id`) );
 
 ALTER TABLE workshopDB.purchase

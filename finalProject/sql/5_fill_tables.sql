@@ -7,10 +7,15 @@ VALUES ("user1", "ee11cbb19052e40b07aac0ca060c23ee", '0', '0', "Вася", "Ва
         /* password = user */
 
 INSERT INTO workshopdb.product (user_id, name, price, description, image_path)
-VALUES (NULL, "Медведь Пух", 10.5, "Плюшевый медведь Винни Пух", "img/sakura2.jpg"),
-       (NULL, "Рыбка золотая", 7.5, "Плюшевая золотая рыбка", "img/1111.png"),
-       (NULL, "Заяц Крош", 9, "Плюшевый заяц Крош", "img/witcher.jpg"),
-       (1, "Тигр", 20, "Большой тигр с большими зубами", NULL);
+VALUES (NULL, "Медведь Пух", 10.5, "Плюшевый медведь Винни Пух", "img/vinni.jpg"),
+       (NULL, "Рыбка золотая", 7.5, "Плюшевая золотая рыбка", "img/gold_fish.jpg"),
+       (NULL, "Заяц Крош", 9, "Плюшевый заяц Крош", "img/crosh.jpg"),
+       (1, "Тигр", 20, "Большой тигр с большими зубами", NULL),
+       (NULL, "Бегемот", 5, "Плюшевый бегемот", "img/begemot.jpg"),
+       (NULL, "Нюша", 10, "Плюшевый свинка Нюша", "img/nyusha.jpg"),
+       (NULL, "Бараш", 8, "Плюшевый баран Бараш", "img/barash.jpg"),
+       (NULL, "Кар Карыч", 10, "Плюшевый ворон Кар Карыч", "img/karkar.jpg");
+
 
 INSERT INTO workshopdb.localaddress (address)
 VALUES ("ул. Покровского, 13-3"),

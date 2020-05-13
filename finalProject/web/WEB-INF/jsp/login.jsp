@@ -20,10 +20,17 @@
 
 </head>
 <body>
-<c:url value="/registration.html" var="registrationLink"/>
+<c:url value="/registration.html" var="registrationPage"/>
+<c:url var="mainPage" value="/main.html"/>
+<c:url var="orderPage" value="/order.html"/>
+<c:url var="infoPage" value="/info.html"/>
+<c:url var="deliveryPage" value="/delivery.html"/>
+<c:url var="loginPage" value="/login.html"/>
+
+<c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="${pageContext.request.contextPath}/main.html" style="color: #1E90FF">WORKSHOP</a>
+    <a class="navbar-brand" href="${mainPage}" style="color: #1E90FF">WORKSHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -32,16 +39,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/error.html">Каталог</a>
+                <a class="nav-link" href="${infoPage}">О нас</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/menu.html">Заказы</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Доставка</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">О нас</a>
+                <a class="nav-link" href="${deliveryPage}">Доставка</a>
             </li>
         </ul>
     </div>
@@ -53,7 +54,7 @@
 
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <form class="form" action="${pageContext.request.contextPath}/login.html" method="post"
+        <form class="form" action="${loginPage}" method="post"
               style="max-width: 500px; width: 100%; margin: 75px auto auto;">
             <div class="form-group">
                 <LABEL for="login">Имя пользователя</LABEL>
@@ -64,7 +65,7 @@
                 <INPUT type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
             </div>
             <BUTTON class="btn btn-outline-success my-2 my-sm-0" type="submit">Войти</BUTTON>
-            <a class="float-right" style="margin-top: 5px;" href="${registrationLink}">Регистрация</a>
+            <a class="float-right" style="margin-top: 5px;" href="${registrationPage}">Регистрация</a>
         </form>
     </div>
 </div>

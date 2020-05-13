@@ -31,8 +31,8 @@ public class SecurityFilter implements Filter {
 		if(request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
 			HttpServletRequest httpRequest = (HttpServletRequest)request;
 			HttpServletResponse httpResponse = (HttpServletResponse)response;
-			Command command = (Command)httpRequest.getAttribute("action");
-			Set<Role> allowRoles = command.getAllowedRoles();
+			Command command = (Command)httpRequest.getAttribute("command");
+			Set<Role> allowedRoles = command.getAllowedRoles();
 			String userName = "unauthorized user";
 			HttpSession session = httpRequest.getSession(false);
 			User user = null;
@@ -45,10 +45,10 @@ public class SecurityFilter implements Filter {
 					session.removeAttribute("SecurityFilterMessage");
 				}
 			}
-			boolean canExecute = allowRoles == null;
+			boolean canExecute = allowedRoles == null;
 			if(user != null) {
 				userName = "\"" + user.getLogin() + "\" user";
-				canExecute = canExecute || allowRoles.contains(user.getRole());
+				canExecute = canExecute || allowedRoles.contains(user.getRole());
 			}
 			if(canExecute) {
 				chain.doFilter(request, response);

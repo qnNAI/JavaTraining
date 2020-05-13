@@ -51,7 +51,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
 
     @Override
     public Product read(int id) throws DAOException {
-        String select = "SELECT name, price, description, image_path FROM workshopDB.product WHERE id=" + id;
+        String select = "SELECT user_id, name, price, description, image_path FROM workshopDB.product WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -103,17 +103,18 @@ public class Purchase implements Entity {
             return ordinal();
         }
 
-        public static ConfirmedOrder.State getByIdentity(Integer identity) {
-            return ConfirmedOrder.State.values()[identity];
+        public static State getByIdentity(Integer identity) {
+            return State.values()[identity];
         }
 
-        public static ConfirmedOrder.State getByName(String name) {
-            for (ConfirmedOrder.State s : ConfirmedOrder.State.values()) {
+        public static State getByName(String name) {
+            for (State s : State.values()) {
                 if (s.getName().equals(name)) {
                     return s;
                 }
             }
             return null;
         }
+
     }
 }

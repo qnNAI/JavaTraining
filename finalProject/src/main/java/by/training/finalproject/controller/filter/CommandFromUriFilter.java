@@ -1,10 +1,7 @@
 package by.training.finalproject.controller.filter;
 
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.impl.LoginCmd;
-import by.training.finalproject.controller.command.impl.LogoutCmd;
-import by.training.finalproject.controller.command.impl.MainCmd;
-import by.training.finalproject.controller.command.impl.RegistrationCmd;
+import by.training.finalproject.controller.command.impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,15 +17,13 @@ public class CommandFromUriFilter implements Filter {
     private static Map<String, Class<? extends Command>> commands = new ConcurrentHashMap<>();
 
     static {
-        commands.put("/", LoginCmd.class);
-        //commands.put("/index", MainCmd.class);
+        commands.put("/", MainCmd.class);
         commands.put("/login", LoginCmd.class);
-        commands.put("/menu", LogoutCmd.class);
+        commands.put("/logout", LogoutCmd.class);
         commands.put("/registration", RegistrationCmd.class);
         commands.put("/main", MainCmd.class);
-        commands.put("/basket", LoginCmd.class);
-       // commands.put("/logout", LogoutCmd.class);
-
+        commands.put("/basket", BasketCmd.class);
+        commands.put("/addToBasket", AddToBasketCmd.class);
     }
 
     @Override
@@ -52,6 +47,7 @@ public class CommandFromUriFilter implements Filter {
             Class<? extends Command> commandClass = commands.get(commandName);
             try {
                 Command command = commandClass.newInstance();
+                logger.debug(String.format("Command name = %s", commandName));
                 command.setName(commandName);
                 httpRequest.setAttribute("command", command);
                 chain.doFilter(request, response);

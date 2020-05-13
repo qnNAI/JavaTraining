@@ -1,13 +1,13 @@
 package by.training.finalproject.service.impl;
 
 import by.training.finalproject.beans.Product;
-import by.training.finalproject.beans.User;
+import by.training.finalproject.beans.ProductList;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
 import by.training.finalproject.dao.Transaction;
-import by.training.finalproject.dao.UserDao;
 import by.training.finalproject.service.ProductService;
 import by.training.finalproject.service.serviceException.ServiceException;
+import by.training.finalproject.service.util.BuildEntityUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,7 +65,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             Product product = dao.read(id);
-            buildProduct(Collections.singletonList(product));
+            BuildEntityUtility.buildProduct(Collections.singletonList(product), transaction);
             transaction.commit();
             return product;
         } catch (DAOException e) {
@@ -85,7 +85,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
             List<Product> products = dao.read();
-            buildProduct(products);
+            BuildEntityUtility.buildProduct(products, transaction);
             transaction.commit();
             return products;
         } catch (DAOException e) {
@@ -100,30 +100,72 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
         }
     }
 
-    private void buildProduct(List<Product> products) throws ServiceException {
+    @Override
+    public List<Product> findAllWithUserID() throws ServiceException {
         try {
-            UserDao userDao = (UserDao) transaction.createDao(UserDao.class.getName());
-            ProductDao productDao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            Map<Integer, User> users = new HashMap<>();
-            User user;
-            Integer userID;
-
-            for (Product product : products) {
-                user = product.getUser();
-                if (user != null) {     // if user set in product
-                    userID = user.getId();
-                    user = users.get(userID);
-                    if (user == null) {     // if there is no user in map
-                        user = userDao.read(userID);
-                        users.put(userID, user);
-                    }
-                    product.setUser(user);
-                }
-            }
+            ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
+            List<Product> products = dao.read();
+            products.removeIf(product -> product.getUser() == null);
+            BuildEntityUtility.buildProduct(products, transaction);
+            transaction.commit();
+            return products;
         } catch (DAOException e) {
-            logger.error("Failed to build product", e);
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Failed to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
+            logger.error("Failed to find all products  with user id", e);
             throw new ServiceException(e);
         }
-
     }
+
+    @Override
+    public List<Product> findAllWithoutUserID() throws ServiceException {
+        try {
+            ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
+            List<Product> products = dao.read();
+            products.removeIf(product -> product.getUser() != null);
+            BuildEntityUtility.buildProduct(products, transaction);
+            transaction.commit();
+            return products;
+        } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Failed to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
+            logger.error("Failed to find all products without user id", e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Product> findAllWithoutUserIdById(List<ProductList> listOfProductList) throws ServiceException {
+        try {
+            ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
+            List<Product> products = new ArrayList<>();
+
+            for (ProductList productList : listOfProductList) {
+                products.add(dao.read(productList.getProduct().getId()));
+            }
+
+            products.removeIf(product -> product.getUser() != null);
+            BuildEntityUtility.buildProduct(products, transaction);
+            transaction.commit();
+            return products;
+        } catch (DAOException e) {
+            try {
+                transaction.rollback();
+            } catch (DAOException ex) {
+                logger.error("Failed to rollback transaction", e);
+                throw new ServiceException(ex);
+            }
+            logger.error("Failed to find all products without user id", e);
+            throw new ServiceException(e);
+        }
+    }
+
 }

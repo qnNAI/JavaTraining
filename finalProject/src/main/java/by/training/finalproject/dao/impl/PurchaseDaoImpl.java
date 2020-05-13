@@ -7,7 +7,6 @@ import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.PurchaseDao;
 
-import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,11 +17,21 @@ import java.util.List;
 public class PurchaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
     @Override
     public void create(Purchase purchase) throws DAOException {
-        String insert = "INSERT INTO workshopDB.purchase (user_id, state, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?)";
+        String insert;
+
+        if (purchase.getLocalAddress() != null) {
+            insert = "INSERT INTO workshopDB.purchase (user_id, state, address, localAddress_id, date, obtainingMethod) VALUES (?,?,?,?,?,?)";
+        } else {
+            insert = "INSERT INTO workshopDB.purchase (user_id, state) VALUES (?,?)";
+        }
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
-            setFullPurchaseStatement(purchase, preparedStatement);
-
+            if (purchase.getLocalAddress() != null) {
+                setFullPurchaseStatement(purchase, preparedStatement);
+            } else {
+                preparedStatement.setInt(1, purchase.getUser().getId());
+                preparedStatement.setString(2, purchase.getState().getName());
+            }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Failed to add purchase", e);
@@ -78,7 +87,7 @@ public class PurchaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Purchase> purchases = new ArrayList<>();
-            Purchase purchase = null;
+            Purchase purchase;
 
             while (resultSet.next()) {
                 purchase = new Purchase();
@@ -92,21 +101,55 @@ public class PurchaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
         }
     }
 
+    @Override
+    public List<Purchase> readIdAndStateByUserId(int userID) throws DAOException {
+        String select = "SELECT id, state FROM workshopdb.purchase WHERE user_id=" + userID;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Purchase> purchases = new ArrayList<>();
+            Purchase purchase;
+
+            while (resultSet.next()) {
+                purchase = new Purchase();
+                purchase.setId(resultSet.getInt("id"));
+                purchase.setState(Purchase.State.getByName(resultSet.getString("state")));
+                purchases.add(purchase);
+            }
+            return purchases;
+        } catch (SQLException e) {
+            throw new DAOException("Failed to read purchases id and state by user id", e);
+        }
+    }
+
     private void setPurchaseFields(ResultSet resultSet, Purchase purchase) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("user_id"));
         purchase.setUser(user);
-        purchase.setState(Purchase.State.valueOf(resultSet.getString("state")));
-        ObtainingMethod obtainingMethod = ObtainingMethod.getByName(resultSet.getString("obtainingMethod"));
-        if (obtainingMethod == ObtainingMethod.DELIVERY) {
-            purchase.setAddress(resultSet.getString("address"));
-        } else {
-            LocalAddress localAddress = new LocalAddress();
-            localAddress.setId(resultSet.getInt("localAddress_id"));
-            purchase.setLocalAddress(localAddress);
+        purchase.setState(Purchase.State.getByName(resultSet.getString("state")));
+        String method = resultSet.getString("obtainingMethod");
+        if (!resultSet.wasNull()) {
+            ObtainingMethod obtainingMethod = ObtainingMethod.getByName(method);
+            if (obtainingMethod == ObtainingMethod.DELIVERY) {
+                String address = resultSet.getString("address");
+                if (!resultSet.wasNull()) {
+                    purchase.setAddress(address);
+                }
+            } else {
+                LocalAddress localAddress = new LocalAddress();
+                int localAddressId = resultSet.getInt("localAddress_id");
+                if (!resultSet.wasNull()) {
+                    localAddress.setId(localAddressId);
+                    purchase.setLocalAddress(localAddress);
+                }
+            }
+            purchase.setObtainingMethod(obtainingMethod);
         }
-        purchase.setDate(resultSet.getDate("date").toLocalDate());
-        purchase.setObtainingMethod(obtainingMethod);
+        java.sql.Date date = resultSet.getDate("date");
+        if (!resultSet.wasNull()) {
+            purchase.setDate(date.toLocalDate());
+        }
+
     }
 
     private void setFullPurchaseStatement(Purchase purchase, PreparedStatement preparedStatement) throws SQLException {

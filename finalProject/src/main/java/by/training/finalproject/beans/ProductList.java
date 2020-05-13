@@ -1,28 +1,28 @@
 package by.training.finalproject.beans;
 
 public class ProductList implements Entity {
-    private int purchaseID;
-    private int productID;
+    private Purchase purchase;
+    private Product product;
     private double finalPrice;
     private int amount;
 
     public ProductList() {
     }
 
-    public int getPurchaseID() {
-        return purchaseID;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setPurchaseID(int purchaseID) {
-        this.purchaseID = purchaseID;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 
-    public int getProductID() {
-        return productID;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public double getFinalPrice() {
@@ -44,8 +44,8 @@ public class ProductList implements Entity {
     @Override
     public String toString() {
         return "ProductList{" +
-                "purchaseID=" + purchaseID +
-                ", productID=" + productID +
+                "purchase=" + purchase +
+                ", product=" + product +
                 ", finalPrice=" + finalPrice +
                 ", amount=" + amount +
                 '}';

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Set;
 
 public class RegistrationCmd extends Command {
@@ -19,9 +20,11 @@ public class RegistrationCmd extends Command {
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+        HttpSession session = request.getSession();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if (login != null && password != null) {
+
+        if (login != null && password != null && session.getAttribute("authorizedUser") == null) {
             User user;
             try {
                 UserService service = factory.getUserService();
@@ -43,7 +46,7 @@ public class RegistrationCmd extends Command {
                     service.save(user);
                     return new Forward("/login.html", true);
                 }
-            } catch (ServiceException | DAOException e) {
+            } catch (ServiceException e) {
                 throw new CommandException(e);
             }
         }

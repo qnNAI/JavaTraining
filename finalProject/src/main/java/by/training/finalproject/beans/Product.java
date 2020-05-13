@@ -7,6 +7,7 @@ public class Product implements Entity {
     private double price;
     private String description;
     private String imagePath;
+    private boolean isInBasket;
 
     public Product() {}
 
@@ -58,6 +59,14 @@ public class Product implements Entity {
         this.imagePath = imagePath;
     }
 
+    public boolean getIsInBasket() {
+        return isInBasket;
+    }
+
+    public void setInBasket(boolean inBasket) {
+        isInBasket = inBasket;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -67,6 +76,7 @@ public class Product implements Entity {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", isInBasket=" + isInBasket +
                 '}';
     }
 }
