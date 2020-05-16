@@ -1,6 +1,5 @@
 package by.training.finalproject.controller.command;
 
-import by.training.finalproject.beans.User;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.factory.ServiceFactory;
@@ -14,12 +13,9 @@ import java.util.Set;
 
 public abstract class Command {
     private Set<Role> allowedRoles = new HashSet<>();
-    private User currentUser;
     private String name;
 
-    protected ServiceFactory factory;
-
-    public abstract Command.Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException;
+    public abstract Command.Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException;
 
     public Set<Role> getAllowedRoles() {
         return allowedRoles;
@@ -29,28 +25,12 @@ public abstract class Command {
         this.allowedRoles = allowedRoles;
     }
 
-    public User getAuthorizedUser() {
-        return currentUser;
-    }
-
-    public void setAuthorizedUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ServiceFactory getFactory() {
-        return factory;
-    }
-
-    public void setFactory(ServiceFactory factory) {
-        this.factory = factory;
     }
 
     public static class Forward {

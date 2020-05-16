@@ -85,13 +85,14 @@
             <c:otherwise>
                 <a class="btn btn-outline-success my-2 my-sm-0"
                    href="${loginPage}">
-                    <i class="fa fa-sign-out"></i>
+                    <i class="fa fa-sign-in"></i>
                     Войти
                 </a>
             </c:otherwise>
         </c:choose>
     </div>
 </nav>
+<!-- end nav -->
 
 <h2>
     <div style="text-align: center; margin-top: 25px;">Товары</div>

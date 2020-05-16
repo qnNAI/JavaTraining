@@ -3,6 +3,7 @@ package by.training.finalproject.controller.command.impl;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.controller.command.commandException.CommandException;
+import by.training.finalproject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,7 @@ public class LogoutCmd extends Command {
     private static Logger logger = LogManager.getLogger(LogoutCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("authorizedUser") != null) {
             session.invalidate();

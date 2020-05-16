@@ -84,8 +84,7 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
 
-            command.setFactory(createFactory());
-            Command.Forward forward = command.execute(request, response);
+            Command.Forward forward = command.execute(request, response, createFactory());
 
             if(session != null && forward != null && !forward.getAttributes().isEmpty()) {
                 session.setAttribute("redirectedData", forward.getAttributes());
@@ -103,7 +102,6 @@ public class DispatcherServlet extends HttpServlet {
                     jspPage = command.getName() + ".jsp";
                 }
                 jspPage = "/WEB-INF/jsp" + jspPage;
-                System.out.println("FORWARD TO " + jspPage);
                 logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
                 getServletContext().getRequestDispatcher(jspPage).forward(request, response);
             }

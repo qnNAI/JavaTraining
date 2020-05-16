@@ -14,16 +14,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CommandFromUriFilter implements Filter {
     private static Logger logger = LogManager.getLogger(CommandFromUriFilter.class.getName());
 
-    private static Map<String, Class<? extends Command>> commands = new ConcurrentHashMap<>();
+    private static Map<String, Command> commands = new ConcurrentHashMap<>();
 
     static {
-        commands.put("/", MainCmd.class);
-        commands.put("/login", LoginCmd.class);
-        commands.put("/logout", LogoutCmd.class);
-        commands.put("/registration", RegistrationCmd.class);
-        commands.put("/main", MainCmd.class);
-        commands.put("/basket", BasketCmd.class);
-        commands.put("/addToBasket", AddToBasketCmd.class);
+        commands.put("/", new MainCmd());
+        commands.put("/login", new LoginCmd());
+        commands.put("/logout", new LogoutCmd());
+        commands.put("/registration", new RegistrationCmd());
+        commands.put("/main", new MainCmd());
+        commands.put("/basket", new BasketCmd());
+        commands.put("/addToBasket", new AddToBasketCmd());
+        commands.put("/removeFromBasket", new RemoveFromBasketCmd());
+        commands.put("/changeProductInBasket", new ChangeProductBasketCmd());
+        commands.put("/confirmPurchase", new ConfirmPurchaseCmd());
+        commands.put("/purchaseConfirmation", new PurchaseConfirmationCmd());
     }
 
     @Override
@@ -36,22 +40,20 @@ public class CommandFromUriFilter implements Filter {
             String contextPath = httpRequest.getContextPath();
             String uri = httpRequest.getRequestURI();
             logger.debug(String.format("Starting of processing of request for URI \"%s\"", uri));
-            int beginAction = contextPath.length();
-            int endAction = uri.lastIndexOf('.');
+            int beginCommand = contextPath.length();
+            int endCommand = uri.lastIndexOf('.');
             String commandName;
-            if(endAction >= 0) {
-                commandName = uri.substring(beginAction, endAction);
+            if(endCommand >= 0) {
+                commandName = uri.substring(beginCommand, endCommand);
             } else {
-                commandName = uri.substring(beginAction);
+                commandName = uri.substring(beginCommand);
             }
-            Class<? extends Command> commandClass = commands.get(commandName);
             try {
-                Command command = commandClass.newInstance();
-                logger.debug(String.format("Command name = %s", commandName));
+                Command command = commands.get(commandName);
                 command.setName(commandName);
                 httpRequest.setAttribute("command", command);
                 chain.doFilter(request, response);
-            } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+            } catch (NullPointerException e) {
                 logger.error("It is impossible to create command handler object", e);
                 httpRequest.setAttribute("error", String.format("Запрошенный адрес %s не может быть обработан сервером", uri));
                 httpRequest.getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);

@@ -2,11 +2,11 @@
 <Configuration status="FATAL">
 
     <Appenders>
-        <Console name="console">
+        <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %C{2} %M %msg%n"/>
         </Console>
-        <RollingFile name="errorLogFile" fileName="logs/logErrorLevel/errorLog.log"
-                     filePattern="logs/logErrorLevel/errorLog-%d{yyyy-MM-dd}.log"
+        <RollingFile name="logFile" fileName="log/log.log"
+                     filePattern="log/log-%d{yyyy-MM-dd}.log"
                      ignoreExceptions="false">
             <PatternLayout pattern="%d{dd::MM::yyyy HH:mm:ss} [%t] %-5level %C{2} %M %msg%n"/>
             <SizeBasedTriggeringPolicy size="2MB"/>
@@ -16,34 +16,37 @@
 
     <Loggers>
         <Logger name="by.training.finalproject.service.impl.LocalAddressServiceImpl" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.service.impl.ProductServiceImpl" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.service.impl.UserServiceImpl" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.controller.DispatcherServlet" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.controller.command.impl.LoginCmd" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.dao.impl.TransactionFactoryImpl" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.dao.impl.TransactionImpl" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.dao.pool.ConnectionPool" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
         <Logger name="by.training.finalproject.controller.filter.CommandFromUriFilter" level="info">
-            <AppenderRef ref="errorLogFile"/>
+            <AppenderRef ref="logFile"/>
         </Logger>
-        <Logger name="by/training/finalproject/controller/command/impl/BasketCmd.java" level="info">
-            <AppenderRef ref="errorLogFile"/>
+        <Logger name="by.training.finalproject.controller.command.impl.BasketCmd" level="info">
+            <AppenderRef ref="logFile"/>
+        </Logger>
+        <Logger name="by.training.finalproject.controller.command.impl.ChangeProductBasketCmd" level="info">
+            <AppenderRef ref="logFile"/>
         </Logger>
 
         <Root level="info">

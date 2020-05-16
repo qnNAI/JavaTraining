@@ -3,7 +3,6 @@
 <body>
 <form action="/error.html" method="post">
     <h2>Error</h2>
-    <input type="text" name="login">
 </form>
 </body>
 </html>

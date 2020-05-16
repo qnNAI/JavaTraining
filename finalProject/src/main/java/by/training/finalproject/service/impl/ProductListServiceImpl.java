@@ -24,7 +24,11 @@ public class ProductListServiceImpl extends BaseServiceImpl implements ProductLi
     public void save(ProductList productList) throws ServiceException {
         try {
             ProductListDao dao = (ProductListDao) transaction.createDao(ProductListDao.class.getName());
-            dao.create(productList);
+            if (findByID(productList.getPurchase().getId(), productList.getProduct().getId()) != null) {
+                dao.update(productList);
+            } else {
+                dao.create(productList);
+            }
             transaction.commit();
         } catch (DAOException e) {
             try {
@@ -61,7 +65,11 @@ public class ProductListServiceImpl extends BaseServiceImpl implements ProductLi
         try {
             ProductListDao dao = (ProductListDao) transaction.createDao(ProductListDao.class.getName());
             ProductList productList = dao.read(purchaseID, productID);
-            BuildEntityUtility.buildProductList(Collections.singletonList(productList), transaction);
+            if (productList != null && productList.getPurchase() != null && productList.getProduct() != null) {
+                BuildEntityUtility.buildProductList(Collections.singletonList(productList), transaction);
+            } else {
+                return null;
+            }
             transaction.commit();
             return productList;
         } catch (DAOException e) {

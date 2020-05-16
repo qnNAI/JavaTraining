@@ -27,6 +27,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
             throw new DAOException("Failed to create product list", e);
         }
     }
+
     @Override
     public ProductList read(int purchaseID, int productID) throws DAOException {
         String select = "SELECT finalPrice, amount FROM workshopdb.productlist WHERE purchase_id=? AND product_id=?";

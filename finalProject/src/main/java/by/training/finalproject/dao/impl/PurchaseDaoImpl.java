@@ -59,7 +59,7 @@ public class PurchaseDaoImpl extends BaseDaoImpl implements PurchaseDao {
 
     @Override
     public void update(Purchase purchase) throws DAOException {
-        String update = "UPDATE workshopdb.purchase SET id=?, user_id=?, state=?, address=?, localAddress_id=?, date=?, obtainingMethod=? WHERE id=" + purchase.getId() ;
+        String update = "UPDATE workshopdb.purchase SET user_id=?, state=?, address=?, localAddress_id=?, date=?, obtainingMethod=? WHERE id=" + purchase.getId() ;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             setFullPurchaseStatement(purchase, preparedStatement);

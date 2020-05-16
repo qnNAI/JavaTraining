@@ -21,11 +21,6 @@ INSERT INTO workshopdb.localaddress (address)
 VALUES ("ул. Покровского, 13-3"),
        ("пр-т Будёного, 3А-43");
 
-/*INSERT INTO workshopdb.confirmedorder (order_id, state, finalPrice, amount, address, date, obtainingMethod)
-VALUE (1, "изготавливается", 15.7, 1, "переул. Смирнова, 7", "2020-05-01", "доставка");
-
-INSERT INTO workshopdb.confirmedorder (order_id, state, finalPrice, amount, localAddress_id, date, obtainingMethod)
-VALUE (2, "изготавливается", 15.7, 1, 1, "2020-05-15", "самовывоз");*/
 
 INSERT INTO workshopdb.purchase (user_id, state, localAddress_id, date, obtainingMethod)
 VALUES (2, "заказан", 2, "2020-06-05", "самовывоз"),

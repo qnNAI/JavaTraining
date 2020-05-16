@@ -6,6 +6,7 @@ import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.service.UserService;
+import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +20,7 @@ public class LoginCmd extends Command {
     private static Logger logger = LogManager.getLogger(LoginCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
         HttpSession session = request.getSession();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
