@@ -26,7 +26,3 @@ INSERT INTO workshopdb.purchase (user_id, state, localAddress_id, date, obtainin
 VALUES (2, "заказан", 2, "2020-06-05", "самовывоз"),
        (3, "доставлен", 1, "2020-05-26", "самовывоз");
 
-/*INSERT INTO workshopdb.productlist (purchase_id, item_id, finalPrice, amount)
-VALUES (1, 2, 8, 3),
-       (2, 1000001, 10.7, 1),
-       (2, 3, 9, 2);*/

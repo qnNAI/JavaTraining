@@ -3,8 +3,6 @@ package by.training.finalproject.controller.command.impl;
 import by.training.finalproject.beans.User;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
-import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.service.UserService;
 import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
@@ -20,7 +18,7 @@ public class RegistrationCmd extends Command {
     private static Logger logger = LogManager.getLogger(RegistrationCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         HttpSession session = request.getSession();
         String login = request.getParameter("login");
         String password = request.getParameter("password");
@@ -48,7 +46,8 @@ public class RegistrationCmd extends Command {
                     return new Forward("/login.html", true);
                 }
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                logger.error("Failed to create user", e);
+                return new Forward("/error.jsp", false);
             }
         }
         return null;

@@ -9,4 +9,6 @@ public interface LocalAddressService extends Service<LocalAddress> {
     void delete(int id) throws ServiceException;
 
     LocalAddress findByID(int id) throws ServiceException;
+
+    List<LocalAddress> findAll() throws ServiceException;
 }

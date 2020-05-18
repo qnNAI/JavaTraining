@@ -13,7 +13,7 @@ import java.util.List;
 public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao {
     @Override
     public void create(LocalAddress localAddress) throws DAOException {
-        String insert = "INSERT INTO workshopDB.localAddress (address) VALUE (?)";
+        final String insert = "INSERT INTO localAddress (address) VALUE (?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             preparedStatement.setString(1, localAddress.getAddress());
@@ -25,7 +25,7 @@ public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao 
 
     @Override
     public void delete(int id) throws DAOException {
-        String delete = "DELETE FROM workshopDB.localAddress WHERE id=" + id;
+        final String delete = "DELETE FROM localAddress WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(delete)) {
             preparedStatement.executeUpdate();
@@ -37,7 +37,7 @@ public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao 
 
     @Override
     public LocalAddress read(int id) throws DAOException {
-        String select = "SELECT * FROM workshopDB.localAddress WHERE id=" + id;
+        final String select = "SELECT * FROM localAddress WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,7 +56,7 @@ public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao 
 
     @Override
     public void update(LocalAddress localAddress) throws DAOException {
-        String update = "UPDATE workshopDB.localaddress SET address=? WHERE id=?";
+        final String update = "UPDATE localaddress SET address=? WHERE id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             preparedStatement.setString(1, localAddress.getAddress());
@@ -68,7 +68,7 @@ public class LocalAddressDaoImpl extends BaseDaoImpl implements LocalAddressDao 
     }
 
     public List<LocalAddress> read() throws DAOException {
-        String select = "SELECT * FROM workshopDB.localAddress";
+        final String select = "SELECT * FROM localAddress";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();

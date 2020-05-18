@@ -1,9 +1,8 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.LocalAddress;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.LocalAddressService;
 import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
@@ -20,7 +19,7 @@ public class PurchaseConfirmationCmd extends Command {
     private static Logger logger = LogManager.getLogger(PurchaseConfirmationCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("authorizedUser") == null) {
             return new Forward("/error.jsp", false);
@@ -33,12 +32,11 @@ public class PurchaseConfirmationCmd extends Command {
             request.setAttribute("amount", amount);
             request.setAttribute("sum", sum);
             request.setAttribute("localAddresses", localAddresses);
-            return new Forward("/purchaseConfirmation.jsp", false);
+            return new Forward("/basket/purchaseConfirmation.jsp", false);
         } catch (NumberFormatException | ServiceException e) {
             logger.error("Failed to load purchase confirmation page", e);
+            return new Forward("/error.jsp", false);
         }
-
-        return new Forward("/error.jsp", false);
     }
 
     @Override

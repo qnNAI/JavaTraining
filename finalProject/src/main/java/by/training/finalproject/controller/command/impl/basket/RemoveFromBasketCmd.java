@@ -1,8 +1,7 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.PurchaseService;
 import by.training.finalproject.service.factory.ServiceFactory;
@@ -19,7 +18,7 @@ public class RemoveFromBasketCmd extends Command {
     private static Logger logger = LogManager.getLogger(RemoveFromBasketCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         HttpSession session = request.getSession();
         try {
             PurchaseService purchaseService = factory.getPurchaseService();
@@ -35,8 +34,8 @@ public class RemoveFromBasketCmd extends Command {
             }
         } catch (NumberFormatException | ServiceException e) {
             logger.error("Failed to remove product from basket", e);
+            return new Forward("/error.jsp", false);
         }
-
         return new Forward("/basket.html", true);
     }
 

@@ -9,6 +9,4 @@ public interface Dao<Type extends Entity> {
     void create(Type entity) throws DAOException;
 
     void update(Type entity) throws DAOException;
-
-    List<Type> read() throws DAOException;
 }

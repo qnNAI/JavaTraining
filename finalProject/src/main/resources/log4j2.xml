@@ -42,10 +42,10 @@
         <Logger name="by.training.finalproject.controller.filter.CommandFromUriFilter" level="info">
             <AppenderRef ref="logFile"/>
         </Logger>
-        <Logger name="by.training.finalproject.controller.command.impl.BasketCmd" level="info">
+        <Logger name="by.training.finalproject.controller.command.impl.basket.BasketCmd" level="info">
             <AppenderRef ref="logFile"/>
         </Logger>
-        <Logger name="by.training.finalproject.controller.command.impl.ChangeProductBasketCmd" level="info">
+        <Logger name="by.training.finalproject.controller.command.impl.basket.ChangeProductBasketCmd" level="info">
             <AppenderRef ref="logFile"/>
         </Logger>
 

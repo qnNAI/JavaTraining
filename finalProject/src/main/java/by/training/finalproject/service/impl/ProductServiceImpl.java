@@ -81,10 +81,10 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     }
 
     @Override
-    public List<Product> findAll() throws ServiceException {
+    public List<Product> findAll(int start, int amount) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            List<Product> products = dao.read();
+            List<Product> products = dao.read(start, amount);
             BuildEntityUtility.buildProduct(products, transaction);
             transaction.commit();
             return products;
@@ -101,10 +101,21 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     }
 
     @Override
-    public List<Product> findAllWithUserID() throws ServiceException {
+    public int countProducts() throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            List<Product> products = dao.read();
+            return dao.countRecords();
+        } catch (DAOException e) {
+            logger.error("Failed to count products", e);
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Product> findAllWithUserID(int start, int amount) throws ServiceException {
+        try {
+            ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
+            List<Product> products = dao.read(start, amount);
             products.removeIf(product -> product.getUser() == null);
             BuildEntityUtility.buildProduct(products, transaction);
             transaction.commit();
@@ -122,10 +133,10 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     }
 
     @Override
-    public List<Product> findAllWithoutUserID() throws ServiceException {
+    public List<Product> findAllWithoutUserID(int start, int amount) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            List<Product> products = dao.read();
+            List<Product> products = dao.read(start, amount);
             products.removeIf(product -> product.getUser() != null);
             BuildEntityUtility.buildProduct(products, transaction);
             transaction.commit();

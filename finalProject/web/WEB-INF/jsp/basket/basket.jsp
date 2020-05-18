@@ -33,7 +33,6 @@
 
 </head>
 <body>
-<c:url value="/registration.html" var="registrationPage"/>
 <c:url var="mainPage" value="/main.html"/>
 <c:url var="orderPage" value="/order.html"/>
 <c:url var="infoPage" value="/info.html"/>

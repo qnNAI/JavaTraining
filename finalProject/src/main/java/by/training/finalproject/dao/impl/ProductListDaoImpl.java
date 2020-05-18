@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
     @Override
     public void create(ProductList productList) throws DAOException {
-        String insert = "INSERT INTO workshopdb.productlist (purchase_id, product_id, finalPrice, amount) VALUES (?,?,?,?)";
+        final String insert = "INSERT INTO productlist (purchase_id, product_id, finalPrice, amount) VALUES (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             preparedStatement.setInt(1, productList.getPurchase().getId());
@@ -30,7 +30,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public ProductList read(int purchaseID, int productID) throws DAOException {
-        String select = "SELECT finalPrice, amount FROM workshopdb.productlist WHERE purchase_id=? AND product_id=?";
+        final String select = "SELECT finalPrice, amount FROM productlist WHERE purchase_id=? AND product_id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             preparedStatement.setInt(1, purchaseID);
@@ -60,7 +60,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public void update(ProductList productList) throws DAOException {
-        String update = "UPDATE workshopdb.productlist SET finalPrice=?, amount=? WHERE purchase_id=? AND product_id=?";
+        final String update = "UPDATE productlist SET finalPrice=?, amount=? WHERE purchase_id=? AND product_id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             preparedStatement.setDouble(1, productList.getFinalPrice());
@@ -76,7 +76,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public void delete(int purchaseID, int productID) throws DAOException {
-        String delete = "DELETE FROM workshopdb.productlist WHERE purchase_id=? AND product_id=?";
+        final String delete = "DELETE FROM productlist WHERE purchase_id=? AND product_id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(delete)) {
             preparedStatement.setInt(1, purchaseID);
@@ -89,7 +89,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public List<ProductList> read() throws DAOException {
-        String select = "SELECT * FROM workshopdb.productlist";
+        final String select = "SELECT * FROM productlist";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -117,7 +117,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public List<ProductList> readIdOnlyByPurchaseId(int purchaseID) throws DAOException {
-        String select = "SELECT product_id FROM workshopdb.productlist WHERE purchase_id=" + purchaseID;
+        final String select = "SELECT product_id FROM productlist WHERE purchase_id=" + purchaseID;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -144,7 +144,7 @@ public class ProductListDaoImpl extends BaseDaoImpl implements ProductListDao {
 
     @Override
     public List<ProductList> readByPurchaseId(int purchaseID) throws DAOException {
-        String select = "SELECT product_id, finalPrice, amount FROM workshopdb.productlist WHERE purchase_id=" + purchaseID;
+        final String select = "SELECT product_id, finalPrice, amount FROM productlist WHERE purchase_id=" + purchaseID;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();

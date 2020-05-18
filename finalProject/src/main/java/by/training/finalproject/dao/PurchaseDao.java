@@ -11,4 +11,6 @@ public interface PurchaseDao extends Dao<Purchase> {
     void delete(int id) throws DAOException;
 
     List<Purchase> readIdAndStateByUserId(int userID) throws DAOException;
+
+    List<Purchase> read() throws DAOException;
 }

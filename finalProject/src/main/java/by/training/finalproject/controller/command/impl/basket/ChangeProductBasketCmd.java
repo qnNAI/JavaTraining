@@ -1,11 +1,10 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.Product;
 import by.training.finalproject.beans.ProductList;
 import by.training.finalproject.beans.Purchase;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
@@ -21,7 +20,7 @@ public class ChangeProductBasketCmd extends Command {
     private static Logger logger = LogManager.getLogger(ChangeProductBasketCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         HttpSession session = request.getSession();
         try {
             ProductListService productListService = factory.getProductListService();
@@ -40,8 +39,8 @@ public class ChangeProductBasketCmd extends Command {
             }
         } catch (NumberFormatException | ServiceException e) {
             logger.error("Failed to change product in basket", e);
+            return new Forward("/error.jsp", false);
         }
-
         return new Forward("/basket.html", true);
     }
 

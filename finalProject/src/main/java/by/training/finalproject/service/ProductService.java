@@ -11,9 +11,13 @@ public interface ProductService extends Service<Product> {
 
     Product findByID(int id) throws ServiceException;
 
-    List<Product> findAllWithUserID() throws ServiceException;
+    int countProducts() throws ServiceException;
 
-    List<Product> findAllWithoutUserID() throws ServiceException;
+    List<Product> findAll(int start, int amount) throws ServiceException;
+
+    List<Product> findAllWithUserID(int start, int amount) throws ServiceException;
+
+    List<Product> findAllWithoutUserID(int start, int amount) throws ServiceException;
 
     List<Product> findAllWithoutUserIdById(List<ProductList> listOfProductList) throws ServiceException;
 }

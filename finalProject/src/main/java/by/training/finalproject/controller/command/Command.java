@@ -1,7 +1,6 @@
 package by.training.finalproject.controller.command;
 
 import by.training.finalproject.beans.infoEnum.Role;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ public abstract class Command {
     private Set<Role> allowedRoles = new HashSet<>();
     private String name;
 
-    public abstract Command.Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException;
+    public abstract Command.Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory);
 
     public Set<Role> getAllowedRoles() {
         return allowedRoles;

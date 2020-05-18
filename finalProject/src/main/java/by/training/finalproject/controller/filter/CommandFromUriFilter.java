@@ -2,6 +2,8 @@ package by.training.finalproject.controller.filter;
 
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.controller.command.impl.*;
+import by.training.finalproject.controller.command.impl.basket.*;
+import by.training.finalproject.controller.command.impl.profile.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +30,11 @@ public class CommandFromUriFilter implements Filter {
         commands.put("/changeProductInBasket", new ChangeProductBasketCmd());
         commands.put("/confirmPurchase", new ConfirmPurchaseCmd());
         commands.put("/purchaseConfirmation", new PurchaseConfirmationCmd());
+        commands.put("/profile", new ProfileCmd());
+        commands.put("/profile/changeUserInfo", new ChangeUserInfoCmd());
+        commands.put("/profile/changePassword", new ChangePasswordCmd());
+        commands.put("/profile/saveUserInfo", new SaveUserInfoCmd());
+        commands.put("/profile/savePassword", new SavePasswordCmd());
     }
 
     @Override

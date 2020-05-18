@@ -1,4 +1,4 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.Product;
 import by.training.finalproject.beans.ProductList;
@@ -6,7 +6,6 @@ import by.training.finalproject.beans.Purchase;
 import by.training.finalproject.beans.User;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.ProductService;
 import by.training.finalproject.service.PurchaseService;
@@ -25,7 +24,7 @@ public class AddToBasketCmd extends Command {
     private static Logger logger = LogManager.getLogger(AddToBasketCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         Forward forward = new Forward("/main.html", true);
         HttpSession session = request.getSession();
         try {
@@ -66,6 +65,7 @@ public class AddToBasketCmd extends Command {
             }
         } catch (InputMismatchException | NumberFormatException | ServiceException e) {
             logger.error("Failed to add product to basket", e);
+            return new Forward("/error.jsp", false);
         }
         return forward;
     }

@@ -1,0 +1,12 @@
+.pagination {
+    border: 1px solid;
+
+}
+
+.page-link:hover {
+    background-color: #FEADA2;
+}
+
+.pag-form  {
+    max-height: 30px;
+}

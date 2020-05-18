@@ -10,6 +10,8 @@ public interface ProductListService extends Service<ProductList> {
 
     ProductList findByID(Integer purchaseID, Integer productID) throws ServiceException;
 
+    List<ProductList> findAll() throws ServiceException;
+
     List<ProductList> findProductListWithIdOnlyByPurchaseId(int purchaseID) throws ServiceException;
 
     List<ProductList> findProductListByPurchaseId(int purchaseID) throws ServiceException;

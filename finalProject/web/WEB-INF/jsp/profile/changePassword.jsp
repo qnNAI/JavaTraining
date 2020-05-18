@@ -3,7 +3,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Basket</title>
+    <title>Profile password edit</title>
+    <c:url var="cssFile" value="/css/changePassword.css"/>
 
     <script src="https://use.fontawesome.com/0227303a93.js"></script>
 
@@ -12,7 +13,7 @@
 
     <link rel="stylesheet" href="css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="css/purchaseConf.css"/>
+    <link rel="stylesheet" type="text/css" href="${cssFile}"/>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -28,22 +29,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="js/TabContent.js" type="text/javascript"></script>
-
 </head>
+
 <body>
 <c:url var="mainPage" value="/main.html"/>
 <c:url var="orderPage" value="/order.html"/>
 <c:url var="infoPage" value="/info.html"/>
 <c:url var="deliveryPage" value="/delivery.html"/>
-<c:url var="loginPage" value="/login.html"/>
-<c:url var="profilePage" value="/profile.html"/>
 <c:url var="logoutPage" value="/logout.html"/>
-<c:url var="confirmPurchase" value="/confirmPurchase.html"/>
 <c:url var="basketPage" value="/basket.html"/>
+<c:url var="loginPage" value="/login.html"/>
+<c:url var="changeUserInfo" value="/profile/changeUserInfo.html"/>
+<c:url var="changePassword" value="/profile/changePassword.html"/>
+<c:url var="profilePage" value="/profile.html"/>
+<c:url var="userManagement" value="/admin/userManagement.html"/>
+<c:url var="productMgmt" value="/admin/productMgmt.html"/>
+<c:url var="history" value="/history.html"/>
+<c:url var="masterOrderMgmt" value="/master/orderMgmt.html"/>
+<c:url var="savePassword" value="/profile/savePassword.html"/>
 
 <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
 
+<!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="${mainPage}" style="color: #1E90FF">WORKSHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -72,56 +79,69 @@
                 </c:choose>
             </li>
         </ul>
-
-        <a class="btn btn-outline-warning my-2 my-sm-0" href="${logoutPage}">
+        <a class="btn btn-outline-secondary my-2 my-sm-0" href="${basketPage}">
+            <i class="fa fa-shopping-cart fa-lg"></i>
+            <text style="color: silver">Корзина</text>
+        </a>
+        <a class="btn btn-outline-warning my-2 my-sm-0 ml-1" href="${logoutPage}">
             <i class="fa fa-sign-out"></i>
             Выйти
         </a>
-        <a class="btn btn-outline-primary my-2 my-sm-0" href="${profilePage}" style="margin-left: 5px">
-            <i class="fa fa-user-circle"></i>
-            Личный кабинет
-        </a>
-
     </div>
 </nav>
-<!-- end nav -->
+<!-- end navbar -->
 
-<jsp:useBean id="amount" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="sum" scope="request" type="java.lang.Double"/>
-<jsp:useBean id="localAddresses" scope="request" class="java.util.ArrayList"/>
-<div class="container">
-    <div class="mt-5">
-        <h4>Товаров в заказе: ${amount}</h4>
-        <h4>Итого: ${sum} р</h4>
-        <br><p>Выберите способ получения: </p>
-    </div>
-    <!-- Tab links -->
-    <div class="tab tab-clazz">
-        <button class="tablinks" onclick="openTab(event, 'PICKUP')">Самовывоз</button>
-        <button class="tablinks" onclick="openTab(event, 'DELIVERY')">Доставка</button>
-    </div>
 
-    <!-- Tab content -->
-    <div id="PICKUP" class="tabcontent">
-        <br><h5>Выберите наиболее подходящий вариант:</h5>
-        <form method="post" action="${confirmPurchase}">
-            <input type="hidden" name="method" value="pickup">
-            <c:forEach items="${localAddresses}" var="localAddress">
-                <p><input type="radio" name="localAddressID" value="${localAddress.id}"> ${localAddress.address}</p>
-            </c:forEach>
-            <p><input type="submit" value="Оформить заказ" class="btn btn-primary">
-                <a class="btn btn-danger" href="${basketPage}">Вернуться в корзину</a></p>
-        </form>
+<div class="row">
+    <div class="col-2">
+        <div class="container-fluid mt-3">
+            <p class="menu-header">Меню</p>
+            <br>
+            <p><a class="menu-text" href="${profilePage}">Профиль</a></p>
+            <hr>
+            <p><a class="menu-text" href="${changeUserInfo}">Изменить данные</a></p>
+            <hr>
+            <c:choose>
+                <c:when test="${authorizedUser.role eq 'USER'}">
+                    <p><a class="menu-text" href="${history}">История покупок</a></p>
+                    <hr>
+                </c:when>
+                <c:when test="${authorizedUser.role eq 'ADMINISTRATOR'}">
+                    <p><a class="menu-text" href="${userManagement}">Управление пользователями</a></p>
+                    <hr>
+                    <p><a class="menu-text" href="${productMgmt}">Управление товарами</a></p>
+                    <hr>
+                </c:when>
+                <c:when test="${authorizedUser.role eq 'MASTER'}">
+                    <p><a class="menu-text" href="${masterOrderMgmt}">Управление заказами</a></p>
+                    <hr>
+                </c:when>
+            </c:choose>
+        </div>
     </div>
-
-    <div id="DELIVERY" class="tabcontent">
-        <form method="post" action="${confirmPurchase}">
-            <input type="hidden" name="method" value="delivery">
-            <br><label for="address"><h5>Введите ваш адрес:</h5></label>
-            <p><input type="text" id="address" name="address" class="address-input"></p>
-            <p><button type="submit" class="btn btn-primary">Оформить заказ</button>
-                <a class="btn btn-danger" href="${basketPage}">Вернуться в корзину</a></p>
-        </form>
+    <div class="col-10">
+        <div class="header-text">
+            <h2>Изменение пароля</h2>
+        </div>
+        <div class="container mt-5">
+            <h5>Добро пожаловать, ${authorizedUser.login}</h5><br>
+            <form method="post" action="${savePassword}" class="form">
+                <div class="form-group">
+                    <label for="oldPassword">Подтвердите, что это ваш аккаунт</label>
+                    <input type="text" name="oldPassword" id="oldPassword" class="form-control" placeholder="Введите старый пароль" required>
+                </div>
+                <div class="form-group">
+                    <label for="oldPassword">Новый пароль</label>
+                    <input type="text" name="newPassword" id="newPassword" class="form-control" placeholder="Новый пароль" required>
+                </div>
+                <div class="form-group">
+                    <label for="oldPassword">Подтвердите новый пароль</label>
+                    <input type="text" name="newPasswordConf" id="newPasswordConf" class="form-control" placeholder="Подтвердите новый пароль" required>
+                </div>
+                <button type="submit" class="btn btn-outline-success">Сменить пароль</button>
+                <a class="btn btn-outline-danger" href="${profilePage}">Отмена</a>
+            </form>
+        </div>
     </div>
 </div>
 

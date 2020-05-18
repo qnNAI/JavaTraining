@@ -1,7 +1,6 @@
 package by.training.finalproject.controller;
 
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.impl.TransactionFactoryImpl;
 import by.training.finalproject.dao.pool.ConnectionPool;
@@ -9,10 +8,6 @@ import by.training.finalproject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.appender.ConsoleAppender;
-import org.apache.logging.log4j.core.appender.FileAppender;
-import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -105,7 +100,7 @@ public class DispatcherServlet extends HttpServlet {
                 logger.debug(String.format("Request for URI \"%s\" is forwarded to JSP \"%s\"", requestedUri, jspPage));
                 getServletContext().getRequestDispatcher(jspPage).forward(request, response);
             }
-        } catch(CommandException | DAOException e) {
+        } catch(DAOException e) {
             logger.error("It is impossible to process request", e);
             request.setAttribute("error", "Ошибка обработки данных");
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);

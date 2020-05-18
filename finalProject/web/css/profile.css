@@ -1,0 +1,72 @@
+.header-text {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.row-text {
+    font-family: "Roboto Thin", sans-serif;
+    font-size: medium;
+    font-weight: 400;
+    color: #3c4043;
+}
+
+.row-value {
+    font-family: "Roboto Thin", sans-serif;
+    font-size: large;
+    font-weight: 400;
+    color: #000000;
+}
+
+table {
+    border-spacing: 10px 10px;
+}
+
+td {
+    min-width: 200px;
+    vertical-align: center;
+    padding: 10px 10px 10px 30px;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+}
+
+td:first-child {
+    padding-left: 0;
+}
+
+.col-2 {
+    border: 1px solid aquamarine;
+    background-color: #3c4043;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.menu-text {
+    font-size: large;
+    color: white;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    color: royalblue;
+}
+
+.menu-header {
+    color: aquamarine;
+    font-size: x-large;
+}
+
+hr {
+    border-color: white;
+}
+

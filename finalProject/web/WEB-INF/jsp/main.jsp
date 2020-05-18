@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <c:url var="cssFile" value="/css/main.css"/>
 
     <script src="https://use.fontawesome.com/0227303a93.js"></script>
 
@@ -11,6 +12,8 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="${cssFile}"/>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
@@ -37,6 +40,9 @@
 <c:url var="addToBasket" value="/addToBasket.html"/>
 
 <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
+<c:set var="amountFull" scope="request" value="${requestScope.amountFull}"/>
+<c:set var="page" scope="request" value="${requestScope.page}"/>
+<c:set var="pageAmount" scope="request" value="${requestScope.pageAmount}"/>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="${mainPage}" style="color: #1E90FF">WORKSHOP</a>
@@ -69,17 +75,17 @@
 
         <c:choose>
             <c:when test="${not empty authorizedUser}">
-                <a class="btn btn-outline-warning my-2 my-sm-0" href="${logoutPage}">
-                    <i class="fa fa-sign-out"></i>
-                    Выйти
+                <a class="btn btn-outline-secondary my-2 my-sm-0" href="${basketPage}">
+                    <i class="fa fa-shopping-cart fa-lg"></i>
+                    <text style="color: silver">Корзина</text>
                 </a>
-                <a class="btn btn-outline-primary my-2 my-sm-0" href="${profilePage}" style="margin-left: 5px">
+                <a class="btn btn-outline-primary my-2 my-sm-0 ml-1" href="${profilePage}">
                     <i class="fa fa-user-circle"></i>
                     Личный кабинет
                 </a>
-                <a class="btn btn-outline-secondary my-2 my-sm-0" href="${basketPage}" style="margin-left: 5px">
-                    <i class="fa fa-shopping-cart fa-lg"></i>
-                    <text style="color: silver">Корзина</text>
+                <a class="btn btn-outline-warning my-2 my-sm-0 ml-1" href="${logoutPage}">
+                    <i class="fa fa-sign-out"></i>
+                    Выйти
                 </a>
             </c:when>
             <c:otherwise>
@@ -119,18 +125,18 @@
                     <div class="card-footer" style="max-height: 60px">
                         <c:choose>
                             <c:when test="${not product.isInBasket}">
-                                    <form class="form-inline" action="${addToBasket}" method="post">
-                                        <input type="number" step="1" min="1" max="200"
-                                               id="productAmount"
-                                               name="productAmount"
-                                               value="1" required style="padding-top: 5px; max-width: 40px; width: 100%">
-                                        <input type="hidden" id="productID" name="productID"
-                                               value="${product.id}">
-                                        <button type="submit"
-                                                class="btn btn-primary ml-auto"
-                                                style="">Добавить в корзину
-                                        </button>
-                                    </form>
+                                <form class="form-inline" action="${addToBasket}" method="post">
+                                    <input type="number" step="1" min="1" max="200"
+                                           id="productAmount"
+                                           name="productAmount"
+                                           value="1" required style="padding-top: 5px; max-width: 40px; width: 100%">
+                                    <input type="hidden" id="productID" name="productID"
+                                           value="${product.id}">
+                                    <button type="submit"
+                                            class="btn btn-primary ml-auto"
+                                            style="">Добавить в корзину
+                                    </button>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <button disabled class="btn btn-secondary float-right"
@@ -143,6 +149,28 @@
             </div>
         </c:forEach>
     </div>
+    <p>${page} ${amountFull} ${pageAmount}</p>
+
+</div>
+
+<div class="row justify-content-center mb-5">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-lg">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">1</a></form></li>
+            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">2</a></form></li>
+            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">3</a></form></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 

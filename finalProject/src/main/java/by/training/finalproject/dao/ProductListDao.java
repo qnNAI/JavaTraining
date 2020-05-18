@@ -13,4 +13,6 @@ public interface ProductListDao extends Dao<ProductList> {
     List<ProductList> readIdOnlyByPurchaseId(int purchaseID) throws DAOException;
 
     List<ProductList> readByPurchaseId(int purchaseID) throws DAOException;
+
+    List<ProductList> read() throws DAOException;
 }

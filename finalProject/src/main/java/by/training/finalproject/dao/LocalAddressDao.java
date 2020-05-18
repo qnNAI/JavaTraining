@@ -10,4 +10,6 @@ public interface LocalAddressDao extends Dao<LocalAddress> {
     LocalAddress read(int id) throws DAOException;
 
     void delete(int id) throws DAOException;
+
+    List<LocalAddress> read() throws DAOException;
 }

@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface Service<Type extends Entity> {
     void save(Type entity) throws ServiceException;
-
-    List<Type> findAll() throws ServiceException;
 }

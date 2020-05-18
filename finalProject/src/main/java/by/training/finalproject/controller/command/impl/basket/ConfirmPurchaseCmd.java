@@ -1,11 +1,10 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.LocalAddress;
 import by.training.finalproject.beans.Purchase;
 import by.training.finalproject.beans.infoEnum.ObtainingMethod;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.PurchaseService;
 import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
@@ -22,7 +21,7 @@ public class ConfirmPurchaseCmd extends Command {
     private static Logger logger = LogManager.getLogger(ConfirmPurchaseCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         HttpSession session = request.getSession();
         if (session.getAttribute("authorizedUser") == null) {
             return new Forward("/error.jsp", false);
@@ -56,6 +55,7 @@ public class ConfirmPurchaseCmd extends Command {
             }
         } catch (NumberFormatException | ServiceException e) {
             logger.error("Failed to confirm purchase", e);
+            return new Forward("/error.jsp", false);
         }
         return new Forward("/main.html", true);
     }

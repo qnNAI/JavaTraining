@@ -26,6 +26,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             UserDao dao = (UserDao) transaction.createDao(UserDao.class.getName());
             String md5 = DigestUtils.md5Hex(user.getPassword());
             user.setPassword(md5);
+
             if (user.getId() == null) {
                 dao.create(user);
             } else {

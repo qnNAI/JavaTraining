@@ -1,11 +1,10 @@
-package by.training.finalproject.controller.command.impl;
+package by.training.finalproject.controller.command.impl.basket;
 
 import by.training.finalproject.beans.ProductList;
 import by.training.finalproject.beans.Purchase;
 import by.training.finalproject.beans.User;
 import by.training.finalproject.beans.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
-import by.training.finalproject.controller.command.commandException.CommandException;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.PurchaseService;
 import by.training.finalproject.service.factory.ServiceFactory;
@@ -23,8 +22,8 @@ public class BasketCmd extends Command {
     private static Logger logger = LogManager.getLogger(BasketCmd.class.getName());
 
     @Override
-    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) throws CommandException {
-        Forward forward = new Forward("/basket.jsp", false);
+    public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
+        Forward forward = new Forward("/basket/basket.jsp", false);
         HttpSession session = request.getSession();
         List<ProductList> listOfProductList = null;
         try {
@@ -44,6 +43,7 @@ public class BasketCmd extends Command {
 
         } catch (ServiceException e) {
             logger.error("Failed to load basket");
+            return new Forward("/error.jsp", false);
         }
 
         if (listOfProductList != null) {

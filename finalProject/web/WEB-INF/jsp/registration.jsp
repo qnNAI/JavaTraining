@@ -48,7 +48,7 @@
     <div style="text-align: center; margin-top: 25px;">Регистрация</div>
 </h2>
 
-<div class="container-fluid mb-5">
+<div class="container-fluid mb-5 mt-5">
     <div class="row justify-content-center">
         <form class="form" action="${pageContext.request.contextPath}/registration.html" method="post"
               style="max-width: 800px; width: 100%; padding-left: 15px; padding-right: 15px;">
@@ -89,8 +89,7 @@
             <div class="row">
                 <div class="col form-group">
                     <LABEL for="patronymic">Отчество</LABEL>
-                    <INPUT type="text" class="form-control" id="patronymic" name="patronymic" placeholder="Отчество"
-                           required>
+                    <INPUT type="text" class="form-control" id="patronymic" name="patronymic" placeholder="Отчество">
                 </div>
                 <div class="col form-group">
                     <LABEL for="phone">Телефон</LABEL>

@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     @Override
     public void create(Product product) throws DAOException {
-        String insert = "INSERT INTO workshopDB.product (user_id, name, price, description, image_path) VALUES (?,?,?,?,?)";
+        final String insert = "INSERT INTO product (user_id, name, price, description, image_path) VALUES (?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insert)) {
             setProductStatement(product, preparedStatement);
@@ -25,7 +25,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
 
     @Override
     public void update(Product product) throws DAOException {
-        String update = "UPDATE workshopDB.product SET name=?, price=?, description=?, image_path=? WHERE id=?";
+        final String update = "UPDATE product SET name=?, price=?, description=?, image_path=? WHERE id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(update)) {
             setProductStatement(product, preparedStatement);
@@ -39,7 +39,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
 
     @Override
     public void delete(int id) throws DAOException {
-        String delete = "DELETE FROM workshopDB.product WHERE id=" + id;
+        final String delete = "DELETE FROM product WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(delete)) {
             preparedStatement.executeUpdate();
@@ -51,7 +51,7 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
 
     @Override
     public Product read(int id) throws DAOException {
-        String select = "SELECT user_id, name, price, description, image_path FROM workshopDB.product WHERE id=" + id;
+        final String select = "SELECT user_id, name, price, description, image_path FROM product WHERE id=" + id;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,10 +69,12 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> read() throws DAOException {
-        String select = "SELECT * FROM workshopDB.product";
+    public List<Product> read(int start, int amount) throws DAOException {
+        final String select = "SELECT * FROM product LIMIT ?,?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
+            preparedStatement.setInt(1, start);
+            preparedStatement.setInt(2, amount);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Product> products = new ArrayList<>();
             Product product;
@@ -86,6 +88,21 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
             return products;
         } catch (SQLException e) {
             throw new DAOException("Failed to read products", e);
+        }
+    }
+
+    @Override
+    public int countRecords() throws DAOException {
+        final String select = "SELECT COUNT(*) AS amount FROM product";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("amount");
+            }
+          return 0;
+        } catch (SQLException e) {
+            throw new DAOException("Failed to count records", e);
         }
     }
 
