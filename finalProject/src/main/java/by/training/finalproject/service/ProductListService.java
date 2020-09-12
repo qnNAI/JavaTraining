@@ -1,6 +1,6 @@
 package by.training.finalproject.service;
 
-import by.training.finalproject.beans.ProductList;
+import by.training.finalproject.entity.ProductList;
 import by.training.finalproject.service.serviceException.ServiceException;
 
 import java.util.List;

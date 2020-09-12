@@ -1,6 +1,6 @@
 package by.training.finalproject.service.impl;
 
-import by.training.finalproject.beans.Purchase;
+import by.training.finalproject.entity.Purchase;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.PurchaseDao;
 import by.training.finalproject.dao.Transaction;

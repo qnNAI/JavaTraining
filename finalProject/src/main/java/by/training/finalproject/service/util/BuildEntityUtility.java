@@ -1,6 +1,6 @@
 package by.training.finalproject.service.util;
 
-import by.training.finalproject.beans.*;
+import by.training.finalproject.entity.*;
 import by.training.finalproject.dao.*;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.service.serviceException.ServiceException;

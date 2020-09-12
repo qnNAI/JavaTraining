@@ -1,9 +1,9 @@
 package by.training.finalproject.controller.command.impl.basket;
 
-import by.training.finalproject.beans.LocalAddress;
-import by.training.finalproject.beans.Purchase;
-import by.training.finalproject.beans.infoEnum.ObtainingMethod;
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.LocalAddress;
+import by.training.finalproject.entity.Purchase;
+import by.training.finalproject.entity.infoEnum.ObtainingMethod;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.service.PurchaseService;
 import by.training.finalproject.service.factory.ServiceFactory;

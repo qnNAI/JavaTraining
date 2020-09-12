@@ -1,9 +1,9 @@
 package by.training.finalproject.dao.impl;
 
-import by.training.finalproject.beans.LocalAddress;
-import by.training.finalproject.beans.Purchase;
-import by.training.finalproject.beans.User;
-import by.training.finalproject.beans.infoEnum.ObtainingMethod;
+import by.training.finalproject.entity.LocalAddress;
+import by.training.finalproject.entity.Purchase;
+import by.training.finalproject.entity.User;
+import by.training.finalproject.entity.infoEnum.ObtainingMethod;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.PurchaseDao;
 

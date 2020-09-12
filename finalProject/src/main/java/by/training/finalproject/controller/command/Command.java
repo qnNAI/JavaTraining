@@ -1,6 +1,6 @@
 package by.training.finalproject.controller.command;
 
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
 package by.training.finalproject.dao;
 
-import by.training.finalproject.beans.User;
+import by.training.finalproject.entity.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 
 import java.util.List;

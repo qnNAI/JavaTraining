@@ -1,10 +1,10 @@
 package by.training.finalproject.controller.command.impl;
 
-import by.training.finalproject.beans.Product;
-import by.training.finalproject.beans.ProductList;
-import by.training.finalproject.beans.Purchase;
-import by.training.finalproject.beans.User;
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.Product;
+import by.training.finalproject.entity.ProductList;
+import by.training.finalproject.entity.Purchase;
+import by.training.finalproject.entity.User;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.ProductService;
@@ -22,14 +22,14 @@ import java.util.List;
 import java.util.Set;
 
 public class MainCmd extends Command {
-    private static Logger logger = LogManager.getLogger(MainCmd.class.getName());
+    private static final Logger logger = LogManager.getLogger(MainCmd.class.getName());
+    private static final int PROD_BY_PAGE = 9;
 
     @Override
     public Forward execute(HttpServletRequest request, HttpServletResponse response, ServiceFactory factory) {
         Forward forward = new Forward("/main.jsp", false);
         HttpSession session = request.getSession();
         List<Product> products;
-        final int prodByPage = 9;
 
         try {
             ProductService productService = factory.getProductService();
@@ -37,30 +37,30 @@ public class MainCmd extends Command {
             ProductListService productListService = factory.getProductListService();
             User user = (User) session.getAttribute("authorizedUser");
             String pageStr = request.getParameter("page");
-            String amountFullStr = request.getParameter("amountFull");
+            String productAmountStr = request.getParameter("productAmount");
             String pageAmountStr = request.getParameter("pageAmount");
             int page;
-            int amountFull;
+            int productAmount;
             int pageAmount;
             if (pageStr != null && !pageStr.isEmpty()) {
                 page = Integer.parseInt(pageStr);
                 ++page;
-                amountFull = Integer.parseInt(amountFullStr);
+                productAmount = Integer.parseInt(productAmountStr);
                 pageAmount = Integer.parseInt(pageAmountStr);
             } else {
                 page = 1;
-                amountFull = productService.countProducts();
-                pageAmount = amountFull / prodByPage;
+                productAmount = productService.countProductsNotInBasket();
+                pageAmount = productAmount / PROD_BY_PAGE;
                 if (pageAmount < 1) {
                     pageAmount = 1;
                 }
             }
             request.setAttribute("page", page);
-            request.setAttribute("amountFull", amountFull);
+            request.setAttribute("productAmount", productAmount);
             request.setAttribute("pageAmount", pageAmount);
             if (user != null) {
                 Purchase purchase = purchaseService.findIdWhenStateIsAddedByUserId(user.getId());
-                products = productService.findAllWithoutUserID((page - 1) * prodByPage, prodByPage);
+                products = productService.findAllWithoutUserID((page - 1) * PROD_BY_PAGE, PROD_BY_PAGE);
                 if (purchase != null) {
                     List<ProductList> listOfProductList = productListService.findProductListWithIdOnlyByPurchaseId(purchase.getId());
                     List<Integer> productIdentities = new ArrayList<>(); // products in basket
@@ -75,7 +75,7 @@ public class MainCmd extends Command {
                 }
             } else {
                 /* check cookies for basket */
-                products = productService.findAllWithoutUserID((page - 1) * prodByPage, prodByPage);
+                products = productService.findAllWithoutUserID((page - 1) * PROD_BY_PAGE, PROD_BY_PAGE);
             }
         } catch (ServiceException e) {
             logger.error("Failed to load products", e);

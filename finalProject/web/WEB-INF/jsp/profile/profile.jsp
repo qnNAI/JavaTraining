@@ -45,7 +45,7 @@
 <c:url var="history" value="/history.html"/>
 <c:url var="masterOrderMgmt" value="/master/orderMgmt.html"/>
 
-<jsp:useBean id="user" scope="request" class="by.training.finalproject.beans.User"/>
+<jsp:useBean id="user" scope="request" class="by.training.finalproject.entity.User"/>
 
 <!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

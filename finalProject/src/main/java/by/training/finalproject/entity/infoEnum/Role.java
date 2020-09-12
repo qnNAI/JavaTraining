@@ -1,4 +1,4 @@
-package by.training.finalproject.beans.infoEnum;
+package by.training.finalproject.entity.infoEnum;
 
 public enum Role {
     USER("пользователь"),

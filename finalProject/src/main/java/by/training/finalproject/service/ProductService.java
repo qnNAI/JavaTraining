@@ -1,7 +1,7 @@
 package by.training.finalproject.service;
 
-import by.training.finalproject.beans.Product;
-import by.training.finalproject.beans.ProductList;
+import by.training.finalproject.entity.Product;
+import by.training.finalproject.entity.ProductList;
 import by.training.finalproject.service.serviceException.ServiceException;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface ProductService extends Service<Product> {
 
     Product findByID(int id) throws ServiceException;
 
-    int countProducts() throws ServiceException;
+    int countProductsNotInBasket() throws ServiceException;
 
     List<Product> findAll(int start, int amount) throws ServiceException;
 
@@ -21,3 +21,4 @@ public interface ProductService extends Service<Product> {
 
     List<Product> findAllWithoutUserIdById(List<ProductList> listOfProductList) throws ServiceException;
 }
+

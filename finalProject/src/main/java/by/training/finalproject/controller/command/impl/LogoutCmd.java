@@ -1,6 +1,6 @@
 package by.training.finalproject.controller.command.impl;
 
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;

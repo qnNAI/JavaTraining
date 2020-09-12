@@ -1,6 +1,6 @@
 package by.training.finalproject.dao;
 
-import by.training.finalproject.beans.Purchase;
+import by.training.finalproject.entity.Purchase;
 import by.training.finalproject.dao.DAOexception.DAOException;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package by.training.finalproject.tag;
 
-import by.training.finalproject.beans.ProductList;
+import by.training.finalproject.entity.ProductList;
 
 import java.util.List;
 

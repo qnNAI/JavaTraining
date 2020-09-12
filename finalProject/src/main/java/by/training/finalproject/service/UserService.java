@@ -1,6 +1,6 @@
 package by.training.finalproject.service;
 
-import by.training.finalproject.beans.User;
+import by.training.finalproject.entity.User;
 import by.training.finalproject.service.serviceException.ServiceException;
 
 import java.util.List;

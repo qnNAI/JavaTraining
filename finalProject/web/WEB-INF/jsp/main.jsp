@@ -15,16 +15,17 @@
 
     <link rel="stylesheet" type="text/css" href="${cssFile}"/>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
-
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -40,12 +41,12 @@
 <c:url var="addToBasket" value="/addToBasket.html"/>
 
 <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
-<c:set var="amountFull" scope="request" value="${requestScope.amountFull}"/>
+<c:set var="productAmount" scope="request" value="${requestScope.productAmount}"/>
 <c:set var="page" scope="request" value="${requestScope.page}"/>
 <c:set var="pageAmount" scope="request" value="${requestScope.pageAmount}"/>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="${mainPage}" style="color: #1E90FF">WORKSHOP</a>
+    <a class="navbar-brand" href="${mainPage}">WORKSHOP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,7 +55,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="${infoPage}">О нас</a>
+                <a class="nav-link nav-item" href="${infoPage}">О нас</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="${deliveryPage}">Доставка</a>
@@ -106,7 +107,7 @@
 
 <!-- products -->
 <div class="container mt-5">
-    <div class="row row-cols-1 row-cols-md-3 row-cols-sm-1">
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-auto">
         <jsp:useBean id="products" scope="request" class="java.util.ArrayList"/>
         <c:forEach items="${products}" var="product">
             <c:url var="path" value="${product.imagePath}"/>
@@ -126,10 +127,10 @@
                         <c:choose>
                             <c:when test="${not product.isInBasket}">
                                 <form class="form-inline" action="${addToBasket}" method="post">
-                                    <input type="number" step="1" min="1" max="200"
+                                    <input class="input-amount" type="number" step="1" min="1" max="200"
                                            id="productAmount"
                                            name="productAmount"
-                                           value="1" required style="padding-top: 5px; max-width: 40px; width: 100%">
+                                           value="1" required>
                                     <input type="hidden" id="productID" name="productID"
                                            value="${product.id}">
                                     <button type="submit"
@@ -149,9 +150,10 @@
             </div>
         </c:forEach>
     </div>
-    <p>${page} ${amountFull} ${pageAmount}</p>
-
 </div>
+
+${productAmount}
+${pageAmount}
 
 <div class="row justify-content-center mb-5">
     <nav aria-label="Page navigation">
@@ -161,9 +163,39 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">1</a></form></li>
-            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">2</a></form></li>
-            <li class="page-item"><form class="pag-form"><a class="page-link" href="#">3</a></form></li>
+            <c:choose>
+                <c:when test="${pageAmount > 2}">
+                    <c:choose>
+                        <c:when test="${page > 1 && page < pageAmount}">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#"></a>${page}</li>
+                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
+                        </c:when>
+                        <c:when test="${page == 1}">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#"></a>2</li>
+                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
+                        </c:when>
+                        <c:when test="${page == pageAmount}">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#"></a>${pageAmount - 1}</li>
+                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
+                        </c:when>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${pageAmount == 2}">
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

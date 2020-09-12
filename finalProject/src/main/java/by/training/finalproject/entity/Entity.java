@@ -1,4 +1,4 @@
-package by.training.finalproject.beans;
+package by.training.finalproject.entity;
 
 import java.io.Serializable;
 

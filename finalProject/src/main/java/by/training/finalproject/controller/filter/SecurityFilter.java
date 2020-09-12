@@ -1,7 +1,7 @@
 package by.training.finalproject.controller.filter;
 
-import by.training.finalproject.beans.User;
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.User;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.controller.command.impl.MainCmd;
 import org.apache.logging.log4j.LogManager;

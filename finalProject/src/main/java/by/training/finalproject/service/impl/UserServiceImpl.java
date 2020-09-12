@@ -1,6 +1,6 @@
 package by.training.finalproject.service.impl;
 
-import by.training.finalproject.beans.User;
+import by.training.finalproject.entity.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.Transaction;
 import by.training.finalproject.dao.UserDao;

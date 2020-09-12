@@ -1,9 +1,10 @@
 package by.training.finalproject.dao.impl;
 
-import by.training.finalproject.beans.Product;
-import by.training.finalproject.beans.User;
+import by.training.finalproject.entity.Product;
+import by.training.finalproject.entity.User;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,6 +73,18 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     public List<Product> read(int start, int amount) throws DAOException {
         final String select = "SELECT * FROM product LIMIT ?,?";
 
+        return readByStatement(start, amount, select);
+    }
+
+    @Override
+    public List<Product> readWithIdIsNull(int start, int amount) throws DAOException {
+        final String select = "SELECT * FROM product WHERE user_id IS NULL LIMIT ?,?";
+
+        return readByStatement(start, amount, select);
+    }
+
+    @NotNull
+    private List<Product> readByStatement(int start, int amount, String select) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             preparedStatement.setInt(1, start);
             preparedStatement.setInt(2, amount);
@@ -92,8 +105,8 @@ public class ProductDaoImpl extends BaseDaoImpl implements ProductDao {
     }
 
     @Override
-    public int countRecords() throws DAOException {
-        final String select = "SELECT COUNT(*) AS amount FROM product";
+    public int countRecordsWhereIdIsNull() throws DAOException {
+        final String select = "SELECT COUNT(*) AS amount FROM product WHERE user_id IS NULL";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(select)) {
             ResultSet resultSet = preparedStatement.executeQuery();

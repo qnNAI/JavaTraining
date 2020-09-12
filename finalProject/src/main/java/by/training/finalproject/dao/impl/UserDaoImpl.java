@@ -1,7 +1,7 @@
 package by.training.finalproject.dao.impl;
 
-import by.training.finalproject.beans.User;
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.User;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.UserDao;
 

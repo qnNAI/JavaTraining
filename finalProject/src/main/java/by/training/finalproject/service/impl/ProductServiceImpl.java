@@ -1,7 +1,7 @@
 package by.training.finalproject.service.impl;
 
-import by.training.finalproject.beans.Product;
-import by.training.finalproject.beans.ProductList;
+import by.training.finalproject.entity.Product;
+import by.training.finalproject.entity.ProductList;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.ProductDao;
 import by.training.finalproject.dao.Transaction;
@@ -101,10 +101,10 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     }
 
     @Override
-    public int countProducts() throws ServiceException {
+    public int countProductsNotInBasket() throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            return dao.countRecords();
+            return dao.countRecordsWhereIdIsNull();
         } catch (DAOException e) {
             logger.error("Failed to count products", e);
             throw new ServiceException(e);
@@ -136,8 +136,8 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     public List<Product> findAllWithoutUserID(int start, int amount) throws ServiceException {
         try {
             ProductDao dao = (ProductDao) transaction.createDao(ProductDao.class.getName());
-            List<Product> products = dao.read(start, amount);
-            products.removeIf(product -> product.getUser() != null);
+            List<Product> products = dao.readWithIdIsNull(start, amount);
+          //  products.removeIf(product -> product.getUser() != null);
             BuildEntityUtility.buildProduct(products, transaction);
             transaction.commit();
             return products;

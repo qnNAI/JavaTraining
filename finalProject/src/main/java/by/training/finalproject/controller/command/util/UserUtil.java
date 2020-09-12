@@ -1,6 +1,6 @@
 package by.training.finalproject.controller.command.util;
 
-import by.training.finalproject.beans.User;
+import by.training.finalproject.entity.User;
 import by.training.finalproject.service.UserService;
 import by.training.finalproject.service.factory.ServiceFactory;
 import by.training.finalproject.service.serviceException.ServiceException;
@@ -30,9 +30,6 @@ public class UserUtil {
             return false;
         }
         user = service.findByID(user.getId());
-        if (user == null) {
-            return false;
-        }
-        return true;
+        return user != null;
     }
 }

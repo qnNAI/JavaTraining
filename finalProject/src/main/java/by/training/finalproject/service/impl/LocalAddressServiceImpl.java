@@ -1,6 +1,6 @@
 package by.training.finalproject.service.impl;
 
-import by.training.finalproject.beans.LocalAddress;
+import by.training.finalproject.entity.LocalAddress;
 import by.training.finalproject.dao.DAOexception.DAOException;
 import by.training.finalproject.dao.LocalAddressDao;
 import by.training.finalproject.dao.Transaction;

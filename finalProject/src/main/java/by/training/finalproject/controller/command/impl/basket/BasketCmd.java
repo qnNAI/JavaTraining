@@ -1,9 +1,9 @@
 package by.training.finalproject.controller.command.impl.basket;
 
-import by.training.finalproject.beans.ProductList;
-import by.training.finalproject.beans.Purchase;
-import by.training.finalproject.beans.User;
-import by.training.finalproject.beans.infoEnum.Role;
+import by.training.finalproject.entity.ProductList;
+import by.training.finalproject.entity.Purchase;
+import by.training.finalproject.entity.User;
+import by.training.finalproject.entity.infoEnum.Role;
 import by.training.finalproject.controller.command.Command;
 import by.training.finalproject.service.ProductListService;
 import by.training.finalproject.service.PurchaseService;
