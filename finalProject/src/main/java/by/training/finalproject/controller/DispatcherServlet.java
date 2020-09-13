@@ -67,6 +67,7 @@ public class DispatcherServlet extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Command command = (Command) request.getAttribute("command");
+        // TODO fix connection pool connections closing
         try {
             HttpSession session = request.getSession(false);
             if(session != null) {

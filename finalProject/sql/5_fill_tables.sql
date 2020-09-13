@@ -10,7 +10,7 @@ INSERT INTO workshopdb.product (user_id, name, price, description, image_path)
 VALUES (NULL, "Медведь Пух", 10.5, "Плюшевый медведь Винни Пух", "img/vinni.jpg"),
        (NULL, "Рыбка золотая", 7.5, "Плюшевая золотая рыбка", "img/gold_fish.jpg"),
        (NULL, "Заяц Крош", 9, "Плюшевый заяц Крош", "img/crosh.jpg"),
-       (1, "Тигр", 20, "Большой тигр с большими зубами", NULL),
+       (NULL, "Тигр", 20, "Большой тигр с большими зубами", "img/tiger.png"),
        (NULL, "Бегемот", 5, "Плюшевый бегемот", "img/begemot.jpg"),
        (NULL, "Нюша", 10, "Плюшевый свинка Нюша", "img/nyusha.jpg"),
        (NULL, "Бараш", 8, "Плюшевый баран Бараш", "img/barash.jpg"),

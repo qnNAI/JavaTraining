@@ -41,9 +41,8 @@
 <c:url var="addToBasket" value="/addToBasket.html"/>
 
 <c:set var="authorizedUser" scope="session" value="${sessionScope.authorizedUser}"/>
-<c:set var="productAmount" scope="request" value="${requestScope.productAmount}"/>
 <c:set var="page" scope="request" value="${requestScope.page}"/>
-<c:set var="pageAmount" scope="request" value="${requestScope.pageAmount}"/>
+<c:set var="pageAmount" scope="session" value="${sessionScope.pageAmount}"/>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="${mainPage}">WORKSHOP</a>
@@ -121,6 +120,7 @@
                         <div class="card-text">
                             <p>${product.price} р</p>
                             <p>${product.description}</p>
+                            <p>${product.id}</p>
                         </div>
                     </div>
                     <div class="card-footer" style="max-height: 60px">
@@ -152,54 +152,93 @@
     </div>
 </div>
 
-${productAmount}
-${pageAmount}
-
 <div class="row justify-content-center mb-5">
     <nav aria-label="Page navigation">
         <ul class="pagination pagination-lg">
             <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+                <form action="${mainPage}" method="post">
+                    <input type="hidden" value="${page - 1}" name="page">
+                    <input type="hidden" value="${pageAmount}" name="pageAmount">
+                    <button class="page-link" type="submit">&laquo;</button>
+                </form>
             </li>
             <c:choose>
                 <c:when test="${pageAmount > 2}">
                     <c:choose>
                         <c:when test="${page > 1 && page < pageAmount}">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#"></a>${page}</li>
-                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="1" name="page">
+                                    <button class="page-link" type="submit">1</button>
+                                </form>
+                            </li>
+                            <li class="page-item"><a class="page-link current" href="#">${page}</a></li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="${pageAmount}" name="page">
+                                    <button class="page-link" type="submit">${pageAmount}</button>
+                                </form>
+                            </li>
                         </c:when>
-                        <c:when test="${page == 1}">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#"></a>2</li>
-                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
+                        <c:when test="${page eq 1}">
+                            <li class="page-item"><a class="page-link current" href="#">1</a></li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="2" name="page">
+                                    <button class="page-link" type="submit">2</button>
+                                </form>
+                            </li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="${pageAmount}" name="page">
+                                    <button class="page-link" type="submit">${pageAmount}</button>
+                                </form>
+                            </li>
                         </c:when>
-                        <c:when test="${page == pageAmount}">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#"></a>${pageAmount - 1}</li>
-                            <li class="page-item"><a class="page-link" href="#">${pageAmount}</a></li>
-                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="1" name="page">
+                                    <button class="page-link" type="submit">1</button>
+                                </form>
+                            </li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="${pageAmount - 1}" name="page">
+                                    <button class="page-link" type="submit">${pageAmount - 1}</button>
+                                </form>
+                            </li>
+                            <li class="page-item"><a class="page-link current" href="#">${pageAmount}</a></li>
+                        </c:otherwise>
                     </c:choose>
                 </c:when>
                 <c:otherwise>
                     <c:choose>
-                        <c:when test="${pageAmount == 2}">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <c:when test="${pageAmount eq 2}">
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="1" name="page">
+                                    <button class="page-link" type="submit">1</button>
+                                </form>
+                            </li>
+                            <li class="page-item">
+                                <form action="${mainPage}" method="post">
+                                    <input type="hidden" value="2" name="page">
+                                    <button class="page-link" type="submit">2</button>
+                                </form>
+                            </li>
                         </c:when>
                         <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link current" href="#">1</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>
             </c:choose>
-
             <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
+                <form action="${mainPage}" method="post">
+                    <input type="hidden" value="${page + 1}" name="page">
+                    <button class="page-link" type="submit">&raquo;</button>
+                </form>
             </li>
         </ul>
     </nav>

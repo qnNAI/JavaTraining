@@ -38,6 +38,13 @@ html {
     width: 330px !important;
 }
 
+form {
+    margin-block-end: 0;
+}
+
+.current {
+    color: crimson;
+}
 
 
 

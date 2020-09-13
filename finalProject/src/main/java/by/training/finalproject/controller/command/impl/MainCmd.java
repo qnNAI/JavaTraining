@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,27 +38,25 @@ public class MainCmd extends Command {
             ProductListService productListService = factory.getProductListService();
             User user = (User) session.getAttribute("authorizedUser");
             String pageStr = request.getParameter("page");
-            String productAmountStr = request.getParameter("productAmount");
-            String pageAmountStr = request.getParameter("pageAmount");
-            int page;
-            int productAmount;
             int pageAmount;
+            int page;
             if (pageStr != null && !pageStr.isEmpty()) {
                 page = Integer.parseInt(pageStr);
-                ++page;
-                productAmount = Integer.parseInt(productAmountStr);
-                pageAmount = Integer.parseInt(pageAmountStr);
+                pageAmount = (int) session.getAttribute("pageAmount");
+                if (page < 1) { // if prev page return value < 1 then set page value = 1
+                    page = 1;
+                } else if (page > pageAmount) { // if next page return value > pages amount then set page value = max
+                    page = pageAmount;
+                }
             } else {
                 page = 1;
-                productAmount = productService.countProductsNotInBasket();
-                pageAmount = productAmount / PROD_BY_PAGE;
+                int productAmount = productService.countProductsNotInBasket();
+                pageAmount = productAmount / PROD_BY_PAGE + 1;
                 if (pageAmount < 1) {
                     pageAmount = 1;
                 }
+                session.setAttribute("pageAmount", pageAmount);
             }
-            request.setAttribute("page", page);
-            request.setAttribute("productAmount", productAmount);
-            request.setAttribute("pageAmount", pageAmount);
             if (user != null) {
                 Purchase purchase = purchaseService.findIdWhenStateIsAddedByUserId(user.getId());
                 products = productService.findAllWithoutUserID((page - 1) * PROD_BY_PAGE, PROD_BY_PAGE);
@@ -77,6 +76,7 @@ public class MainCmd extends Command {
                 /* check cookies for basket */
                 products = productService.findAllWithoutUserID((page - 1) * PROD_BY_PAGE, PROD_BY_PAGE);
             }
+            request.setAttribute("page", page);
         } catch (ServiceException e) {
             logger.error("Failed to load products", e);
             return new Forward("/error.jsp", false);
